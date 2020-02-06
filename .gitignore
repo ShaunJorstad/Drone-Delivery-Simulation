@@ -1,3 +1,7 @@
+# Jetbrains IDEA config
+.idea/
+*.iml
+
 # Compiled class file
 *.class
 
