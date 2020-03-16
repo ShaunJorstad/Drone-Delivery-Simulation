@@ -5,26 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.SplashScreen">
+<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Splash">
     <top>
-        <MenuBar id="navBar" BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="Home">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Settings" />
-                <Menu mnemonicParsing="false" text="Result" />
-            </menus>
-        </MenuBar>
+        <HBox id="navBar" fx:id="navBar" spacing="10">
+            <Button id="home" fx:id="home" text="Home" onAction="#handleNavigateHome"/>
+            <Button id="settings" fx:id="settings" text="Settings" onAction="#HandleNavigateSettings"/>
+            <Button id="results" fx:id="results" text="Results" onAction="#handleNavigateResults"/>
+        </HBox>
     </top>
    <center>
       <HBox id="hBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView id="splashImage" fx:id="SplashImage" fitHeight="660.0" fitWidth="660.0" pickOnBounds="true" preserveRatio="true" />
 
-            <VBox id="vBox" prefHeight="200.0" prefWidth="730.0">
+            <VBox id="vBox" fx:id="vBox" prefHeight="200.0" prefWidth="730.0">
                <children>
                   <Label id="splashTitle" text="Delivery Simulation" />
                   <TextFlow id="splashText" prefHeight="200.0" prefWidth="200.0">
@@ -37,7 +31,7 @@
    </center>
     <bottom>
         <AnchorPane>
-            <Button id="nextButton" fx:id="simButton" textFill="ffffff" contentDisplay="CENTER" text="Next" layoutX="1304" layoutY="-120"/>
+            <Button id="nextButton" fx:id="simButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120" text="Next" textFill="ffffff" />
         </AnchorPane>
     </bottom>
 </BorderPane>
