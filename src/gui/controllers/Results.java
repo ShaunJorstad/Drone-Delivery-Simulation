@@ -13,6 +13,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -41,23 +42,25 @@ public class Results implements Initializable {
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
-//        Parent root = FXMLLoader.load(getClass().getResource("layouts/Splash.fxml"));
-//
-//        Scene splashScene = new Scene(root, scale(1000), scale(700));
-//        splashScene.getStylesheets().add("gui/CSS/Splash.css");
-//        splashScene.getStylesheets().add("gui/CSS/Navigation.css");
-//
-//        Stage currentStage = (Stage) home.getScene().getWindow();
-//        currentStage.setScene(splashScene);
-//        currentStage.close();
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
+        Scene splashScene = new Scene(root, scale(1000), scale(700));
+        splashScene.getStylesheets().add("gui/CSS/Splash.css");
+        splashScene.getStylesheets().add("gui/CSS/Navigation.css");
+        Stage currentStage = (Stage) home.getScene().getWindow();
+        currentStage.setScene(splashScene);
     }
 
     public void handleExport(ActionEvent actionEvent) {
         System.out.println("Exporting");
     }
 
-    public void HandleNavigateSettings(ActionEvent actionEvent) {
-        System.out.println("navigating to settings");
+    public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
+        Scene splashScene = new Scene(root, scale(1000), scale(700));
+        splashScene.getStylesheets().add("gui/CSS/FoodItems.css");
+        splashScene.getStylesheets().add("gui/CSS/Navigation.css");
+        Stage currentStage = (Stage) home.getScene().getWindow();
+        currentStage.setScene(splashScene);
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) {
