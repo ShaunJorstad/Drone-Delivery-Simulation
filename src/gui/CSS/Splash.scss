@@ -1,0 +1,9 @@
+$scale = 1.6;
+
+#navBar {
+  -fx-background-color: #E6E6E6;
+  /*-fx-base: rgb(225, 228, 203);*/
+  -fx-font-size: 16pt * scale;
+  -fx-font-family: "Courier New";
+  -fx-skin: inherit;
+}
