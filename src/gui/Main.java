@@ -23,7 +23,6 @@ public class Main extends Application {
         splashScene.getStylesheets().add("gui/CSS/Splash.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
 
-
         primaryStage.setScene(splashScene);
 
         // --- TESTING

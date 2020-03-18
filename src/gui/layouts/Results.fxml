@@ -8,10 +8,10 @@
 <?import javafx.geometry.Insets?>
 <BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Results">
     <top>
-        <HBox id="navBar" fx:id="navBar" spacing="10">
-            <Button id="home" fx:id="home" text="Home" onAction="#handleNavigateHome"/>
-            <Button id="settings" fx:id="settings" text="Settings" onAction="#HandleNavigateSettings"/>
-            <Button id="results" fx:id="results" text="Results" onAction="#handleNavigateResults"/>
+        <HBox id="navBar" styleClass="navBar" fx:id="navBar" spacing="10">
+            <Button id="home" styleClass="navItem" fx:id="home" text="Home" onAction="#handleNavigateHome"/>
+            <Button id="settings" styleClass="navItem" fx:id="settings" text="Settings" onAction="#HandleNavigateSettings"/>
+            <Button id="results" styleClass="navItem" fx:id="results" text="Results" onAction="#handleNavigateResults"/>
         </HBox>
     </top>
     <center>

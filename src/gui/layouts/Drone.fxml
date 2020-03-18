@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Drone">
+    <top>
+        <VBox id="navBarContainer" fx:id="navBarContainer">
+            <HBox id="navBar" styleClass="navBar" fx:id="navBar" spacing="10">
+                <Button id="home" styleClass="navItem" fx:id="home" text="Home" onAction="#handleNavigateHome"/>
+                <Button id="settings" styleClass="navItem" fx:id="settings" text="Settings" onAction="#HandleNavigateSettings"/>
+                <Button id="results" styleClass="navItem" fx:id="results" text="Results" onAction="#handleNavigateResults"/>
+            </HBox>
+            <HBox id="settingsNavBar" styleClass="navBar" fx:id="settingsNavBar" spacing="10">
+                <Button id="foodItems" styleClass="navItem" fx:id="foodItems" text="Food Items" onAction="#handleNavigateFoodItems"/>
+                <Button id="mealItems" styleClass="navItem" fx:id="mealItems" text="Meal Items" onAction="#handleNavigateMealItems"/>
+                <Button id="orderDistribution" styleClass="navItem" fx:id="orderDistribution" text="Order Distribution" onAction="#handleNavigateOrderDistribution"/>
+                <Button id="map" styleClass="navItem" fx:id="map" text="Map" onAction="#handleNavigateMap"/>
+                <Button id="drone" styleClass="navItem" fx:id="drone" text="Drone" onAction="#handleNavigateDrone"/>
+            </HBox>
+        </VBox>
+
+    </top>
+    <center>
+
+    </center>
+    <right>
+        <VBox>
+            <!--            import settings-->
+            <!--            export settings-->
+            <!--            run simulation-->
+        </VBox>
+    </right>
+</BorderPane>

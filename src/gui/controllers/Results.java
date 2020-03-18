@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import gui.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -37,8 +38,6 @@ public class Results implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         results.setStyle("-fx-underline:true");
-
-
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -51,11 +50,11 @@ public class Results implements Initializable {
     }
 
     public void handleExport(ActionEvent actionEvent) {
-        System.out.println("Exporting");
+        System.out.println();
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
         Scene splashScene = new Scene(root, scale(1000), scale(700));
         splashScene.getStylesheets().add("gui/CSS/FoodItems.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
