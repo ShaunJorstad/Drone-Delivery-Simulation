@@ -5,33 +5,40 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Splash">
+<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Splash">
     <top>
-        <HBox id="navBar" styleClass="navBar" fx:id="navBar" spacing="10">
-            <Button id="home" styleClass="navItem" fx:id="home" text="Home" onAction="#handleNavigateHome"/>
-            <Button id="settings" styleClass="navItem" fx:id="settings" text="Settings" onAction="#HandleNavigateSettings"/>
-            <Button id="results" styleClass="navItem" fx:id="results" text="Results" onAction="#handleNavigateResults"/>
+        <HBox id="navBar" fx:id="navBar" spacing="10" styleClass="navBar">
+            <Button id="back" fx:id="back" onAction="#handleNavigateBack" styleClass="navItem" text=" ">
+                <graphic>
+                    <ImageView id="backImage" fx:id="backImage" fitHeight="22" fitWidth="22" pickOnBounds="true"
+                               preserveRatio="true"/>
+                </graphic>
+            </Button>
+            <Button id="home" fx:id="home" onAction="#handleNavigateHome" styleClass="navItem" text="Home"/>
+            <Button id="settings" fx:id="settings" onAction="#HandleNavigateSettings" styleClass="navItem"
+                    text="Settings"/>
+            <Button id="results" fx:id="results" onAction="#handleNavigateResults" styleClass="navItem" text="Results"/>
         </HBox>
     </top>
-   <center>
-      <HBox id="hBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView id="splashImage" fx:id="SplashImage" fitHeight="660.0" fitWidth="660.0" pickOnBounds="true" preserveRatio="true" />
-
+    <center>
+        <HBox id="hBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ImageView id="splashImage" fx:id="SplashImage" fitHeight="660.0" fitWidth="660.0" pickOnBounds="true"
+                       preserveRatio="true"/>
             <VBox id="vBox" fx:id="vBox" prefHeight="200.0" prefWidth="730.0">
-               <children>
-                  <Label id="splashTitle" text="Delivery Simulation" />
-                  <TextFlow id="splashText" prefHeight="200.0" prefWidth="200.0">
-                      <Text id="splashTextText" fill="#808080" text="This simulation compares delivery times of knapsack vs fifo delivery systems. Click next to continue to the simulation settings." />
-                  </TextFlow>
+                <Label id="splashTitle" text="Delivery Simulation"/>
+                <TextFlow id="splashText" prefHeight="200.0" prefWidth="200.0">
+                    <Text id="splashTextText" fill="#808080"
+                          text="This simulation compares delivery times of knapsack vs fifo delivery systems. Click next to continue to the simulation settings."/>
+                </TextFlow>
 
-               </children></VBox>
-         </children>
-      </HBox>
-   </center>
+            </VBox>
+        </HBox>
+    </center>
     <bottom>
         <AnchorPane>
-            <Button id="nextButton" fx:id="simButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120" text="Next" textFill="ffffff" />
+            <Button id="nextButton" fx:id="simButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120" text="Next"
+                    textFill="ffffff"/>
         </AnchorPane>
     </bottom>
 </BorderPane>

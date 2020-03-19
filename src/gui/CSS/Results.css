@@ -14,6 +14,6 @@
     -fx-padding: 96 0 0 115px;
 }
 
-#algorithmText, #averageText, #worstText, #totalTime, #knapsack, #fifo  {
+#algorithmText, #averageText, #worstText, #totalTime, #knapsack, #fifo {
     -fx-font-size: 18px;
 }
