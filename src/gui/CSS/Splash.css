@@ -1,0 +1,23 @@
+#hBox {
+    -fx-padding: 115 115 115 115;
+}
+
+#vBox {
+    -fx-padding: 0 0 0 83;
+}
+
+#splashTitle {
+    -fx-font-size: 35pt;
+}
+
+#splashText {
+    -fx-padding: 45 0 0 0;
+    -fx-font-size: 20pt;
+    -fx-line-spacing: 14pt;
+}
+
+#nextButton {
+    -fx-padding: 13 63 13 63;
+    -fx-background-color: #0078D7;
+    -fx-font-size: 14pt;
+}
