@@ -1,5 +1,6 @@
 package cli;
 
+import menu.Destination;
 import menu.Meal;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class PlacedOrder {
     int orderedTime; //The time in minutes since the start of the simulation that the order was placed
     String clientName; //name of the client
     Meal meal; //The meal that was ordered
-    //Destination dest
+    Destination dest;
 
     /**
      * Constructor
@@ -22,11 +23,11 @@ public class PlacedOrder {
      * @param name name of the client
      * @param meal The meal that was ordered
      */
-    PlacedOrder(int timePlaced /*, Destination dest*/, String name, Meal meal) {
+    PlacedOrder(int timePlaced , Destination dest, String name, Meal meal) {
         orderedTime = timePlaced;
         clientName = name;
         this.meal = meal;
-        //this.dest = dest;
+        this.dest = dest;
     }
 
     /**
@@ -44,7 +45,7 @@ public class PlacedOrder {
             output += "<order>";
             output += "<cname>" + clientName + "</cname>";
             output += "<ordTime>" + orderedTime + "</ordTime>";
-            //Dest
+            output += "<dest>" + dest + "</dest>";
             output += "<meal>" + meal + "</meal>";
             output += "</order>";
             printWriter.println(output);

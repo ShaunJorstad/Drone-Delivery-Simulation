@@ -1,6 +1,7 @@
 package cli;
 
 import menu.DefaultFood;
+import menu.Destination;
 import menu.Meal;
 import org.w3c.dom.ranges.Range;
 
@@ -58,7 +59,9 @@ public class SimController {
         int minutesInSim = 240; //The number of minutes in the simulation
         int curMin = 0; //The current minute the simulation is in
         int randName; //random integer for what name to choose the ArrayList
+        ArrayList<Destination> map = defaultFood.getMap();
         Meal m; //Current meal being ordered
+        Destination d;
 
         try{
             ordersFile = new File("Orders.xml"); //open the orders file
@@ -82,10 +85,11 @@ public class SimController {
 
                 //Get a random meal based on the distribution
                 m = randomMeal(random.nextDouble());
+                d = map.get(random.nextInt(map.size()));
 
                 if (m != null) {
                     //Create a new order
-                    PlacedOrder ord = new PlacedOrder(curMin, names.get(randName), m);
+                    PlacedOrder ord = new PlacedOrder(curMin, d, names.get(randName), m);
                     //Add the order to the xml file
                     ord.addToXML(ordersFile);
                 } else {
@@ -131,6 +135,7 @@ public class SimController {
         //If it returns null the distribution invalid
         return null;
     }
+
 
 
 
