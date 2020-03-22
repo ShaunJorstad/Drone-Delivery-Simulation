@@ -102,6 +102,7 @@ public class Navigation {
     public static void inflateScene(Parent root, String nextScene, Stage stage) {
         Scene splashScene = new Scene(root, scale(1000), scale(700));
         splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
+        splashScene.getStylesheets().add("gui/CSS/Settings.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
         stage.setScene(splashScene);
     }

@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -40,6 +41,10 @@ public class FoodItems implements Initializable {
     public Button runSimButton;
     public Button back;
     public ImageView backImage;
+    public Button importSettingsButton;
+    public Button exportSettingsButton;
+    public VBox settingButtons;
+    public ScrollPane scrollpane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,5 +104,14 @@ public class FoodItems implements Initializable {
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+    }
+
+    public void handleImportSettings(ActionEvent actionEvent) {
+    }
+
+    public void handleExportSettings(ActionEvent actionEvent) {
+    }
+
+    public void handleRunSimulation(ActionEvent actionEvent) {
     }
 }

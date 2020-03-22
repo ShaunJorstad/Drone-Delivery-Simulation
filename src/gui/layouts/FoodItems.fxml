@@ -37,13 +37,26 @@
 
     </top>
     <center>
-
+        <ScrollPane id="scrollpane" fx:id="scrollpane">
+            <VBox id="content" styleClass="content" spacing="10">
+                <Label styleClass="title" text="Food Items" textFill="808080"/>
+                <Label styleClass="description" textFill="808080"
+                       text="These are the food options that meals are formed from. Every food item must include a &#xD;weight per single unit"/>
+            </VBox>
+        </ScrollPane>
     </center>
     <right>
-        <VBox>
-            <!--            import settings-->
-            <!--            export settings-->
-            <!--            run simulation-->
+        <VBox id="controls" fx:id="settingButtons" spacing="600" alignment="BASELINE_RIGHT">
+            <VBox spacing="10" alignment="BASELINE_RIGHT">
+                <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importSettingsButton"
+                        text="Import Settings" textFill="ffffff"
+                        onAction="#handleImportSettings"/>
+                <Button id="exportSettingsButton" styleClass="settingsControls" fx:id="exportSettingsButton"
+                        text="Export Settings" textFill="ffffff"
+                        onAction="#handleExportSettings"/>
+            </VBox>
+            <Button id="runSimButton" fx:id="runSimButton" text="Run"
+                    onAction="#handleRunSimulation" textFill="ffffff"/>
         </VBox>
     </right>
 </BorderPane>

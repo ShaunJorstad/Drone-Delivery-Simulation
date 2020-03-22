@@ -1,0 +1,36 @@
+.settingsControls {
+}
+
+#scrollpane {
+    -fx-background-color:transparent;
+}
+
+.title {
+    -fx-font-size: 38pt;
+}
+
+.content {
+    -fx-padding: 80 0 0 115;
+}
+
+.description {
+    -fx-font-size: 16pt;
+    -fx-line-spacing: 40px;
+    -fx-padding: 15 0 0 0;
+}
+
+#controls{
+    -fx-padding: 100 80 0 0;
+}
+
+#runSimButton {
+    -fx-padding: 13 63 13 63;
+    -fx-background-color: #0078D7;
+    -fx-font-size: 14pt;
+}
+
+.settingsControls{
+    -fx-padding: 13 24 13 24;
+    -fx-background-color: #2353FE;
+    -fx-font-size: 13pt;
+}
