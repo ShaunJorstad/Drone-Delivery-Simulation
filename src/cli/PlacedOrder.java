@@ -15,11 +15,12 @@ public class PlacedOrder {
     int orderedTime; //The time in minutes since the start of the simulation that the order was placed
     String clientName; //name of the client
     Meal meal; //The meal that was ordered
-    Destination dest;
+    Destination dest; //The destination of the delivery
 
     /**
      * Constructor
      * @param timePlaced The time in minutes since the start of the simulation that the order was placed
+     * @param dest The destination of the delivery
      * @param name name of the client
      * @param meal The meal that was ordered
      */

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class DefaultFood {
 	
-	//Data Structures to hold each collection of food, meals
+	//Data Structures to hold each collection of food, meals and destinations
 	private Set<FoodItem> foods;
 	private List<Meal> meals;
 	private ArrayList<Destination> map;
@@ -19,6 +19,8 @@ public class DefaultFood {
 	public DefaultFood() {
 		foods = new HashSet<FoodItem>();
 		meals = new ArrayList<Meal>();
+
+		//create the map for GCC
 		createMap("GCCMap.txt");
 
 		
@@ -74,24 +76,35 @@ public class DefaultFood {
 	public List<Meal> getMeals() {
 		return meals;
 	}
-	
-	public boolean createMap(String fileName) {
-		map = new ArrayList<Destination>();
-		try {
-			File mapFile = new File(fileName);
-			Scanner s = new Scanner(mapFile);
 
+	/**
+	 * Creates the map for the given fileName
+	 * @param fileName Name of the file
+	 * @return false if an error was thrown
+	 */
+	public boolean createMap(String fileName) {
+		map = new ArrayList<Destination>(); //new map of destinations
+
+		try {
+			File mapFile = new File(fileName); //open the file
+			Scanner s = new Scanner(mapFile); //scanner for the whole file
+
+			//Attributes of a destination
 			String name;
 			int x, y;
 			double dist;
 
-
+			//For each line in the file
 			while (s.hasNextLine()) {
-				Scanner line = new Scanner(s.nextLine());
+				Scanner line = new Scanner(s.nextLine()); //Scanner for the given line
+
+				//Get the attributes from the file
 				name = line.next();
 				x = line.nextInt();
 				y = line.nextInt();
 				dist = line.nextDouble();
+
+				//Create a new destination
 				map.add(new Destination(name, x, y, dist));
 				line.close();
 			}
@@ -107,6 +120,10 @@ public class DefaultFood {
 		return map;
 	}
 
+	/**
+	 * Create a string representation of the map
+	 * @return string from of the map
+	 */
 	public String mapToString() {
 		String output = "";
 		for (int i = 0; i < map.size(); i++) {
