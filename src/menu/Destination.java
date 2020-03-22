@@ -73,6 +73,10 @@ public class Destination {
         dist = Math.sqrt(x*x + y*y);
     }
 
+    public double distanceBetween(Destination d) {
+        return Math.sqrt((x-d.getX())*(x-d.getX()) + (y-d.getY())*(y-d.getY()));
+    }
+
     @Override
     public String toString() {
         return destName + "\t" + x + "\t" + y + "\t" + dist;
