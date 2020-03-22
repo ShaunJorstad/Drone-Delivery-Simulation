@@ -37,6 +37,7 @@ public class SimController {
         }
 
         defaultFood = new DefaultFood(); //Get the default food settings
+        //System.out.println(defaultFood.mapToString());
     }
 
     //Singleton creator

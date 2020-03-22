@@ -1,367 +1,399 @@
 <listOfOrders>
-<order><cname>Monah</cname><ordTime>10</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Bunni</cname><ordTime>11</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Estrella</cname><ordTime>12</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Amii</cname><ordTime>12</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Kyle</cname><ordTime>21</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Gussi</cname><ordTime>24</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Delphine</cname><ordTime>24</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Bettine</cname><ordTime>30</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Jackie</cname><ordTime>31</ordTime><meal>Combo 2:
+<order><cname>Emiline</cname><ordTime>0</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Romola</cname><ordTime>32</ordTime><meal>Combo 4:
+<order><cname>Christa</cname><ordTime>5</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Kat</cname><ordTime>6</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Camala</cname><ordTime>6</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Angelika</cname><ordTime>7</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Elinor</cname><ordTime>11</ordTime><meal>Combo 4:
 	Fries: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Kellie</cname><ordTime>34</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Marrissa</cname><ordTime>35</ordTime><meal>Combo 2:
+<order><cname>Katharyn</cname><ordTime>12</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
-	Hamburger: 2
+	Hamburger: 1
 </meal></order>
-<order><cname>Bev</cname><ordTime>39</ordTime><meal>Combo 4:
+<order><cname>Delila</cname><ordTime>16</ordTime><meal>Combo 4:
 	Fries: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Masha</cname><ordTime>43</ordTime><meal>Combo 2:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Gilly</cname><ordTime>47</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Nixie</cname><ordTime>56</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Elyse</cname><ordTime>57</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Meggi</cname><ordTime>59</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Jeanette</cname><ordTime>59</ordTime><meal>Combo 2:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Madelena</cname><ordTime>66</ordTime><meal>Combo 2:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Valerie</cname><ordTime>66</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Ellynn</cname><ordTime>68</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Jaquith</cname><ordTime>71</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Ingaborg</cname><ordTime>73</ordTime><meal>Combo 4:
+<order><cname>Mildred</cname><ordTime>33</ordTime><meal>Combo 4:
 	Fries: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Catlin</cname><ordTime>78</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Nelie</cname><ordTime>78</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Gilli</cname><ordTime>78</ordTime><meal>Combo 2:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Alejandrina</cname><ordTime>81</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Carine</cname><ordTime>81</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Holly-Anne</cname><ordTime>82</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Yovonnda</cname><ordTime>85</ordTime><meal>Combo 4:
+<order><cname>Herminia</cname><ordTime>36</ordTime><meal>Combo 4:
 	Fries: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Joyce</cname><ordTime>85</ordTime><meal>Combo 1:
+<order><cname>Cathlene</cname><ordTime>40</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Dorris</cname><ordTime>44</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Kesley</cname><ordTime>86</ordTime><meal>Combo 1:
+<order><cname>Ina</cname><ordTime>52</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Candis</cname><ordTime>54</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Tova</cname><ordTime>88</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Devonne</cname><ordTime>101</ordTime><meal>Combo 1:
+<order><cname>Meggi</cname><ordTime>54</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Beatriz</cname><ordTime>103</ordTime><meal>Combo 3:
+<order><cname>Sibella</cname><ordTime>57</ordTime><meal>Combo 1:
 	Fries: 1
+	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Brynna</cname><ordTime>108</ordTime><meal>Combo 2:
+<order><cname>Joline</cname><ordTime>58</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Kristien</cname><ordTime>58</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Ursuline</cname><ordTime>58</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Drucy</cname><ordTime>109</ordTime><meal>Combo 1:
+<order><cname>Zora</cname><ordTime>58</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Mirella</cname><ordTime>109</ordTime><meal>Combo 4:
+<order><cname>Grata</cname><ordTime>58</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Corie</cname><ordTime>62</ordTime><meal>Combo 4:
 	Fries: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Sharai</cname><ordTime>116</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Denys</cname><ordTime>117</ordTime><meal>Combo 1:
+<order><cname>Sofia</cname><ordTime>65</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Auberta</cname><ordTime>118</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Charlot</cname><ordTime>126</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Fanni</cname><ordTime>133</ordTime><meal>Combo 2:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Karylin</cname><ordTime>137</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Carmita</cname><ordTime>137</ordTime><meal>Combo 1:
+<order><cname>Niki</cname><ordTime>65</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Gunilla</cname><ordTime>137</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Merci</cname><ordTime>141</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Domini</cname><ordTime>141</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Faina</cname><ordTime>144</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Odelinda</cname><ordTime>144</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Bernardina</cname><ordTime>148</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Vikky</cname><ordTime>149</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Rozina</cname><ordTime>150</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Jada</cname><ordTime>150</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Margit</cname><ordTime>154</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Sabine</cname><ordTime>154</ordTime><meal>Combo 3:
+<order><cname>Chicky</cname><ordTime>71</ordTime><meal>Combo 3:
 	Fries: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Myrlene</cname><ordTime>155</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Ruthann</cname><ordTime>159</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Ophelie</cname><ordTime>167</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Catharine</cname><ordTime>168</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Winni</cname><ordTime>174</ordTime><meal>Combo 4:
-	Fries: 1
-	Hamburger: 2
-</meal></order>
-<order><cname>Nichole</cname><ordTime>174</ordTime><meal>Combo 3:
-	Fries: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Prudi</cname><ordTime>176</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Karmen</cname><ordTime>191</ordTime><meal>Combo 2:
+<order><cname>Marcille</cname><ordTime>78</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Friederike</cname><ordTime>195</ordTime><meal>Combo 2:
+<order><cname>Arlyne</cname><ordTime>79</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Sonny</cname><ordTime>82</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Latrina</cname><ordTime>82</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Debby</cname><ordTime>82</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Emmi</cname><ordTime>85</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Karita</cname><ordTime>202</ordTime><meal>Combo 2:
+<order><cname>Andromache</cname><ordTime>86</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Tiphani</cname><ordTime>90</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Joann</cname><ordTime>90</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Carolynn</cname><ordTime>92</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Jeane</cname><ordTime>92</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>La</cname><ordTime>101</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Anestassia</cname><ordTime>109</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Moselle</cname><ordTime>113</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Maurine</cname><ordTime>113</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Colette</cname><ordTime>113</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Maureene</cname><ordTime>114</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Audie</cname><ordTime>116</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Fanchon</cname><ordTime>116</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Evelyn</cname><ordTime>117</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Rafaela</cname><ordTime>118</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Dale</cname><ordTime>120</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Kris</cname><ordTime>120</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Clarice</cname><ordTime>123</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Reeva</cname><ordTime>123</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Alina</cname><ordTime>127</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Sondra</cname><ordTime>202</ordTime><meal>Combo 2:
+<order><cname>Latrina</cname><ordTime>127</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Ileane</cname><ordTime>128</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Casi</cname><ordTime>128</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Clemmy</cname><ordTime>128</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Keelia</cname><ordTime>143</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Peggi</cname><ordTime>150</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Bibi</cname><ordTime>150</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Patty</cname><ordTime>158</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Aviva</cname><ordTime>158</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Farrah</cname><ordTime>158</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Ruthann</cname><ordTime>165</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Daphna</cname><ordTime>203</ordTime><meal>Combo 3:
+<order><cname>Katuscha</cname><ordTime>165</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Elsbeth</cname><ordTime>165</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Helene</cname><ordTime>174</ordTime><meal>Combo 3:
 	Fries: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Deloria</cname><ordTime>203</ordTime><meal>Combo 2:
+<order><cname>Lesli</cname><ordTime>176</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Bren</cname><ordTime>183</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Lira</cname><ordTime>208</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Pattie</cname><ordTime>211</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Lotta</cname><ordTime>218</ordTime><meal>Combo 1:
-	Fries: 1
-	12 oz. drink: 1
-	Hamburger: 1
-</meal></order>
-<order><cname>Yolanda</cname><ordTime>221</ordTime><meal>Combo 2:
+<order><cname>Amelia</cname><ordTime>186</ordTime><meal>Combo 2:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 2
 </meal></order>
-<order><cname>Edwina</cname><ordTime>230</ordTime><meal>Combo 1:
+<order><cname>Paulie</cname><ordTime>186</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Harlene</cname><ordTime>230</ordTime><meal>Combo 1:
+<order><cname>Nicolle</cname><ordTime>201</ordTime><meal>Combo 2:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Tamarah</cname><ordTime>204</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Aile</cname><ordTime>206</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Wilhelmine</cname><ordTime>231</ordTime><meal>Combo 1:
+<order><cname>Vannie</cname><ordTime>209</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Dara</cname><ordTime>235</ordTime><meal>Combo 1:
+<order><cname>Shaylah</cname><ordTime>210</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
 </meal></order>
-<order><cname>Zenia</cname><ordTime>236</ordTime><meal>Combo 1:
+<order><cname>Shea</cname><ordTime>211</ordTime><meal>Combo 1:
 	Fries: 1
 	12 oz. drink: 1
 	Hamburger: 1
+</meal></order>
+<order><cname>Mellicent</cname><ordTime>212</ordTime><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Antonetta</cname><ordTime>218</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Nathalia</cname><ordTime>220</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Marline</cname><ordTime>227</ordTime><meal>Combo 2:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Jany</cname><ordTime>229</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Elisabet</cname><ordTime>229</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Melly</cname><ordTime>230</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Jo</cname><ordTime>231</ordTime><meal>Combo 4:
+	Fries: 1
+	Hamburger: 2
+</meal></order>
+<order><cname>Cornelia</cname><ordTime>232</ordTime><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Gussie</cname><ordTime>234</ordTime><meal>Combo 2:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 2
 </meal></order>
 </listOfOrders>

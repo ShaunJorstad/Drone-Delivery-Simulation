@@ -1,15 +1,14 @@
 package menu;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.File;
+import java.util.*;
 
 public class DefaultFood {
 	
 	//Data Structures to hold each collection of food, meals
 	private Set<FoodItem> foods;
 	private List<Meal> meals;
+	private ArrayList<Destination> map;
 	
 	
 	/**
@@ -20,6 +19,8 @@ public class DefaultFood {
 	public DefaultFood() {
 		foods = new HashSet<FoodItem>();
 		meals = new ArrayList<Meal>();
+		createMap("GCCMap.txt");
+
 		
 		//Creates three default food items, and adds them to the foods set
 		FoodItem hamburger = new FoodItem("Hamburger", 6);
@@ -74,5 +75,44 @@ public class DefaultFood {
 		return meals;
 	}
 	
-	
+	public boolean createMap(String fileName) {
+		map = new ArrayList<Destination>();
+		try {
+			File mapFile = new File(fileName);
+			Scanner s = new Scanner(mapFile);
+
+			String name;
+			int x, y;
+			double dist;
+
+
+			while (s.hasNextLine()) {
+				Scanner line = new Scanner(s.nextLine());
+				name = line.next();
+				x = line.nextInt();
+				y = line.nextInt();
+				dist = line.nextDouble();
+				map.add(new Destination(name, x, y, dist));
+				line.close();
+			}
+			s.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
+	}
+
+	public ArrayList<Destination> getMap() {
+		return map;
+	}
+
+	public String mapToString() {
+		String output = "";
+		for (int i = 0; i < map.size(); i++) {
+			output += map.get(i) + "\n";
+		}
+		return output;
+	}
+
 }

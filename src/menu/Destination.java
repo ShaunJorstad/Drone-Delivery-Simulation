@@ -3,9 +3,9 @@ package menu;
 
 
 public class Destination {
-    String destName;
-    int x, y;
-    double dist;
+    private String destName;
+    private int x, y;
+    private double dist;
 
 
     public Destination(String destName, int x, int y) {
@@ -57,9 +57,8 @@ public class Destination {
         dist = Math.sqrt(x*x + y*y);
     }
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return destName + "\t" + x + "\t" + y + "\t" + dist;
+    }
 }
