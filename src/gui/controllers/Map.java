@@ -9,6 +9,7 @@ package gui.controllers;
 
 import gui.Navigation;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -26,6 +27,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Map implements Initializable {
+	
+	@FXML
+    public ImageView mapImage;
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -53,6 +57,11 @@ public class Map implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+
+        
+        File map = new File("/assets/mapImage.jpg");
+        Image mapImageJPG = new Image(map.toURI().toString());
+        mapImage.setImage(mapImageJPG);
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
