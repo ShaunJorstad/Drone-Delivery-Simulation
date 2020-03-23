@@ -59,4 +59,19 @@ public class PlacedOrder {
         }
     }
 
+    public Destination getDest() {
+        return dest;
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public int getOrderedTime() {
+        return orderedTime;
+    }
 }
