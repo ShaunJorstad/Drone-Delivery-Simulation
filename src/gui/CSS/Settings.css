@@ -16,7 +16,7 @@
 .description {
     -fx-font-size: 16pt;
     -fx-line-spacing: 40px;
-    -fx-padding: 15 0 0 0;
+    -fx-padding: 15 0 91 0;
 }
 
 #controls{
@@ -33,4 +33,18 @@
     -fx-padding: 13 24 13 24;
     -fx-background-color: #2353FE;
     -fx-font-size: 13pt;
+}
+
+.grayButton {
+    -fx-padding: 13 63 13 63;
+    -fx-background-color: #707070;
+    -fx-font-size: 14pt;
+}
+
+.removeButton {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-radius: 0;
+    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }

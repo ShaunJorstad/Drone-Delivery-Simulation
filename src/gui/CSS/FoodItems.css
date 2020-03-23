@@ -1,5 +1,5 @@
 #contentGrid {
-    -fx-padding: 91 0 0 0;
+    /*-fx-padding: 91 0 0 0;*/
     /*-fx-background-color: #0078D7;*/
 }
 
@@ -13,4 +13,7 @@
 
 .foodName, .foodWeight {
     -fx-font-size: 20px;
+}
+
+.deleteButton {
 }

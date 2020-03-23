@@ -48,12 +48,9 @@
                           GridPane.rowIndex="0"/>
                     <Text id="weightTitle" styleClass="gridTitle" fx:id="weightTitle" text="Weight (lbs)" fill="808080"
                           GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
-                    <TextField styleClass="foodName" prefWidth="300" text="food name" GridPane.columnIndex="0"
-                               GridPane.rowIndex="1"/>
-                    <TextField styleClass="foodWeight" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                    <TextField styleClass="foodName" text="food name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <TextField styleClass="foodWeight" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 </GridPane>
+                <Button id="addFood" fx:id="addFood" styleClass="grayButton" text="Add Item" textFill="ffffff"
+                        onAction="#handleAddFoodItem"/>
             </VBox>
         </ScrollPane>
     </center>
