@@ -69,6 +69,9 @@ public class Navigation {
      * @return true if empty, false otherwise
      */
     public static boolean isEmpty() {
+        if (instance == null) {
+            instance = new Navigation();
+        }
         return sceneStack.isEmpty();
     }
 

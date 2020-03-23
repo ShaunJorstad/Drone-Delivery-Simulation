@@ -17,8 +17,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -45,13 +47,21 @@ public class FoodItems implements Initializable {
     public Button exportSettingsButton;
     public VBox settingButtons;
     public ScrollPane scrollpane;
+    public Text nameTitle;
+    public GridPane contentGrid;
+    public Text weightTitle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settings.setStyle("-fx-underline:true");
-        foodItems.setStyle("-fx-underline:true");
+        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+        foodItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
-        File backFile = new File("assets/backArrow.png");
+        File backFile;
+        if (Navigation.isEmpty()) {
+            backFile = new File("assets/icons/backGray.png");
+        } else {
+            backFile = new File("assets/icons/backBlack.png");
+        }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
     }

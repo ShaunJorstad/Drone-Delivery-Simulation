@@ -42,6 +42,18 @@
                 <Label styleClass="title" text="Food Items" textFill="808080"/>
                 <Label styleClass="description" textFill="808080"
                        text="These are the food options that meals are formed from. Every food item must include a &#xD;weight per single unit"/>
+                <GridPane id="contentGrid" fx:id="contentGrid" hgap="40" vgap="15">
+                    <Text id="nameTitle" styleClass="gridTitle" text="Name" fx:id="nameTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="0"/>
+                    <Text id="weightTitle" styleClass="gridTitle" fx:id="weightTitle" text="Weight (lbs)" fill="808080"
+                          GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
+                    <TextField styleClass="foodName" prefWidth="300" text="food name" GridPane.columnIndex="0"
+                               GridPane.rowIndex="1"/>
+                    <TextField styleClass="foodWeight" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <TextField styleClass="foodName" text="food name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField styleClass="foodWeight" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </GridPane>
             </VBox>
         </ScrollPane>
     </center>
