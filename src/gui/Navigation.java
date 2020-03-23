@@ -69,6 +69,9 @@ public class Navigation {
      * @return true if empty, false otherwise
      */
     public static boolean isEmpty() {
+        if (instance == null) {
+            instance = new Navigation();
+        }
         return sceneStack.isEmpty();
     }
 
@@ -102,6 +105,7 @@ public class Navigation {
     public static void inflateScene(Parent root, String nextScene, Stage stage) {
         Scene splashScene = new Scene(root, scale(1000), scale(700));
         splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
+        splashScene.getStylesheets().add("gui/CSS/Settings.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
         stage.setScene(splashScene);
     }

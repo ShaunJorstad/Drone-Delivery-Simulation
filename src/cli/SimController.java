@@ -15,7 +15,7 @@ public class SimController {
     File nameFile; //File that contains a list of names
     ArrayList<String> names; //Stores the list of names
     File ordersFile; //xml file that saves the orders
-    DefaultFood defaultFood; //The object that stores the default meal combos
+    private static DefaultFood defaultFood; //The object that stores the default meal combos
 
     ArrayList<PlacedOrder> test;
 
@@ -208,8 +208,12 @@ public class SimController {
 
 
 
-
-
+    public static DefaultFood getDefaultFood() {
+        if (single_instance == null) {
+            single_instance = new SimController();
+        }
+        return defaultFood;
+    }
 
 
 }

@@ -18,6 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -44,11 +47,17 @@ public class Splash implements Initializable {
         Image droneImage = new Image(droneFile.toURI().toString());
         SplashImage.setImage(droneImage);
 
-        File backFile = new File("assets/backArrow.png");
+        File backFile;
+        if (Navigation.isEmpty()) {
+            backFile = new File("assets/icons/backGray.png");
+        } else {
+            backFile = new File("assets/icons/backBlack.png");
+        }
+
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-        home.setStyle("-fx-underline:true");
+        home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
         //registers onclick handler
         simButton.setOnAction(this::runSimulationHandler);
@@ -63,15 +72,15 @@ public class Splash implements Initializable {
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
+        Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
         Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Splash");
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
+        Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
         Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Splash");
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {

@@ -42,10 +42,15 @@ public class OrderDistribution implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settings.setStyle("-fx-underline:true");
-        orderDistribution.setStyle("-fx-underline:true");
+        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+        orderDistribution.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
-        File backFile = new File("assets/backArrow.png");
+        File backFile;
+        if (Navigation.isEmpty()) {
+            backFile = new File("assets/icons/backGray.png");
+        } else {
+            backFile = new File("assets/icons/backBlack.png");
+        }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
     }
