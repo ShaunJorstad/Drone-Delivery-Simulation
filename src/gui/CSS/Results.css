@@ -1,0 +1,19 @@
+#exportButton {
+    -fx-padding: 13 63 13 63;
+    -fx-background-color: #0078D7;
+    -fx-font-size: 14pt;
+}
+
+#vBox {
+    /*-fx-background-color: RGB(0, 255, 0);*/
+}
+
+#resultsTitle {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 96 0 0 115px;
+}
+
+#algorithmText, #averageText, #worstText, #totalTime, #knapsack, #fifo {
+    -fx-font-size: 18px;
+}
