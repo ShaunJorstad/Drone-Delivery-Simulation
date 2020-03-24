@@ -59,7 +59,7 @@ public class Map implements Initializable {
         backImage.setImage(backArrowImage);
 
         
-        File map = new File("assets/mapImage.jpg");
+        File map = new File("assets/mapImage.png");
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
     }
