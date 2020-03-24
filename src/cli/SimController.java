@@ -130,11 +130,27 @@ public class SimController {
 
         System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
     }
-    /*
-    public void runAlgorithms() {
-        Knapsack n = new Knapsack();
 
-    }*/
+    public void runAlgorithms() {
+        //Knapsack n = new Knapsack();
+
+    }
+
+    private ArrayList<PlacedOrder> getXMLOrders() {
+        ArrayList<PlacedOrder> placedOrders = new ArrayList<>();
+        try {
+            File orderFile = new File("Orders.xml");
+            Scanner s = new Scanner(orderFile);
+
+
+
+            s.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return placedOrders;
+    }
 
 
     /**
