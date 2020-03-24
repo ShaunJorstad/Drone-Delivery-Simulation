@@ -203,6 +203,8 @@ public class SimController {
             return min;
         }
 
+        //Test for blue in IntelliJ
+
     }
 
 
