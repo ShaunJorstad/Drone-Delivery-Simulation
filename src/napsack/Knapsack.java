@@ -7,7 +7,7 @@ import menu.Meal;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class napsack {
+public class Knapsack {
 
     //should be orders not meals
     public ArrayList<PlacedOrder> droneList; //what is on the drone
@@ -19,7 +19,7 @@ public class napsack {
     private double currentWeight;
 
 
-    public napsack(){
+    public Knapsack(){
 
         //text
         droneList = new ArrayList<>();

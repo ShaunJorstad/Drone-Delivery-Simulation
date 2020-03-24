@@ -3,7 +3,7 @@ package cli;
 import menu.DefaultFood;
 import menu.Destination;
 import menu.Meal;
-import org.w3c.dom.ranges.Range;
+import napsack.Knapsack;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -130,6 +130,12 @@ public class SimController {
 
         System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
     }
+    /*
+    public void runAlgorithms() {
+        Knapsack n = new Knapsack();
+
+    }*/
+
 
     /**
      * Returns a random meal based on the distribution
