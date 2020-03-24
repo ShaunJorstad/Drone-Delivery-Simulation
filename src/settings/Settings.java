@@ -1,25 +1,22 @@
 package settings;
 
 import cli.PlacedOrder;
-import menu.DefaultFood;
 import menu.Destination;
 import menu.FoodItem;
-import menu.Meal;
-import org.w3c.dom.ranges.Range;
 
 import java.io.*;
 import java.util.*;
 
-public class settings {
+public class Settings {
 
     ArrayList<Destination> map;
     Set<PlacedOrder> foods;
     List<FoodItem> meals;
     File settingsFile;
 
-    private static settings single_instance = null;
+    private static Settings single_instance = null;
 
-    private settings(){
+    private Settings(){
         map = new ArrayList<>();
         foods = new HashSet<>();
         meals = new ArrayList<>();
@@ -63,9 +60,9 @@ public class settings {
         }
     }
     //Singleton creator
-    public static settings getInstance() {
+    public static Settings getInstance() {
         if (single_instance == null) {
-            single_instance = new settings();
+            single_instance = new Settings();
         }
         return single_instance;
     }
