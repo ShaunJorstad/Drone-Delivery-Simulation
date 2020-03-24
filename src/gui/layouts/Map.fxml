@@ -37,8 +37,8 @@
 
     </top>
     <center>
-    	<HBox id="hBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <ImageView id="mapImage" fx:id="mapImage" fitHeight="660.0" fitWidth="660.0" pickOnBounds="true"
+    	<HBox id="hBox" prefHeight="600.0" prefWidth="1200.0" alignment="CENTER">
+            <ImageView id="mapImage" fx:id="mapImage" fitHeight="600.0" fitWidth="1200.0" pickOnBounds="true"
                        preserveRatio="true"/>
         </HBox>
     </center>

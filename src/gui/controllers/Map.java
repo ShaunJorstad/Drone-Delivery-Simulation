@@ -59,9 +59,9 @@ public class Map implements Initializable {
         backImage.setImage(backArrowImage);
 
         
-        File map = new File("/assets/mapImage.jpg");
-        Image mapImageJPG = new Image(map.toURI().toString());
-        mapImage.setImage(mapImageJPG);
+        File map = new File("assets/mapImage.jpg");
+        Image mapImageFile = new Image(map.toURI().toString());
+        mapImage.setImage(mapImageFile);
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
