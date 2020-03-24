@@ -74,4 +74,8 @@ public class PlacedOrder {
     public int getOrderedTime() {
         return orderedTime;
     }
+
+    public float getWeight() {
+        return meal.getWeight();
+    }
 }
