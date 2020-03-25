@@ -4,8 +4,14 @@ import menu.DefaultFood;
 import menu.Destination;
 import menu.Meal;
 import napsack.Knapsack;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import simulation.Fifo;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +144,7 @@ public class SimController {
      */
     public void runAlgorithms() {
         ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
+        System.out.println("Total number of orders: " + allOrders.size());
 
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders);
@@ -176,6 +183,8 @@ public class SimController {
             }
         }
 
+
+
     }
 
 
@@ -186,13 +195,69 @@ public class SimController {
      * @return ArrayList of orders that were placed
      */
     private ArrayList<PlacedOrder> getXMLOrders() {
-        ArrayList<PlacedOrder> placedOrders = new ArrayList<>();
+        ArrayList<PlacedOrder> placedOrders = new ArrayList<>(); //all the placed orders
+
+        //List of potential meals so that to compare the name in the xml file with
+        List<Meal> meals = defaultFood.getMeals();
+
         try {
+            //XML file reading initialization
             File orderFile = new File("Orders.xml");
-            Scanner s = new Scanner(orderFile);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newDefaultInstance();
+            DocumentBuilder documentBuilder = dbFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(orderFile);
+            document.getDocumentElement().normalize();
+
+            //Create a node list of all the elements
+            NodeList nodeList = document.getElementsByTagName("order");
+
+            //Variables that go in a placed order
+            String cname,dname, mealString, mname;
+            int ordTime;
+            Destination dest;
+            Meal chosenMeal = new Meal("Temp", 0);
+            PlacedOrder oneOrder;
+
+            //For each element in the file
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+
+                Node node = nodeList.item(temp);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element e = (Element) node;
+
+                    //Get the customer's name
+                    cname = e.getElementsByTagName("cname").item(0).getTextContent();
+
+                    //Get the time of the order
+                    ordTime = Integer.parseInt(e.getElementsByTagName("ordTime").item(0).getTextContent());
+
+                    //Get the destination
+                    dname = e.getElementsByTagName("dest").item(0).getTextContent();
+                    Scanner destScanner = new Scanner(dname);
+                    dest = new Destination(destScanner.next(), destScanner.nextInt(), destScanner.nextInt());
+                    destScanner.close();
+
+                    //Get the name of the meal in the file and check it against the potential meals and find
+                    //the right meal
+                    mealString = e.getElementsByTagName("meal").item(0).getTextContent();
+                    Scanner mealScanner = new Scanner(mealString);
+                    mealScanner.useDelimiter(":");
+                    mname = mealScanner.next();
+                    mealScanner.close();
+                    for(int m = 0; m < meals.size(); m++) {
+                        if (mname.equals(meals.get(m).getName())) {
+                            chosenMeal = meals.get(m);
+                            break;
+                        }
+                    }
 
 
-            s.close();
+                    //Create the order and it to the arrayList of all the orders
+                    oneOrder = new PlacedOrder(ordTime, dest, cname, chosenMeal);
+                    placedOrders.add(oneOrder);
+                }
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
