@@ -4,6 +4,7 @@ import menu.DefaultFood;
 import menu.Destination;
 import menu.Meal;
 import napsack.Knapsack;
+import simulation.Fifo;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -131,11 +132,57 @@ public class SimController {
         System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
     }
 
+    /**
+     * Run the FIFO and Knapsack algorithms
+     */
     public void runAlgorithms() {
-        //Knapsack n = new Knapsack();
+        ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
+
+        //Initialize the knapsack and FIFO algorithms
+        Knapsack n = new Knapsack(allOrders);
+        Fifo f = new Fifo(allOrders);
+
+        double elapsedTime = 3; //how far into the simulation are we
+        boolean ordersStillToProcess = true; //If there are orders still to process
+        double droneSpeed = 20 *5280/60; //Flight speed of the drone
+
+        //Knapsack
+        while (ordersStillToProcess) {
+            ArrayList<PlacedOrder> droneRun = n.packDrone(); //Get what is on the current drone
+            if (droneRun == null) {
+                ordersStillToProcess = false;
+            } else {
+                //Find how long the delivery takes
+                elapsedTime = TSP(droneRun) + .5 * droneRun.size();
+                System.out.println(elapsedTime);
+                elapsedTime += 3;
+            }
+        }
+
+        elapsedTime = 3;
+        ordersStillToProcess = true;
+
+        //FIFO
+        while (ordersStillToProcess) {
+            ArrayList<PlacedOrder> droneRun = f.packDrone(); //Get what is on the current drone
+            if (droneRun == null) {
+                ordersStillToProcess = false;
+            } else {
+                //Find how long the delivery takes
+                elapsedTime = TSP(droneRun) + .5 * droneRun.size();
+                System.out.println(elapsedTime);
+                elapsedTime += 3;
+            }
+        }
 
     }
 
+
+    /**
+     * Get all of the order in the xml file
+     * INCOMPLETE
+     * @return ArrayList of orders that were placed
+     */
     private ArrayList<PlacedOrder> getXMLOrders() {
         ArrayList<PlacedOrder> placedOrders = new ArrayList<>();
         try {

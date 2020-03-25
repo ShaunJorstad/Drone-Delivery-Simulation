@@ -28,7 +28,7 @@ public class Knapsack {
         //packingList = orders for the hour;
         nextList = new ArrayList<>();
         skippedOrder=false;
-        maxWeight=12;
+        maxWeight=12 * 16;
         currentWeight=0;
     }
 
