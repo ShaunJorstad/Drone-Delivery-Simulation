@@ -42,7 +42,7 @@
                 <Label styleClass="title" text="Food Items" textFill="808080"/>
                 <Label styleClass="description" textFill="808080"
                        text="These are the food options that meals are formed from. Every food item must include a &#xD;weight per single unit"/>
-                <GridPane id="contentGrid" fx:id="contentGrid" hgap="40" vgap="15">
+                <GridPane id="contentGrid" fx:id="contentGrid" hgap="40">
                     <Text id="nameTitle" styleClass="gridTitle" text="Name" fx:id="nameTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="0"/>
