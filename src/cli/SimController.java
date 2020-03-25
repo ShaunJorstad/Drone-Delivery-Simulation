@@ -17,6 +17,7 @@ public class SimController {
     ArrayList<String> names; //Stores the list of names
     File ordersFile; //xml file that saves the orders
     private static DefaultFood defaultFood; //The object that stores the default meal combos
+    private static Settings settings;
 
     ArrayList<PlacedOrder> test;
 
@@ -34,7 +35,7 @@ public class SimController {
 
             //Seed the arraylist with names in the file
             Scanner s = new Scanner(nameFile);
-            while(s.hasNext()) {
+            while (s.hasNext()) {
                 names.add(s.next());
             }
             s.close();
@@ -44,6 +45,7 @@ public class SimController {
         }
 
         defaultFood = new DefaultFood(); //Get the default food settings
+        settings = new Settings();
         //System.out.println(defaultFood.mapToString());
     }
 
@@ -71,7 +73,7 @@ public class SimController {
 
 
         //open the orders file
-        try{
+        try {
             ordersFile = new File("Orders.xml");
             FileWriter fileWriter = new FileWriter(ordersFile, false); //clear out the orders file
             PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -115,11 +117,10 @@ public class SimController {
             }
 
 
-
         }
 
         //Add the xml closing for the orders file
-        try{
+        try {
             ordersFile = new File("Orders.xml"); //open the orders file
             FileWriter fileWriter = new FileWriter(ordersFile, true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -144,7 +145,7 @@ public class SimController {
 
         double elapsedTime = 3; //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
-        double droneSpeed = 20 *5280/60; //Flight speed of the drone
+        double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone
 
         //Knapsack
         while (ordersStillToProcess) {
@@ -181,6 +182,7 @@ public class SimController {
     /**
      * Get all of the order in the xml file
      * INCOMPLETE
+     *
      * @return ArrayList of orders that were placed
      */
     private ArrayList<PlacedOrder> getXMLOrders() {
@@ -188,7 +190,6 @@ public class SimController {
         try {
             File orderFile = new File("Orders.xml");
             Scanner s = new Scanner(orderFile);
-
 
 
             s.close();
@@ -202,6 +203,7 @@ public class SimController {
 
     /**
      * Returns a random meal based on the distribution
+     *
      * @param rand A random double between 0 and 1
      * @return The meal that was randomly selected
      */
@@ -225,6 +227,7 @@ public class SimController {
 
     /**
      * Calculates the least cost distance to complete the delivery cycle
+     *
      * @param orders ArrayList of placed orders to travel and deliver food to
      * @return The least cost distance to complete the delivery cycle
      */
@@ -245,8 +248,9 @@ public class SimController {
 
     /**
      * Does the brunt work of the TSP. Should run in O(n^2 * 2^n) which is much better than O(n!)
+     *
      * @param locations The locations yet to be visited
-     * @param lastDest The last destination the algorithm visited
+     * @param lastDest  The last destination the algorithm visited
      * @return The least cost distance to visit all the locations and return
      */
     private double recursiveTSP(ArrayList<Destination> locations, Destination lastDest) {
@@ -275,8 +279,6 @@ public class SimController {
     }
 
 
-
-
     public static DefaultFood getDefaultFood() {
         if (single_instance == null) {
             single_instance = new SimController();
@@ -285,4 +287,10 @@ public class SimController {
     }
 
 
+    public static Settings getSettings() {
+        if (single_instance == null) {
+            single_instance = new SimController();
+        }
+        return settings;
+    }
 }

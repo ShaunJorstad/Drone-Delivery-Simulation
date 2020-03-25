@@ -7,17 +7,24 @@
 
 package gui.controllers;
 
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -39,6 +46,16 @@ public class OrderDistribution implements Initializable {
     public Button drone;
     public Button back;
     public ImageView backImage;
+    public Button runSimButton;
+    public Button exportSettingsButton;
+    public Button importSettingsButton;
+    public VBox settingButtons;
+    public Text ordersTitle;
+    public Text hoursTitle;
+    public GridPane contentGrid;
+    public ScrollPane scrollpane;
+
+    private int gridIndex;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,6 +70,11 @@ public class OrderDistribution implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+
+        GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
+        gridIndex = 1;
+
+        inflateOrderDistribution();
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -107,5 +129,41 @@ public class OrderDistribution implements Initializable {
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+    }
+
+    public void handleRunSimulation(ActionEvent actionEvent) {
+    }
+
+    public void handleExportSettings(ActionEvent actionEvent) {
+    }
+
+    public void handleImportSettings(ActionEvent actionEvent) {
+    }
+
+    public void inflateOrderDistribution() {
+        for (Integer numOrders : SimController.getSettings().getOrderDistribution()) {
+            addHour(numOrders);
+        }
+    }
+
+    public void addHour(Integer numOrders) {
+        Text hourTitle = new Text(Integer.toString(gridIndex));
+        hourTitle.getStyleClass().add("hourTitle");
+
+        TextField orderField = new TextField();
+        orderField.setText(Integer.toString(numOrders));
+        orderField.getStyleClass().add("orderField");
+        orderField.setOnAction(actionEvent -> {
+//            TODO: update settings object
+//            TODO: check settings for correctness
+        });
+
+        GridPane.setMargin(hourTitle, new Insets(15, 0, 0, 0));
+        GridPane.setMargin(orderField, new Insets(15, 0, 0, 40));
+
+        contentGrid.add(hourTitle, 0, gridIndex);
+        contentGrid.add(orderField, 1, gridIndex);
+
+        gridIndex++;
     }
 }

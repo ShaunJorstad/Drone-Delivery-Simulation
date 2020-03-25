@@ -37,13 +37,35 @@
 
     </top>
     <center>
-
+        <ScrollPane id="scrollpane" fx:id="scrollpane">
+            <VBox id="content" styleClass="content" spacing="10">
+                <Label styleClass="title" text="Order Distribution" textFill="808080"/>
+                <Label styleClass="description" textFill="808080"
+                       text="The simulation generates orders in a 'bursty' pattern as opposed to a strict, by minute&#xD;pattern. Simulations consist of 50: 4 hour shifts, aggregated to analyze trends. The&#xD;number of meals ordered in the 4 hours can be adjusted below"/>
+                <GridPane id="contentGrid" fx:id="contentGrid" hgap="40">
+                    <Text id="hoursTitle" styleClass="gridTitle" text="Hours" fx:id="hoursTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="0"/>
+                    <Text id="ordersTitle" styleClass="gridTitle" fx:id="ordersTitle" text="# Orders" fill="808080"
+                          GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
+                </GridPane>
+                <!--                <Button id="addFood" fx:id="addFood" styleClass="grayButton" text="Add Item" textFill="ffffff"-->
+                <!--                        onAction="#handleAddFoodItem"/>-->
+            </VBox>
+        </ScrollPane>
     </center>
     <right>
-        <VBox>
-            <!--            import settings-->
-            <!--            export settings-->
-            <!--            run simulation-->
+        <VBox id="controls" fx:id="settingButtons" spacing="600" alignment="BASELINE_RIGHT">
+            <VBox spacing="10" alignment="BASELINE_RIGHT">
+                <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importSettingsButton"
+                        text="Import Settings" textFill="ffffff"
+                        onAction="#handleImportSettings"/>
+                <Button id="exportSettingsButton" styleClass="settingsControls" fx:id="exportSettingsButton"
+                        text="Export Settings" textFill="ffffff"
+                        onAction="#handleExportSettings"/>
+            </VBox>
+            <Button id="runSimButton" fx:id="runSimButton" text="Run"
+                    onAction="#handleRunSimulation" textFill="ffffff"/>
         </VBox>
     </right>
 </BorderPane>
