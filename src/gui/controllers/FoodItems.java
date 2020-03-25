@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -159,6 +160,11 @@ public class FoodItems implements Initializable {
                 }
             });
 
+            // margins
+            Insets one = new Insets(15, 0, 0, 0);
+            Insets two = new Insets(15, 0, 0, 0);
+            Insets three = new Insets(15, 0, 0, 0);
+
             File removeFoodIconFile = new File("assets/icons/remove.png");
             Image removeFoodIcon = new Image(removeFoodIconFile.toURI().toString());
             ImageView icon = new ImageView(removeFoodIcon);
@@ -170,11 +176,13 @@ public class FoodItems implements Initializable {
             removeFood.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    // remove fields
                     contentGrid.getChildren().remove(nameInput);
                     contentGrid.getChildren().remove(weightInput);
                     contentGrid.getChildren().remove(removeFood);
-                    // remove from scene
-                    // delete from settings
+                    
+                    //TODO:  delete from settings
+                    /* code */
                 }
             });
 
@@ -182,6 +190,10 @@ public class FoodItems implements Initializable {
             contentGrid.add(nameInput, 0, gridIndex);
             contentGrid.add(weightInput, 1, gridIndex);
             contentGrid.add(removeFood, 2, gridIndex);
+
+            GridPane.setMargin(nameInput, one);
+            GridPane.setMargin(weightInput, two);
+            GridPane.setMargin(removeFood, three);
             gridIndex++;
         }
 
@@ -209,6 +221,11 @@ public class FoodItems implements Initializable {
             }
         });
 
+        // margins
+        Insets one = new Insets(15, 0, 0, 0);
+        Insets two = new Insets(15, 0, 0, 0);
+        Insets three = new Insets(15, 0, 0, 0);
+
         File removeFoodIconFile = new File("assets/icons/remove.png");
         Image removeFoodIcon = new Image(removeFoodIconFile.toURI().toString());
         ImageView icon = new ImageView(removeFoodIcon);
@@ -217,22 +234,24 @@ public class FoodItems implements Initializable {
         icon.setPreserveRatio(true);
         Button removeFood = new Button("", icon);
         removeFood.getStyleClass().add("removeButton");
-        removeFood.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                contentGrid.getChildren().remove(nameInput);
-                contentGrid.getChildren().remove(weightInput);
-                contentGrid.getChildren().remove(removeFood);
-                // remove from scene
-                // delete from settings
-            }
+
+        removeFood.setOnAction(actionEvent1 -> {
+            // remove fields
+            contentGrid.getChildren().remove(nameInput);
+            contentGrid.getChildren().remove(weightInput);
+            contentGrid.getChildren().remove(removeFood);
+
+            // TODO: delete from settings
+            /* code */
         });
 
-
-//        add button
         contentGrid.add(nameInput, 0, gridIndex);
         contentGrid.add(weightInput, 1, gridIndex);
         contentGrid.add(removeFood, 2, gridIndex);
+
+        GridPane.setMargin(nameInput, one);
+        GridPane.setMargin(weightInput, two);
+        GridPane.setMargin(removeFood, three);
         gridIndex++;
 
         //insert
