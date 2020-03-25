@@ -1,0 +1,12 @@
+.mealTitle, .distributionTitle, .weightTitle {
+    -fx-font-size: 19pt;
+    -fx-fill: #707070;
+}
+
+.foodName {
+    -fx-text-alignment: right;
+}
+
+.addItemBtn {
+
+}

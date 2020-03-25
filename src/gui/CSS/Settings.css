@@ -41,6 +41,20 @@
     -fx-font-size: 14pt;
 }
 
+.smallGrayButton {
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: #707070;
+    -fx-font-size: 9pt;
+    -fx-text-fill: #E6E6E6;
+}
+
+.smallDeleteButton {
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: #EC2F08;
+    -fx-font-size: 9pt;
+    -fx-text-fill: #E6E6E6;
+}
+
 .removeButton {
     -fx-border-color: transparent;
     -fx-border-width: 0;
