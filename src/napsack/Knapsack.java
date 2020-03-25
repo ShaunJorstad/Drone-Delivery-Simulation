@@ -19,20 +19,21 @@ public class Knapsack {
     private double currentWeight;
 
 
-    public Knapsack(){
+    public Knapsack(ArrayList<PlacedOrder> listOfAllOrders){
+        //copy of all orders
+        ArrayList<PlacedOrder> packingList = (ArrayList<PlacedOrder>) listOfAllOrders.clone();
 
         //text
         droneList = new ArrayList<>();
         //packingList = orders for the hour;
         nextList = new ArrayList<>();
         skippedOrder=false;
-        maxWeight=12;
+        maxWeight=12 * 16;
         currentWeight=0;
     }
 
-    public void packDrone(){
-        //copy of all orders
-        ArrayList<PlacedOrder> packingClone = (ArrayList<PlacedOrder>) packingList.clone();
+    public ArrayList<PlacedOrder> packDrone(){
+
 
         //moves orders skipped to shippment
         droneList.addAll(nextList);
@@ -46,10 +47,10 @@ public class Knapsack {
         // adds all orders to the drone
         // and adds up the wight
         int i;
-        for (i = 0; i < packingClone.size(); i++) {
-            droneList.add(packingClone.get(i));
-            currentWeight += packingClone.get(i).getMeal().getWeight();
-            packingClone.remove(i);
+        for (i = 0; i < packingList.size(); i++) {
+            droneList.add(packingList.get(i));
+            currentWeight += packingList.get(i).getMeal().getWeight();
+            packingList.remove(i);
         }
 
         //removes the largest of the non skipped orders until the drone has a correct amount of weight
@@ -66,6 +67,7 @@ public class Knapsack {
             currentWeight -= droneList.get(pos).getMeal().getWeight();
             nextList.add(droneList.remove(pos));
         }
+        return droneList;
     }
 
 }
