@@ -6,5 +6,6 @@ public class Main {
         System.out.println("testing");
         SimController simController = SimController.getInstance();
         simController.generateOrders();
+        simController.runAlgorithms();
     }
 }
