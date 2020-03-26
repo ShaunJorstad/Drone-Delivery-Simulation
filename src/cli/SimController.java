@@ -24,6 +24,7 @@ public class SimController {
     File ordersFile; //xml file that saves the orders
     private static DefaultFood defaultFood; //The object that stores the default meal combos
     private static Settings settings;
+    int MINUTES_IN_SIM = 240; //The number of minutes in the simulation
 
     ArrayList<PlacedOrder> test;
 
@@ -70,10 +71,10 @@ public class SimController {
     public void generateOrders() {
         Random random = new Random(); //new random generator
 
-        int minutesInSim = 240; //The number of minutes in the simulation
         int curMin = 0; //The current minute the simulation is in
         int randName; //random integer for what name to choose the ArrayList
         ArrayList<Destination> map = defaultFood.getMap(); //Map of the given campus
+        ArrayList<Integer> ordersPerHour = defaultFood.getOrdersPerHour();
         Meal m; //Current meal being ordered
         Destination d; //The destination to be delivered to
 
@@ -89,11 +90,13 @@ public class SimController {
             System.out.println(e.getMessage());
         }
 
-        double chanceOfOrderPerM = .25; //Set to .25 as default
         //calculate the chance of order per minute
+        double chanceOfOrderPerM;
+        chanceOfOrderPerM = adjustProbability(ordersPerHour.get(0));
+
 
         //For each minute in the simulation
-        while (curMin < minutesInSim) {
+        while (curMin < MINUTES_IN_SIM) {
 
             if (random.nextDouble() < chanceOfOrderPerM) { //If the probability is low enough, generate an order
                 //Get a random name
@@ -120,6 +123,9 @@ public class SimController {
 
             } else { //If an order is not generated
                 curMin++;
+                if (curMin %60 == 0 && curMin < MINUTES_IN_SIM) {
+                    chanceOfOrderPerM = adjustProbability(ordersPerHour.get(curMin/60));
+                }
             }
 
 
@@ -150,16 +156,19 @@ public class SimController {
         Knapsack n = new Knapsack(allOrders);
         Fifo f = new Fifo(allOrders);
 
+        //UNCOMMENT THE CODE WHEN YOU HAVE KNAPSACK/FIFO REFACTORED
+        /*
         double elapsedTime = 3; //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone
 
         //Knapsack
         while (ordersStillToProcess) {
-            ArrayList<PlacedOrder> droneRun = n.packDrone(); //Get what is on the current drone
+            ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
             if (droneRun == null) {
                 ordersStillToProcess = false;
             } else {
+                elapsedTime += n.getTimeSkipped();
                 //Find how long the delivery takes
                 elapsedTime = TSP(droneRun) + .5 * droneRun.size();
                 System.out.println(elapsedTime);
@@ -172,16 +181,19 @@ public class SimController {
 
         //FIFO
         while (ordersStillToProcess) {
-            ArrayList<PlacedOrder> droneRun = f.packDrone(); //Get what is on the current drone
+            ArrayList<PlacedOrder> droneRun = f.packDrone(elapsedTime); //Get what is on the current drone
             if (droneRun == null) {
                 ordersStillToProcess = false;
             } else {
+                f.getTimeSkipped();
                 //Find how long the delivery takes
                 elapsedTime = TSP(droneRun) + .5 * droneRun.size();
                 System.out.println(elapsedTime);
                 elapsedTime += 3;
             }
         }
+        */
+
 
 
 
@@ -190,7 +202,6 @@ public class SimController {
 
     /**
      * Get all of the order in the xml file
-     * INCOMPLETE
      *
      * @return ArrayList of orders that were placed
      */
@@ -342,6 +353,34 @@ public class SimController {
         }
 
     }
+
+    /**
+     * Adjust the probability so that generateOrders produces the correct number of orders
+     * even though multiple orders can come in a single minute
+     * @param ordersPerHour The number of orders per this hour
+     * @return The adjusted probability
+     */
+    private double adjustProbability(int ordersPerHour) {
+        //The probability that we would be shooting for if we were not allowing multiple orders to
+        //come in the same minute
+        double idealProbability = ordersPerHour/60.0;
+
+        double newProbability = idealProbability; //The new probability that we will use
+
+        //The sum of the geometric series that is used to find what the input probability will correspond
+        //to given that we can have multiple orders per minutes
+        double extrapolatedProbability = Double.MAX_VALUE;
+
+        //Keep looping until we lower the newProbability enough so that it will result in the correct
+        //number of orders per hours
+        while (extrapolatedProbability > idealProbability) {
+            newProbability -= .01;
+            extrapolatedProbability = newProbability/(1-newProbability); //Sum of a geometric series
+        }
+
+        return newProbability;
+    }
+
 
 
     public static DefaultFood getDefaultFood() {

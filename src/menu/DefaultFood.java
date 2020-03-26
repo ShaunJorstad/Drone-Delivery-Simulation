@@ -9,6 +9,7 @@ public class DefaultFood {
 	private Set<FoodItem> foods;
 	private List<Meal> meals;
 	private ArrayList<Destination> map;
+	private ArrayList<Integer> ordersPerHour;
 	
 	
 	/**
@@ -66,6 +67,12 @@ public class DefaultFood {
 		//combo4.addFoodItem(drink);
 		meals.add(combo4);
 		combo4.setDistribution(.15f);
+
+		ordersPerHour = new ArrayList<>();
+		ordersPerHour.add(15);
+		ordersPerHour.add(17);
+		ordersPerHour.add(22);
+		ordersPerHour.add(15);
 		
 	}
 	
@@ -118,6 +125,10 @@ public class DefaultFood {
 
 	public ArrayList<Destination> getMap() {
 		return map;
+	}
+
+	public ArrayList<Integer> getOrdersPerHour() {
+		return ordersPerHour;
 	}
 
 	/**
