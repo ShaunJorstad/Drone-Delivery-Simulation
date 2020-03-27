@@ -139,24 +139,27 @@ public class FoodItems implements Initializable {
 
     public void inflateFoodItems() {
 //        load food items from settings object
-        for (FoodItem item : SimController.getDefaultFood().getFoods()) {
+        for (FoodItem item : SimController.getSettings().getFoods()) {
             TextField nameInput = new TextField(item.getName());
+            TextField weightInput = new TextField(Float.toString(item.getWeight()));
+
             nameInput.getStyleClass().add("foodName");
             nameInput.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 //                    update simcontroller data
 //                    verify weights
+                    SimController.getSettings().editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
                 }
             });
 
-            TextField weightInput = new TextField(Float.toString(item.getWeight()));
             weightInput.getStyleClass().add("foodWeight");
             weightInput.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     // update simcontroller data
 //                verify weights
+                    SimController.getSettings().editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
                 }
             });
 
@@ -182,7 +185,7 @@ public class FoodItems implements Initializable {
                     contentGrid.getChildren().remove(removeFood);
                     
                     //TODO:  delete from settings
-                    /* code */
+                    SimController.getSettings().removeFoodItem(item);
                 }
             });
 
@@ -201,23 +204,28 @@ public class FoodItems implements Initializable {
 
     public void handleAddFoodItem(ActionEvent actionEvent) {
 //        insert new fields into table and change run button to red
+        FoodItem newFood = new FoodItem("food name", 0);
+
         TextField nameInput = new TextField("food name");
+        TextField weightInput = new TextField("0");
+
         nameInput.getStyleClass().add("foodName");
         nameInput.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
 //                    update simcontroller data
 //                    verify weights
+                    SimController.getSettings().editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
             }
         });
 
-        TextField weightInput = new TextField("0");
         weightInput.getStyleClass().add("foodWeight");
         weightInput.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // update simcontroller data
 //                verify weights
+                SimController.getSettings().editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
             }
         });
 
@@ -242,7 +250,7 @@ public class FoodItems implements Initializable {
             contentGrid.getChildren().remove(removeFood);
 
             // TODO: delete from settings
-            /* code */
+            SimController.getSettings().removeFoodItem(newFood);
         });
 
         contentGrid.add(nameInput, 0, gridIndex);
@@ -254,7 +262,8 @@ public class FoodItems implements Initializable {
         GridPane.setMargin(removeFood, three);
         gridIndex++;
 
-        //insert
+        //insert item into settings
+        SimController.getSettings().addFoodItem(newFood);
     }
 
     public void modifyRunButton(String text, boolean valid) {
