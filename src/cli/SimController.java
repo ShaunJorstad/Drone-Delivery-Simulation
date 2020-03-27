@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import simulation.Fifo;
+import simulation.Results;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -142,7 +143,7 @@ public class SimController {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
+        //System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
     }
 
     /**
@@ -151,6 +152,7 @@ public class SimController {
     public void runAlgorithms() {
         ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
         System.out.println("Total number of orders: " + allOrders.size());
+        Results results = new Results();
 
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders);
@@ -161,6 +163,7 @@ public class SimController {
         double elapsedTime = 3; //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone
+        int droneDeliveryNumber = 1;
 
         //Knapsack
         while (ordersStillToProcess) {
@@ -171,13 +174,18 @@ public class SimController {
                 elapsedTime += n.getTimeSkipped();
                 //Find how long the delivery takes
                 elapsedTime = TSP(droneRun) + .5 * droneRun.size();
-                System.out.println(elapsedTime);
+                System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived: " + elapsedTime);
+                results.processDelivery(elapsedTime, droneRun);
                 elapsedTime += 3;
             }
+            droneDeliveryNumber++;
         }
+        results.getFinalResults("Knapsack");
 
+        results = new Results();
         elapsedTime = 3;
         ordersStillToProcess = true;
+        droneDeliveryNumber = 1;
 
         //FIFO
         while (ordersStillToProcess) {
@@ -188,13 +196,14 @@ public class SimController {
                 f.getTimeSkipped();
                 //Find how long the delivery takes
                 elapsedTime = TSP(droneRun) + .5 * droneRun.size();
-                System.out.println(elapsedTime);
+                results.processDelivery(elapsedTime, droneRun);
+                results.processDelivery(elapsedTime, droneRun);
                 elapsedTime += 3;
             }
         }
+
+        results.getFinalResults("FIFO");
         */
-
-
 
 
     }
