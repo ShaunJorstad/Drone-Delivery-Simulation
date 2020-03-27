@@ -9,13 +9,16 @@ package gui.controllers;
 
 import gui.Navigation;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,6 +29,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Splash implements Initializable {
@@ -59,8 +65,22 @@ public class Splash implements Initializable {
 
         home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
+        injectCursorStates();
+
         //registers onclick handler
         simButton.setOnAction(this::runSimulationHandler);
+    }
+
+    public void injectCursorStates() {
+        List<Button> items = Arrays.asList(home, settings, results, back, simButton);
+        for (Button item : items) {
+            item.setOnMouseEntered(mouseEvent -> {
+                item.getScene().setCursor(Cursor.HAND);
+            });
+            item.setOnMouseExited(mouseEvent -> {
+                item.getScene().setCursor(Cursor.DEFAULT);
+            });
+        }
     }
 
     @FXML

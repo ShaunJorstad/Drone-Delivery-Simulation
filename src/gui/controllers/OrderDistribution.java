@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,6 +31,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class OrderDistribution implements Initializable {
@@ -74,7 +77,20 @@ public class OrderDistribution implements Initializable {
         GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
         gridIndex = 1;
 
+        injectCursorStates();
         inflateOrderDistribution();
+    }
+
+    public void injectCursorStates() {
+        List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importSettingsButton, exportSettingsButton);
+        for (Button item : items) {
+            item.setOnMouseEntered(mouseEvent -> {
+                item.getScene().setCursor(Cursor.HAND);
+            });
+            item.setOnMouseExited(mouseEvent -> {
+                item.getScene().setCursor(Cursor.DEFAULT);
+            });
+        }
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {

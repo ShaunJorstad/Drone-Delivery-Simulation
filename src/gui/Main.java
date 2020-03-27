@@ -19,6 +19,7 @@ public class Main extends Application {
 
         Scene splashScene = new Scene(root, Navigation.scale(1000), Navigation.scale(700));
         splashScene.getStylesheets().add("gui/CSS/Splash.css");
+        splashScene.getStylesheets().add("/gui/CSS/Settings.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
 
         primaryStage.setScene(splashScene);

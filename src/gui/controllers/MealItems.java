@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -30,6 +31,8 @@ import menu.Meal;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -78,8 +81,39 @@ public class MealItems implements Initializable {
 
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
+        injectCursorStates();
+
         gridIndex = 1;
         inflateMeals();
+    }
+
+    public void injectCursorStates() {
+        List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importSettingsButton, exportSettingsButton, addMeal);
+        for (Button item : items) {
+            item.setOnMouseEntered(mouseEvent -> {
+                item.getScene().setCursor(Cursor.HAND);
+            });
+            item.setOnMouseExited(mouseEvent -> {
+                item.getScene().setCursor(Cursor.DEFAULT);
+            });
+        }
+    }
+    public void injectCursorStates(Button btn) {
+        btn.setOnMouseEntered(mouseEvent -> {
+            btn.getScene().setCursor(Cursor.HAND);
+        });
+        btn.setOnMouseExited(mouseEvent -> {
+            btn.getScene().setCursor(Cursor.DEFAULT);
+        });
+    }
+
+    public void injectCursorStates(MenuButton btn) {
+        btn.setOnMouseEntered(mouseEvent -> {
+            btn.getScene().setCursor(Cursor.HAND);
+        });
+        btn.setOnMouseExited(mouseEvent -> {
+            btn.getScene().setCursor(Cursor.DEFAULT);
+        });
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -202,6 +236,7 @@ public class MealItems implements Initializable {
             // TODO: re-evaluate distributions and stuff
             // TODO: update settings
         });
+        injectCursorStates(addItemBtn);
 
         Button deleteMealBtn = new Button();
         deleteMealBtn.setText("Remove Meal");
@@ -212,6 +247,7 @@ public class MealItems implements Initializable {
             // TODO: update settings
             // TODO: check for correct settings (distributions)
         });
+        injectCursorStates(deleteMealBtn);
 
         controlGrid.add(distributionTitle, 0, 0);
         controlGrid.add(distribution, 1, 0);
@@ -233,6 +269,7 @@ public class MealItems implements Initializable {
         foodName.setText(food.getName());
         foodName.getStyleClass().add("foodName");
         foodName.setPrefWidth(200);
+        injectCursorStates(foodName);
         // add all food options
         for (FoodItem item : SimController.getDefaultFood().getFoods()) {
             MenuItem menuItem = new MenuItem(item.getName());
@@ -259,9 +296,9 @@ public class MealItems implements Initializable {
         icon.setFitHeight(20);
         icon.setFitWidth(20);
         icon.setPreserveRatio(true);
+
         Button removeMeal = new Button("", icon);
         removeMeal.getStyleClass().add("removeButton");
-
         removeMeal.setOnAction(actionEvent -> {
             // remove fields
             grid.getChildren().remove(foodName);
@@ -272,6 +309,8 @@ public class MealItems implements Initializable {
 //                TODO: re calculate weiht
             /* code */
         });
+        injectCursorStates(removeMeal);
+
         grid.add(foodName, 2, gridIndex);
         grid.add(number, 1, gridIndex);
         grid.add(removeMeal, 3, gridIndex);

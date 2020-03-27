@@ -14,16 +14,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menu.FoodItem;
@@ -31,6 +35,8 @@ import menu.FoodItem;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FoodItems implements Initializable {
@@ -56,6 +62,8 @@ public class FoodItems implements Initializable {
     public GridPane contentGrid;
     public Text weightTitle;
     public Button addFood;
+    public ImageView uploadImage;
+    public ImageView downloadImage;
 
     private int gridIndex;
 
@@ -64,6 +72,14 @@ public class FoodItems implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         foodItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
+        loadIcons();
+        injectCursorStates();
+
+        gridIndex = 1;
+        inflateFoodItems();
+    }
+
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -73,8 +89,36 @@ public class FoodItems implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-        gridIndex = 1;
-        inflateFoodItems();
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(141, 153, 250));
+        shadow.setOffsetX(0);
+        shadow.setOffsetY(10);
+        shadow.setBlurType(BlurType.GAUSSIAN);
+        shadow.setSpread(.01);
+        runSimButton.setEffect(shadow);
+    }
+
+    public void injectCursorStates() {
+        List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importSettingsButton, exportSettingsButton, addFood);
+        for (Button item : items) {
+            item.setOnMouseEntered(mouseEvent -> {
+                item.getScene().setCursor(Cursor.HAND);
+            });
+            item.setOnMouseExited(mouseEvent -> {
+                item.getScene().setCursor(Cursor.DEFAULT);
+            });
+        }
+    }
+    public void injectCursorStates(Button btn) {
+        btn.setOnMouseEntered(mouseEvent -> {
+            btn.getScene().setCursor(Cursor.HAND);
+        });
+        btn.setOnMouseExited(mouseEvent -> {
+            btn.getScene().setCursor(Cursor.DEFAULT);
+        });
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -180,11 +224,12 @@ public class FoodItems implements Initializable {
                     contentGrid.getChildren().remove(nameInput);
                     contentGrid.getChildren().remove(weightInput);
                     contentGrid.getChildren().remove(removeFood);
-                    
+
                     //TODO:  delete from settings
                     /* code */
                 }
             });
+            injectCursorStates(removeFood);
 
 //        add button
             contentGrid.add(nameInput, 0, gridIndex);
@@ -244,6 +289,7 @@ public class FoodItems implements Initializable {
             // TODO: delete from settings
             /* code */
         });
+        injectCursorStates(removeFood);
 
         contentGrid.add(nameInput, 0, gridIndex);
         contentGrid.add(weightInput, 1, gridIndex);
