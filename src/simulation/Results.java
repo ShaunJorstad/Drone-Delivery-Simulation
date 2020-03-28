@@ -30,7 +30,7 @@ public class Results {
 		//not too long, and then store the result
 		for (int i = 0; i < onDrone.size(); i++) {
 			deliveryTime = time - onDrone.get(i).getOrderedTime();
-			if (time - onDrone.get(i).getOrderedTime() > MAXTIME) throw new Exception("Order #" + (i+1) + " was over the max time allowed.");
+			if (deliveryTime > MAXTIME) throw new Exception("Order #" + (i+1) + " was over the max time allowed.");
 			times.add(deliveryTime);
 		}
 	}

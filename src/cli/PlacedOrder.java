@@ -78,4 +78,14 @@ public class PlacedOrder {
     public float getWeight() {
         return meal.getWeight();
     }
+
+    @Override
+    public String toString() {
+        return "PlacedOrder{" +
+                "orderedTime=" + orderedTime +
+                ", clientName='" + clientName + '\'' +
+                ", meal=" + meal +
+                ", dest=" + dest +
+                '}';
+    }
 }
