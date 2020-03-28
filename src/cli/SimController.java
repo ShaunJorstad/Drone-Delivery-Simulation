@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import simulation.Fifo;
+import simulation.Results;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -142,7 +143,7 @@ public class SimController {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
+        //System.out.println("Least cost distance of the subset of the first five orders is: " + TSP(test));
     }
 
     /**
@@ -150,50 +151,76 @@ public class SimController {
      */
     public void runAlgorithms() {
         ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
+        //System.out.println(allOrders.get(0));
         System.out.println("Total number of orders: " + allOrders.size());
+        Results results = new Results();
 
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders);
         Fifo f = new Fifo(allOrders);
 
         //UNCOMMENT THE CODE WHEN YOU HAVE KNAPSACK/FIFO REFACTORED
-        /*
+
         double elapsedTime = 3; //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone
+        int droneDeliveryNumber = 1;
+        /*
+        try {
 
-        //Knapsack
-        while (ordersStillToProcess) {
-            ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
-            if (droneRun == null) {
-                ordersStillToProcess = false;
-            } else {
-                elapsedTime += n.getTimeSkipped();
-                //Find how long the delivery takes
-                elapsedTime = TSP(droneRun) + .5 * droneRun.size();
-                System.out.println(elapsedTime);
-                elapsedTime += 3;
+
+            //Knapsack
+            while (ordersStillToProcess) {
+                ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
+                if (droneRun == null) {
+                    ordersStillToProcess = false;
+                } else {
+                    elapsedTime += n.getTimeSkipped();
+                    //Find how long the delivery takes
+                    elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
+                    System.out.println("Time that delivery " + droneDeliveryNumber + " arrived: " + elapsedTime);
+                    results.processDelivery(elapsedTime, droneRun);
+                    elapsedTime += 3;
+                }
+                droneDeliveryNumber++;
             }
+            results.getFinalResults("Knapsack");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
-        elapsedTime = 3;
-        ordersStillToProcess = true;
+         */
 
-        //FIFO
-        while (ordersStillToProcess) {
-            ArrayList<PlacedOrder> droneRun = f.packDrone(elapsedTime); //Get what is on the current drone
-            if (droneRun == null) {
-                ordersStillToProcess = false;
-            } else {
-                f.getTimeSkipped();
-                //Find how long the delivery takes
-                elapsedTime = TSP(droneRun) + .5 * droneRun.size();
-                System.out.println(elapsedTime);
-                elapsedTime += 3;
+        try {
+
+            results = new Results();
+            elapsedTime = 3;
+            ordersStillToProcess = true;
+            droneDeliveryNumber = 1;
+
+            //FIFO
+            while (ordersStillToProcess) {
+                //System.out.println("Test prior to drone run");
+                ArrayList<PlacedOrder> droneRun = f.packDrone(elapsedTime); //Get what is on the current drone
+                //System.out.println("Test after FIFO");
+                if (droneRun == null) {
+                    ordersStillToProcess = false;
+                } else {
+                    double test = f.getTimeSkipped();
+                    System.out.println("f.getTimeSkipped()" + test);
+                    elapsedTime += test;
+                    //Find how long the delivery takes
+                    elapsedTime += TSP(droneRun)/droneSpeed + .5 * droneRun.size();
+                    System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived: " + elapsedTime);
+                    results.processDelivery(elapsedTime, droneRun);
+                    elapsedTime += 3;
+                }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        */
 
+        results.getFinalResults("FIFO");
 
 
 
