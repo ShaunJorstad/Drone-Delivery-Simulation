@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import settings.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -134,14 +135,16 @@ public class OrderDistribution implements Initializable {
     public void handleRunSimulation(ActionEvent actionEvent) {
     }
 
-    public void handleExportSettings(ActionEvent actionEvent) {
+    public void handleImportSettings(ActionEvent actionEvent) {
+        Settings.importSettings((Stage) home.getScene().getWindow());
     }
 
-    public void handleImportSettings(ActionEvent actionEvent) {
+    public void handleExportSettings(ActionEvent actionEvent) {
+        Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
     public void inflateOrderDistribution() {
-        for (Integer numOrders : SimController.getSettings().getOrderDistribution()) {
+        for (Integer numOrders : Settings.getOrderDistribution()) {
             addHour(numOrders);
         }
     }

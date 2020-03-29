@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menu.FoodItem;
+import settings.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -129,9 +130,11 @@ public class FoodItems implements Initializable {
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {
+        Settings.importSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
+        Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
@@ -139,7 +142,7 @@ public class FoodItems implements Initializable {
 
     public void inflateFoodItems() {
 //        load food items from settings object
-        for (FoodItem item : SimController.getSettings().getFoods()) {
+        for (FoodItem item : Settings.getFoods()) {
             TextField nameInput = new TextField(item.getName());
             TextField weightInput = new TextField(Float.toString(item.getWeight()));
 
@@ -149,7 +152,7 @@ public class FoodItems implements Initializable {
                 public void handle(ActionEvent actionEvent) {
 //                    update simcontroller data
 //                    verify weights
-                    SimController.getSettings().editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                    Settings.editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
                 }
             });
 
@@ -159,7 +162,7 @@ public class FoodItems implements Initializable {
                 public void handle(ActionEvent actionEvent) {
                     // update simcontroller data
 //                verify weights
-                    SimController.getSettings().editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                    Settings.editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
                 }
             });
 
@@ -183,9 +186,9 @@ public class FoodItems implements Initializable {
                     contentGrid.getChildren().remove(nameInput);
                     contentGrid.getChildren().remove(weightInput);
                     contentGrid.getChildren().remove(removeFood);
-                    
+
                     //TODO:  delete from settings
-                    SimController.getSettings().removeFoodItem(item);
+                    Settings.removeFoodItem(item);
                 }
             });
 
@@ -215,7 +218,7 @@ public class FoodItems implements Initializable {
             public void handle(ActionEvent actionEvent) {
 //                    update simcontroller data
 //                    verify weights
-                    SimController.getSettings().editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                Settings.editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
             }
         });
 
@@ -225,7 +228,7 @@ public class FoodItems implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 // update simcontroller data
 //                verify weights
-                SimController.getSettings().editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                Settings.editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
             }
         });
 
@@ -250,7 +253,7 @@ public class FoodItems implements Initializable {
             contentGrid.getChildren().remove(removeFood);
 
             // TODO: delete from settings
-            SimController.getSettings().removeFoodItem(newFood);
+            Settings.removeFoodItem(newFood);
         });
 
         contentGrid.add(nameInput, 0, gridIndex);
@@ -263,7 +266,7 @@ public class FoodItems implements Initializable {
         gridIndex++;
 
         //insert item into settings
-        SimController.getSettings().addFoodItem(newFood);
+        Settings.addFoodItem(newFood);
     }
 
     public void modifyRunButton(String text, boolean valid) {

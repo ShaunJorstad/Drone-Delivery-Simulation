@@ -26,6 +26,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import menu.FoodItem;
 import menu.Meal;
+import settings.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -137,11 +138,12 @@ public class MealItems implements Initializable {
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {
+        Settings.importSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
+        Settings.exportSettings((Stage) home.getScene().getWindow());
     }
-
     public void handleRunSimulation(ActionEvent actionEvent) {
     }
 

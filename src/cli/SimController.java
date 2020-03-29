@@ -23,7 +23,6 @@ public class SimController {
     ArrayList<String> names; //Stores the list of names
     File ordersFile; //xml file that saves the orders
     private static DefaultFood defaultFood; //The object that stores the default meal combos
-    private static Settings settings;
 
     ArrayList<PlacedOrder> test;
 
@@ -51,7 +50,6 @@ public class SimController {
         }
 
         defaultFood = new DefaultFood(); //Get the default food settings
-        settings = new Settings();
         //System.out.println(defaultFood.mapToString());
     }
 
@@ -349,13 +347,5 @@ public class SimController {
             single_instance = new SimController();
         }
         return defaultFood;
-    }
-
-
-    public static Settings getSettings() {
-        if (single_instance == null) {
-            single_instance = new SimController();
-        }
-        return settings;
     }
 }
