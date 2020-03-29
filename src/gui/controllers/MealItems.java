@@ -57,6 +57,8 @@ public class MealItems implements Initializable {
     public VBox settingButtons;
     public ScrollPane scrollpane;
     public VBox mealsVBox;
+    public ImageView uploadImage;
+    public ImageView downloadImage;
 
     private int mealCount;
     private int gridIndex;
@@ -66,6 +68,22 @@ public class MealItems implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         mealItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
+
+        // sets scrolling settings
+        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollpane.setFitToHeight(true);
+        scrollpane.setFitToWidth(true);
+
+        VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
+
+        loadIcons();
+        injectCursorStates();
+
+        gridIndex = 1;
+        inflateMeals();
+    }
+
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -75,16 +93,8 @@ public class MealItems implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollpane.setFitToHeight(true);
-        scrollpane.setFitToWidth(true);
-
-        VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
-
-        injectCursorStates();
-
-        gridIndex = 1;
-        inflateMeals();
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
     public void injectCursorStates() {

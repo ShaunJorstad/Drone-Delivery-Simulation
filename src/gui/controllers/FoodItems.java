@@ -91,17 +91,10 @@ public class FoodItems implements Initializable {
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
-
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.rgb(141, 153, 250));
-        shadow.setOffsetX(0);
-        shadow.setOffsetY(10);
-        shadow.setBlurType(BlurType.GAUSSIAN);
-        shadow.setSpread(.01);
-        runSimButton.setEffect(shadow);
     }
 
     public void injectCursorStates() {
+
         List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importSettingsButton, exportSettingsButton, addFood);
         for (Button item : items) {
             item.setOnMouseEntered(mouseEvent -> {

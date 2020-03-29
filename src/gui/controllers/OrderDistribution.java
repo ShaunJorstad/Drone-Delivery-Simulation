@@ -57,6 +57,8 @@ public class OrderDistribution implements Initializable {
     public Text hoursTitle;
     public GridPane contentGrid;
     public ScrollPane scrollpane;
+    public ImageView uploadImage;
+    public ImageView downloadImage;
 
     private int gridIndex;
 
@@ -65,6 +67,15 @@ public class OrderDistribution implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         orderDistribution.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
+        GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
+        gridIndex = 1;
+
+        loadIcons();
+        injectCursorStates();
+        inflateOrderDistribution();
+    }
+
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -74,11 +85,8 @@ public class OrderDistribution implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-        GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
-        gridIndex = 1;
-
-        injectCursorStates();
-        inflateOrderDistribution();
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
     public void injectCursorStates() {

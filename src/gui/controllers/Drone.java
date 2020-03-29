@@ -39,12 +39,18 @@ public class Drone implements Initializable {
     public Button drone;
     public Button back;
     public ImageView backImage;
+    public ImageView downloadImage;
+    public ImageView uploadImage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         drone.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
+        loadIcons();
+    }
+
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -53,6 +59,9 @@ public class Drone implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -108,5 +117,14 @@ public class Drone implements Initializable {
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+    }
+
+    public void handleImportSettings(ActionEvent actionEvent) {
+    }
+
+    public void handleExportSettings(ActionEvent actionEvent) {
+    }
+
+    public void handleRunSimulation(ActionEvent actionEvent) {
     }
 }

@@ -56,11 +56,21 @@
         <VBox id="controls" fx:id="settingButtons" spacing="600" alignment="BASELINE_RIGHT">
             <VBox spacing="10" alignment="BASELINE_RIGHT">
                 <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importSettingsButton"
-                        text="Import Settings" textFill="ffffff"
-                        onAction="#handleImportSettings"/>
+                        text="Import Settings   " textFill="ffffff"
+                        onAction="#handleImportSettings">
+                    <graphic>
+                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
+                                   preserveRatio="true" />
+                    </graphic>
+                </Button>
                 <Button id="exportSettingsButton" styleClass="settingsControls" fx:id="exportSettingsButton"
-                        text="Export Settings" textFill="ffffff"
-                        onAction="#handleExportSettings"/>
+                        text="Export Settings   " textFill="ffffff"
+                        onAction="#handleExportSettings">
+                    <graphic>
+                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
+                                   preserveRatio="true" />
+                    </graphic>
+                </Button>
             </VBox>
             <Button id="runSimButton" fx:id="runSimButton" text="Run"
                     onAction="#handleRunSimulation" textFill="ffffff"/>
