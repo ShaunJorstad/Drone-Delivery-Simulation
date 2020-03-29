@@ -122,7 +122,7 @@ public class Settings {
      * checks meal settings for a valid simulation
      * @return true if meal settings are correct
      */
-    private boolean verify() {return true;}
+    private boolean verifyMeals() {return true;}
 
     // Order Distributions ------------------------------------------------------
 
