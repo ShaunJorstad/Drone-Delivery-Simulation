@@ -96,54 +96,81 @@ public class Settings {
     }
 
     // Meal Items----------------------------------------------------------------
-    /** TODO: write this method
+
+    /**
+     * TODO: write this method
      * adds provided meal
+     *
      * @param meal meal being added
      * @return true if meals are all valid
      */
-    private boolean addMeal(Meal meal) {return true;}
+    private boolean addMeal(Meal meal) {
+        return true;
+    }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * edits a meal by removing the old and adding the edited meal object
+     *
      * @param oldMeal old meal being removed
      * @param newMeal new meal being added
      * @return true if meals are all valid
      */
-    private boolean editMeal(Meal oldMeal, Meal newMeal) {return true;}
+    private boolean editMeal(Meal oldMeal, Meal newMeal) {
+        return true;
+    }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * removes meal.
+     *
      * @param meal meal being removed
      * @return true if meal settings are valid
      */
-    private boolean removeMeal(Meal meal) {return true;}
+    private boolean removeMeal(Meal meal) {
+        return true;
+    }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * checks meal settings for a valid simulation
+     *
      * @return true if meal settings are correct
      */
-    private boolean verifyMeals() {return true;}
+    private boolean verifyMeals() {
+        return true;
+    }
 
     // Order Distributions ------------------------------------------------------
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * edits the distribution of meals
-     * @param index index of distribution
+     *
+     * @param index        index of distribution
      * @param distribution number of meals to be generated in that hour
      * @return true if valid settings
      */
-    private boolean editDistribution(int index, int distribution) {return true;}
+    private boolean editDistribution(int index, int distribution) {
+        return true;
+    }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * verifies the order distribution
+     *
      * @return true if valid settings
      */
-    private boolean verifyDistribution() {return true;}
+    private boolean verifyDistribution() {
+        return true;
+    }
 
     // Map ----------------------------------------------------------------------
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * adds map point
+     *
      * @param x
      * @param y
      * @param dist
@@ -152,8 +179,10 @@ public class Settings {
 
     }
 
-    /** TODO: write ths method
+    /**
+     * TODO: write ths method
      * removes map point
+     *
      * @param x
      * @param y
      */
@@ -161,8 +190,10 @@ public class Settings {
 
     }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * edits map point
+     *
      * @param x
      * @param y
      * @param dist
@@ -171,22 +202,26 @@ public class Settings {
 
     }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * exports map
      */
     private void exportMap() {
 
     }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * imports map
      */
     private void importMap() {
 
     }
 
-    /** TODO: write this method
+    /**
+     * TODO: write this method
      * verifies the map
+     *
      * @return
      */
     private boolean verifyMap() {
@@ -195,11 +230,16 @@ public class Settings {
     }
 
     // IO -----------------------------------------------------------------------
-    /** TODO: write method
+
+    /**
+     * TODO: write method
      * parses settings and returns string representation of the object to be printed to a file
+     *
      * @return string representation of object
      */
-    private static String unparseSettings() {return "";}
+    private static String unparseSettings() {
+        return "testing";
+    }
 
     private static boolean parseSettings(File settingsFile) {
         try {
@@ -241,6 +281,7 @@ public class Settings {
 
     /**
      * opens the file browser and returns the file chosen by the user
+     *
      * @param stage current stage of the application
      * @return true if imported file. false otherwise
      */
@@ -256,6 +297,7 @@ public class Settings {
 
     /**
      * exports the current settings to the chosen file by the user
+     *
      * @param stage current stage of the application
      * @return true if saved file. false otherwise
      */
@@ -264,7 +306,17 @@ public class Settings {
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
             //TODO: pipe this string into the file
-            unparseSettings();
+            try {
+                FileWriter fw = new FileWriter(file, false);
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println(unparseSettings());
+
+                fw.close();
+                pw.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                return false;
+            }
             return true;
         }
         return false;
