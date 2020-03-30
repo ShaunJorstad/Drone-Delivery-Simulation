@@ -93,27 +93,10 @@ public class Settings {
             //s.close();
             s.close();
             } catch (Exception e) {
-        System.out.println((e.getMessage()));
+            System.out.println((e.getMessage()));
+        }
     }
 
-            //Seed the arraylist with names in the file
-            /*Scanner s = new Scanner(settingsFile);
-            while(s.hasNext()) {
-                String next = s.nextLine();
-                if(next.contains("<d>")) {
-                    //next.substring(next.indexOf(" "),next.length());
-                    //Destinations.add();
-                    String name;
-                    int x, y;
-                    double dist;
-
-
-                }
-            }
-            s.close();*/
-
-
-    }
     //Singleton creator
     public static Settings getInstance() {
         if (single_instance == null) {
