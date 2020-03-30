@@ -190,7 +190,7 @@ public class SimController {
         }
 
 
-        /*
+        
         try {
 
             results = new Results();
@@ -215,6 +215,7 @@ public class SimController {
                     results.processDelivery(elapsedTime, droneRun);
                     elapsedTime += 3;
                 }
+                	droneDeliveryNumber++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -222,7 +223,7 @@ public class SimController {
 
         results.getFinalResults("FIFO");
 
-        */
+        
 
     }
 

@@ -30,23 +30,19 @@ public class Fifo {
 		float currentWeight = 0;
 		
 		while (!orders.isEmpty() && !isFull) {
-			
 			if (currentWeight + orders.peek().getWeight() <= maxWeight) {
 				if (orders.peek().getOrderedTime() < (int)elapsedTime) {
 					currentWeight += orders.peek().getWeight();
 					drone.add(orders.remove());
 					isFull = false;
 				} else if (drone.size() == 0){
-
-					timePassed = elapsedTime - (double)orders.peek().getOrderedTime();
+					timePassed = Math.abs(elapsedTime - (double)orders.peek().getOrderedTime());
 					currentWeight += orders.peek().getWeight();
 					drone.add(orders.remove());
 					isFull = true;
-				}
+				} else isFull = true;
 				
-			} else {
-				isFull = true;
-			}//else
+			} else  isFull = true;
 		}//while
 		if (orders.size() == 0) return null;
 		return drone;
