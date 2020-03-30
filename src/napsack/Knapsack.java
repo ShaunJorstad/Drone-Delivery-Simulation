@@ -17,28 +17,33 @@ public class Knapsack {
     private boolean skippedOrder;
     private double maxWeight;
     private double currentWeight;
-    private double skipepdTime;
+    private double skippedTime;
 
 
     public Knapsack(ArrayList<PlacedOrder> listOfAllOrders) {
         //copy of all orders
-        ArrayList<PlacedOrder> packingList = (ArrayList<PlacedOrder>) listOfAllOrders.clone();
+        packingList = (ArrayList<PlacedOrder>) listOfAllOrders.clone();
 
         //text
         droneList = new ArrayList<>();
-        packingList = new ArrayList<>();
+        //packingList = new ArrayList<>();
         nextList = new ArrayList<>();
         skippedOrder = false;
         maxWeight = 12;
         currentWeight = 0;
-        skipepdTime = 0;
+        skippedTime = 0;
     }
 
-    public void packDrone(double elapsedTime) {
+    public ArrayList<PlacedOrder> packDrone(double elapsedTime) {
         //copy of all orders
         try {
             ArrayList<PlacedOrder> packingClone = (ArrayList<PlacedOrder>) packingList.clone();
+            System.out.println("PackingList Size: " + packingList.size());
+            System.out.println("nextList Size: " + nextList.size());
 
+            if (packingList.isEmpty() && nextList.isEmpty()) {
+                return null;
+            }
 
             //moves orders skipped to shippment
             droneList.addAll(nextList);
@@ -76,16 +81,20 @@ public class Knapsack {
                     firstpos = pos + 1;
             }
             if (elapsedTime < packingClone.get(firstpos).getOrderedTime() && firstpos == 0)
-                skipepdTime = packingClone.get(firstpos).getOrderedTime() - elapsedTime;
+                skippedTime = packingClone.get(firstpos).getOrderedTime() - elapsedTime;
 
         } catch (Exception e) {
             System.out.println((e.getMessage()));
         }
-//        return droneList;
+        System.out.println("DroneList Size: " + droneList.size());
+        for (int i = 0; i < droneList.size(); i++ ) {
+            System.out.println(droneList.get(i));
+        }
+        return droneList;
     }
 
     public double getTimeSkipped() {
-        return skipepdTime;
+        return skippedTime;
     }
 
     public ArrayList<PlacedOrder> getDroneList() {
