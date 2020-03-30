@@ -165,12 +165,12 @@ public class SimController {
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone
         int droneDeliveryNumber = 1;
-        /*
+
         try {
 
 
             //Knapsack
-            while (ordersStillToProcess) {
+            while (ordersStillToProcess && droneDeliveryNumber < 100) {
                 ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
                 if (droneRun == null) {
                     ordersStillToProcess = false;
@@ -189,8 +189,8 @@ public class SimController {
             System.out.println(e.getMessage());
         }
 
-         */
 
+        /*
         try {
 
             results = new Results();
@@ -222,7 +222,7 @@ public class SimController {
 
         results.getFinalResults("FIFO");
 
-
+        */
 
     }
 
