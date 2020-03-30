@@ -7,7 +7,6 @@
 
 package gui.controllers;
 
-import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -27,7 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menu.FoodItem;
-import settings.Settings;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -150,9 +148,9 @@ public class FoodItems implements Initializable {
             nameInput.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-//                    update simcontroller data
-//                    verify weights
-                    Settings.editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                    item.setName(nameInput.getText());
+                    item.setWeight(Float.parseFloat(weightInput.getText()));
+                    Settings.editFoodItem(item);
                 }
             });
 
@@ -160,9 +158,9 @@ public class FoodItems implements Initializable {
             weightInput.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    // update simcontroller data
-//                verify weights
-                    Settings.editFoodItem(item, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                    item.setName(nameInput.getText());
+                    item.setWeight(Float.parseFloat(weightInput.getText()));
+                    Settings.editFoodItem(item);
                 }
             });
 
@@ -187,7 +185,6 @@ public class FoodItems implements Initializable {
                     contentGrid.getChildren().remove(weightInput);
                     contentGrid.getChildren().remove(removeFood);
 
-                    //TODO:  delete from settings
                     Settings.removeFoodItem(item);
                 }
             });
@@ -216,9 +213,11 @@ public class FoodItems implements Initializable {
         nameInput.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-//                    update simcontroller data
-//                    verify weights
-                Settings.editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                newFood.setName(nameInput.getText());
+                newFood.setWeight(Float.parseFloat(weightInput.getText()));
+                if (Settings.editFoodItem(newFood)) {
+                    //TODO: update run button
+                }
             }
         });
 
@@ -226,9 +225,11 @@ public class FoodItems implements Initializable {
         weightInput.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                // update simcontroller data
-//                verify weights
-                Settings.editFoodItem(newFood, new FoodItem(nameInput.getText(), Float.parseFloat(weightInput.getText())));
+                newFood.setName(nameInput.getText());
+                newFood.setWeight(Float.parseFloat(weightInput.getText()));
+                if (Settings.editFoodItem(newFood)) {
+                    // TODO: update run button
+                }
             }
         });
 
@@ -252,8 +253,7 @@ public class FoodItems implements Initializable {
             contentGrid.getChildren().remove(weightInput);
             contentGrid.getChildren().remove(removeFood);
 
-            // TODO: delete from settings
-            Settings.removeFoodItem(newFood);
+            updateRunBtn("Not enough Food items", Settings.removeFoodItem(newFood));
         });
 
         contentGrid.add(nameInput, 0, gridIndex);
@@ -269,14 +269,13 @@ public class FoodItems implements Initializable {
         Settings.addFoodItem(newFood);
     }
 
-    public void modifyRunButton(String text, boolean valid) {
+    public void updateRunBtn(String errMessage, boolean valid) {
         if (valid) {
-//            make button blue
             runSimButton.setStyle("-fx-background-color: #0078D7");
+            runSimButton.setText("Run");
         } else {
-//            make button red
             runSimButton.setStyle("-fx-background-color: #EC2F08");
+            runSimButton.setText(errMessage);
         }
-        runSimButton.setText(text);
     }
 }

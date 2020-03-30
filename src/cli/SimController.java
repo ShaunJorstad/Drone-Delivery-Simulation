@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import simulation.Fifo;
+import simulation.Settings;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +23,6 @@ public class SimController {
     File nameFile; //File that contains a list of names
     ArrayList<String> names; //Stores the list of names
     File ordersFile; //xml file that saves the orders
-    private static DefaultFood defaultFood; //The object that stores the default meal combos
 
     ArrayList<PlacedOrder> test;
 
@@ -49,7 +49,6 @@ public class SimController {
             System.out.println((e.getMessage()));
         }
 
-        defaultFood = new DefaultFood(); //Get the default food settings
         //System.out.println(defaultFood.mapToString());
     }
 
@@ -71,7 +70,7 @@ public class SimController {
         int minutesInSim = 240; //The number of minutes in the simulation
         int curMin = 0; //The current minute the simulation is in
         int randName; //random integer for what name to choose the ArrayList
-        ArrayList<Destination> map = defaultFood.getMap(); //Map of the given campus
+        ArrayList<Destination> map = Settings.getMap(); //Map of the given campus
         Meal m; //Current meal being ordered
         Destination d; //The destination to be delivered to
 
@@ -196,7 +195,7 @@ public class SimController {
         ArrayList<PlacedOrder> placedOrders = new ArrayList<>(); //all the placed orders
 
         //List of potential meals so that to compare the name in the xml file with
-        List<Meal> meals = defaultFood.getMeals();
+        List<Meal> meals = Settings.getMeals();
 
         try {
             //XML file reading initialization
@@ -274,7 +273,7 @@ public class SimController {
         double counter = 0; //Keeps track of the distribution through the loop
 
         //Store the list of meals
-        List<Meal> lm = defaultFood.getMeals();
+        List<Meal> lm = Settings.getMeals();
 
         //Iterate to where the random number points to in the distribution
         for (int i = 0; i < lm.size(); i++) {
@@ -339,13 +338,5 @@ public class SimController {
             return min;
         }
 
-    }
-
-
-    public static DefaultFood getDefaultFood() {
-        if (single_instance == null) {
-            single_instance = new SimController();
-        }
-        return defaultFood;
     }
 }

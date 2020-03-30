@@ -1,6 +1,5 @@
-package settings;
+package simulation;
 
-import cli.PlacedOrder;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -17,7 +16,7 @@ public class Settings {
     private static Set<FoodItem> foods;
     private static List<Meal> meals;
     private File settingsFile;
-    private final String defaultSettingsPath = "settings.txt";
+    private static final String defaultSettingsPath = "src/simulation/DefaultSettings.txt";
     static final FileChooser fileChooser = new FileChooser();
     private static Settings instance = new Settings();
 
@@ -28,14 +27,14 @@ public class Settings {
         orderDistribution = new ArrayList<>();
 
         // imports the default settings
-        parseSettings(new File(defaultSettingsPath));
+        System.out.println(parseSettings(new File(defaultSettingsPath)));
     }
 
+    // Getters ------------------------------------------------------------------
     public static Settings getInstance() {
         return instance;
     }
 
-    // Getters ------------------------------------------------------------------
     public static Set<FoodItem> getFoods() {
         return foods;
     }
@@ -47,6 +46,8 @@ public class Settings {
     public static ArrayList<Integer> getOrderDistribution() {
         return orderDistribution;
     }
+
+    public static ArrayList<Destination> getMap() { return map; }
 
     // Food Items----------------------------------------------------------------
 
@@ -64,13 +65,12 @@ public class Settings {
     /**
      * Edits food item by removing the old object and adding the new object.
      *
-     * @param old  FoodItem being removed
-     * @param edit FoodItem being added
+     * @param updatedItem Modified Food Item
      * @return true if foodItems are valid. false otherwise
      */
-    public static boolean editFoodItem(FoodItem old, FoodItem edit) {
-        foods.remove(old);
-        foods.add(edit);
+    public static boolean editFoodItem(FoodItem updatedItem) {
+        foods.remove(updatedItem);
+        foods.add(updatedItem);
         return verifyFoodItems();
     }
 
@@ -241,38 +241,151 @@ public class Settings {
         return "testing";
     }
 
-    private static boolean parseSettings(File settingsFile) {
+    private static boolean validateFile(File file) {
+        boolean validFile = true;
         try {
-            //Seed the arraylist with names in the file
-            Scanner s = new Scanner(settingsFile);
-            while (s.hasNext()) {
-                String next = s.nextLine();
-                if (next.contains("<d>")) {
-                    //next.substring(next.indexOf(" "),next.length());
-                    //Destinations.add();
-                    String name;
-                    int x, y;
-                    double dist;
-
-                    //For each line in the file
-                    while (s.hasNextLine()) {
-                        Scanner line = new Scanner(s.nextLine()); //Scanner for the given line
-
-                        //Get the attributes from the file
-                        name = line.next();
-                        x = line.nextInt();
-                        y = line.nextInt();
-                        dist = line.nextDouble();
-
-                        //Create a new destination
-                        map.add(new Destination(name, x, y, dist));
-                        line.close();
+            Scanner s = new Scanner(file);
+            while (s.hasNextLine()) {
+                Scanner line = new Scanner(s.nextLine());
+                String tag = line.next();
+                if (tag.equals("<d>")) {
+                    if (!line.hasNext()) {
+                        validFile = false;
                     }
+                    line.next();
+                    if (!line.hasNextInt()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (!line.hasNextInt()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (!line.hasNextDouble()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (line.hasNext()) {
+                        validFile = false;
+                    }
+                } else if (tag.equals("<f>")) {
+                    if (!line.hasNext()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (!line.hasNextInt()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (line.hasNext()) {
+                        validFile = false;
+                    }
+                } else if (tag.equals("<m>")) {
+                    if (!line.hasNext()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (!line.hasNextInt()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    if (!line.hasNextFloat()) {
+                        validFile = false;
+                    }
+                    line.next();
+                    while (line.hasNext()) {
+                        line.next();
+                        if (!line.hasNextInt()) {
+                            validFile = false;
+                        }
+                        line.next();
+                    }
+                } else {
+                    validFile = false;
+                    break;
                 }
             }
             s.close();
-            return true;
+        } catch (Exception e) {
+            System.out.println((e.getMessage()));
+        }
+        return validFile;
+    }
 
+    /**
+     * parses the given file and updates settings objects accordingly
+     *
+     * @param settingsFile settings file
+     * @return true if successful, false otherwise
+     */
+    private static boolean parseSettings(File settingsFile) {
+//        if (!validateFile(settingsFile)) {
+//            parseSettings(new File(defaultSettingsPath));
+//            return false;
+//        }
+        try {
+            //Names.txt was generated by Dominic Tarr
+            Scanner s = new Scanner(settingsFile);
+
+            //For each line in the file
+            while (s.hasNextLine()) {
+                Scanner line = new Scanner(s.nextLine()); //Scanner for the given line
+                String tag = line.next();
+                if (tag.equals("<d>")) {
+//                    String name;
+//                    int x, y;
+//                    double dist;
+//
+//                    //Get the attributes from the file
+//                    name = line.next();
+//                    x = line.nextInt();
+//                    y = line.nextInt();
+//                    dist = line.nextDouble();
+
+                    //Create a new destination
+//                    map.add(new Destination(name, x, y, dist));
+                } else if (tag.equals("<f>")) {
+                    String name;
+                    float weight;
+
+                    //Get the attributes from the file
+                    name = line.next();
+                    weight = line.nextInt();
+
+                    //Create a new food item
+                    foods.add(new FoodItem(name, weight));
+                } else if (tag.equals("<m>")) {
+                    String name;
+                    int id;
+                    float distribution;
+
+                    //gets the attributes from the file
+                    name = line.next();
+                    id = line.nextInt();
+                    distribution = line.nextFloat();
+
+                    //creates a meal item
+                    Meal combo = new Meal(name, id);
+                    combo.setDistribution(distribution);
+                    while (line.hasNext()) {
+                        String food = line.next();
+                        int quantity = line.nextInt();
+
+                        //finds food so it can add it to the combo
+                        for (Iterator<FoodItem> it = foods.iterator(); it.hasNext(); ) {
+                            FoodItem f = it.next();
+                            if (f.getName().equals(food))
+                                combo.addFoodItem(f, quantity);
+                        }
+                    }
+                    meals.add(combo);
+                }
+
+                line.close();
+            }
+            //s.close();
+            s.close();
+            return true;
         } catch (Exception e) {
             System.out.println((e.getMessage()));
             return false;
