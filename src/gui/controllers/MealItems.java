@@ -10,7 +10,6 @@ package gui.controllers;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -23,10 +22,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import menu.FoodItem;
 import menu.Meal;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +33,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MealItems implements Initializable {
     public VBox navBarContainer;
@@ -60,7 +58,6 @@ public class MealItems implements Initializable {
     public ImageView uploadImage;
     public ImageView downloadImage;
 
-    private int mealCount;
     private int gridIndex;
 
     @Override
@@ -181,22 +178,24 @@ public class MealItems implements Initializable {
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {
+        Settings.importSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
+        Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
     }
 
     public void inflateMeals() {
-        for (Meal meal : SimController.getDefaultFood().getMeals()) {
+        for (Meal meal : Settings.getMeals()) {
             addMeal(meal);
         }
     }
 
     public void handleAddMeal(ActionEvent actionEvent) {
-        addMeal(new Meal("Meal Name", mealCount));
+        addMeal(new Meal("Meal Name", gridIndex - 1));
     }
 
     public void addMeal(Meal meal) {
@@ -281,7 +280,7 @@ public class MealItems implements Initializable {
         foodName.setPrefWidth(200);
         injectCursorStates(foodName);
         // add all food options
-        for (FoodItem item : SimController.getDefaultFood().getFoods()) {
+        for (FoodItem item : Settings.getFoods()) {
             MenuItem menuItem = new MenuItem(item.getName());
             foodName.getItems().add(menuItem);
             menuItem.setOnAction(actionEvent -> {
