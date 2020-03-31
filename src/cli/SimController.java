@@ -26,6 +26,8 @@ public class SimController {
     private static DefaultFood defaultFood; //The object that stores the default meal combos
     private static Settings settings;
     int MINUTES_IN_SIM = 240; //The number of minutes in the simulation
+    ArrayList<Results> aggregatedResults; //The results from all 50 simulations
+    int NUMBER_OF_SIMULATIONS = 50;
 
     ArrayList<PlacedOrder> test;
 
@@ -35,6 +37,7 @@ public class SimController {
 
     private SimController() {
         test = new ArrayList<>();
+        aggregatedResults = new ArrayList<>();
 
         names = new ArrayList<>();
         try {
@@ -78,6 +81,7 @@ public class SimController {
         ArrayList<Integer> ordersPerHour = defaultFood.getOrdersPerHour();
         Meal m; //Current meal being ordered
         Destination d; //The destination to be delivered to
+
 
 
         //open the orders file
@@ -150,6 +154,8 @@ public class SimController {
      * Run the FIFO and Knapsack algorithms
      */
     public void runAlgorithms() {
+
+
         ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
         //System.out.println(allOrders.get(0));
         System.out.println("Total number of orders: " + allOrders.size());
@@ -163,9 +169,9 @@ public class SimController {
 
         double elapsedTime = 3; //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
-        double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone
+        double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone in ft/minute
         int droneDeliveryNumber = 1;
-
+        /*
         try {
 
 
@@ -189,6 +195,9 @@ public class SimController {
             System.out.println(e.getMessage());
         }
 
+        aggregatedResults.add(results);
+         */
+
 
         
         try {
@@ -207,11 +216,11 @@ public class SimController {
                     ordersStillToProcess = false;
                 } else {
                     double test = f.getTimeSkipped();
-                    System.out.println("f.getTimeSkipped()" + test);
+                    //System.out.println("f.getTimeSkipped()" + test);
                     elapsedTime += test;
                     //Find how long the delivery takes
                     elapsedTime += TSP(droneRun)/droneSpeed + .5 * droneRun.size();
-                    System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived: " + elapsedTime);
+                    //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
                     results.processDelivery(elapsedTime, droneRun);
                     elapsedTime += 3;
                 }
@@ -223,7 +232,7 @@ public class SimController {
 
         results.getFinalResults("FIFO");
 
-        
+        aggregatedResults.add(results);
 
     }
 
@@ -425,4 +434,9 @@ public class SimController {
         }
         return settings;
     }
+
+    public int getNUMBER_OF_SIMULATIONS() {
+        return NUMBER_OF_SIMULATIONS;
+    }
+
 }
