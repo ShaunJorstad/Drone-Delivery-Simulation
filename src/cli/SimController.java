@@ -172,7 +172,7 @@ public class SimController {
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone in ft/minute
         int droneDeliveryNumber = 1;
-        /*
+
         try {
 
 
@@ -185,7 +185,7 @@ public class SimController {
                     elapsedTime += n.getTimeSkipped() + loadMealTime;
                     //Find how long the delivery takes
                     elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
-                    System.out.println("Time that delivery " + droneDeliveryNumber + " arrived: " + elapsedTime);
+                    //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
                     results.processDelivery(elapsedTime, droneRun);
                     elapsedTime += 3;
                 }
@@ -197,10 +197,10 @@ public class SimController {
         }
 
         aggregatedResults.add(results);
-         */
 
 
-        
+
+
         try {
 
             results = new Results();
