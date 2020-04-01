@@ -1,433 +1,292 @@
 <listOfOrders>
-<order><cname>Cortney</cname><ordTime>2</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 3:
-	Hamburger: 1
+<order><cname>Mable</cname><ordTime>3</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
 	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
 </meal></order>
-<order><cname>Heda</cname><ordTime>4</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 2:
+<order><cname>Carmencita</cname><ordTime>8</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Shanta</cname><ordTime>15</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Michaela</cname><ordTime>18</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Gaynor</cname><ordTime>20</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Terrye</cname><ordTime>20</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Nola</cname><ordTime>22</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Pet</cname><ordTime>23</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Magda</cname><ordTime>27</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 4:
+	Fries: 1
 	Hamburger: 2
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Madelyn</cname><ordTime>7</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Kitty</cname><ordTime>31</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Suzann</cname><ordTime>17</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Caroline</cname><ordTime>19</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Danella</cname><ordTime>20</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Lela</cname><ordTime>23</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Sherill</cname><ordTime>24</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Alene</cname><ordTime>26</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo 2:
 	Hamburger: 2
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Veronika</cname><ordTime>36</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Ceciley</cname><ordTime>34</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Gracia</cname><ordTime>39</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 2:
 	Hamburger: 2
+</meal></order>
+<order><cname>Chiquita</cname><ordTime>34</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Star</cname><ordTime>40</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 1:
 	Hamburger: 1
+</meal></order>
+<order><cname>Gertrude</cname><ordTime>36</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Jeralee</cname><ordTime>50</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 3:
 	Hamburger: 1
-	Fries: 1
 </meal></order>
-<order><cname>Adel</cname><ordTime>51</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
+<order><cname>Giana</cname><ordTime>39</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 3:
+	Fries: 1
 	Hamburger: 1
+</meal></order>
+<order><cname>Constantia</cname><ordTime>39</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Allis</cname><ordTime>51</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Faina</cname><ordTime>54</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
+<order><cname>Emeline</cname><ordTime>44</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Avrit</cname><ordTime>58</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
+<order><cname>Dionne</cname><ordTime>63</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Carolee</cname><ordTime>62</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
+<order><cname>Aeriel</cname><ordTime>63</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Kathrine</cname><ordTime>66</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Zonnya</cname><ordTime>65</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 2:
 	Fries: 1
-</meal></order>
-<order><cname>Candide</cname><ordTime>67</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 2:
+	12 oz. drink: 1
 	Hamburger: 2
+</meal></order>
+<order><cname>Wendye</cname><ordTime>79</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Orelia</cname><ordTime>82</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Cecelia</cname><ordTime>67</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 3:
 	Hamburger: 1
-	Fries: 1
 </meal></order>
-<order><cname>Kym</cname><ordTime>72</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Dixie</cname><ordTime>83</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Anne-Corinne</cname><ordTime>72</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Dasya</cname><ordTime>73</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Jilli</cname><ordTime>73</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Rosemaria</cname><ordTime>73</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Glenine</cname><ordTime>76</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Rosaleen</cname><ordTime>78</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Alexina</cname><ordTime>83</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 2:
 	Hamburger: 2
+</meal></order>
+<order><cname>Hadria</cname><ordTime>89</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Agretha</cname><ordTime>84</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 3:
 	Hamburger: 1
-	Fries: 1
 </meal></order>
-<order><cname>Velma</cname><ordTime>95</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 3:
-	Hamburger: 1
+<order><cname>Elicia</cname><ordTime>90</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 3:
 	Fries: 1
-</meal></order>
-<order><cname>Rosalia</cname><ordTime>95</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo 1:
 	Hamburger: 1
+</meal></order>
+<order><cname>Arly</cname><ordTime>92</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Dode</cname><ordTime>97</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Nickie</cname><ordTime>99</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 1:
+<order><cname>Susi</cname><ordTime>107</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Maxine</cname><ordTime>101</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 1:
+<order><cname>Melina</cname><ordTime>107</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Crystie</cname><ordTime>102</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 4:
+<order><cname>Riane</cname><ordTime>111</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Fanni</cname><ordTime>115</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Verena</cname><ordTime>122</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 4:
+	Fries: 1
 	Hamburger: 2
-	Fries: 1
 </meal></order>
-<order><cname>Rosalynd</cname><ordTime>103</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 2:
+<order><cname>Madella</cname><ordTime>125</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Dedie</cname><ordTime>125</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Roanne</cname><ordTime>132</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Meryl</cname><ordTime>133</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Adrienne</cname><ordTime>135</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Demetra</cname><ordTime>141</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Vonny</cname><ordTime>141</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Allina</cname><ordTime>141</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo 4:
+	Fries: 1
 	Hamburger: 2
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Marylinda</cname><ordTime>110</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 1:
+<order><cname>Susanne</cname><ordTime>141</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 3:
+	Fries: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Moira</cname><ordTime>114</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Ansley</cname><ordTime>142</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Mariellen</cname><ordTime>115</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Jessi</cname><ordTime>123</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Livvyy</cname><ordTime>125</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Charlean</cname><ordTime>127</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Nanny</cname><ordTime>130</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Yovonnda</cname><ordTime>130</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Ardene</cname><ordTime>136</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 4:
 	Hamburger: 2
-	Fries: 1
 </meal></order>
-<order><cname>Marge</cname><ordTime>138</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Loree</cname><ordTime>159</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Sabine</cname><ordTime>139</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Danya</cname><ordTime>140</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Michele</cname><ordTime>143</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Oralie</cname><ordTime>143</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Jeanine</cname><ordTime>147</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Olivette</cname><ordTime>147</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 2:
 	Hamburger: 2
+</meal></order>
+<order><cname>Prue</cname><ordTime>164</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Nixie</cname><ordTime>149</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
 	Hamburger: 1
+</meal></order>
+<order><cname>Abagael</cname><ordTime>165</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Suzann</cname><ordTime>151</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo 3:
 	Hamburger: 1
-	Fries: 1
 </meal></order>
-<order><cname>Ilse</cname><ordTime>153</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo 1:
-	Hamburger: 1
+<order><cname>Augusta</cname><ordTime>166</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 2:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Rori</cname><ordTime>153</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Christian</cname><ordTime>158</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Lexis</cname><ordTime>158</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Fawnia</cname><ordTime>158</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Nelie</cname><ordTime>163</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 4:
 	Hamburger: 2
-	Fries: 1
 </meal></order>
-<order><cname>Maddy</cname><ordTime>164</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 3:
-	Hamburger: 1
+<order><cname>Evaleen</cname><ordTime>167</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
 	Fries: 1
-</meal></order>
-<order><cname>Marcie</cname><ordTime>165</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Jayme</cname><ordTime>169</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 1:
-	Hamburger: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Cloris</cname><ordTime>169</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 3:
 	Hamburger: 1
-	Fries: 1
 </meal></order>
-<order><cname>Patience</cname><ordTime>171</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Ardeen</cname><ordTime>169</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Merrile</cname><ordTime>171</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 2:
 	Hamburger: 2
+</meal></order>
+<order><cname>Kimmy</cname><ordTime>170</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 2:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Rhiamon</cname><ordTime>174</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Willi</cname><ordTime>174</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Laverne</cname><ordTime>174</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Juditha</cname><ordTime>176</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Leda</cname><ordTime>176</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Alisa</cname><ordTime>176</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Donella</cname><ordTime>176</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Pooh</cname><ordTime>176</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Stephine</cname><ordTime>176</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Tiffi</cname><ordTime>180</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Jillana</cname><ordTime>181</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Gaylene</cname><ordTime>184</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Flss</cname><ordTime>184</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 4:
 	Hamburger: 2
-	Fries: 1
 </meal></order>
-<order><cname>Shaylyn</cname><ordTime>190</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 4:
+<order><cname>Wendeline</cname><ordTime>173</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Debora</cname><ordTime>176</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Adda</cname><ordTime>181</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Tanya</cname><ordTime>182</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Orel</cname><ordTime>189</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
+	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Shirleen</cname><ordTime>191</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Valera</cname><ordTime>191</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 4:
+	Fries: 1
 	Hamburger: 2
-	Fries: 1
 </meal></order>
-<order><cname>Dody</cname><ordTime>192</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo 1:
+<order><cname>Cassandra</cname><ordTime>199</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo 3:
+	Fries: 1
 	Hamburger: 1
+</meal></order>
+<order><cname>Carol-Jean</cname><ordTime>210</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Gennifer</cname><ordTime>193</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 1:
 	Hamburger: 1
+</meal></order>
+<order><cname>Adora</cname><ordTime>212</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Shanna</cname><ordTime>194</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 1:
 	Hamburger: 1
+</meal></order>
+<order><cname>Carmel</cname><ordTime>214</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Noami</cname><ordTime>195</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo 1:
 	Hamburger: 1
+</meal></order>
+<order><cname>Christel</cname><ordTime>216</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 1:
+	Fries: 1
 	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Corrianne</cname><ordTime>208</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Jeannie</cname><ordTime>208</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 1:
+<order><cname>Glynda</cname><ordTime>218</ordTime><dest>HAL	0	225	225.0</dest><meal>Combo 3:
+	Fries: 1
 	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
 </meal></order>
-<order><cname>Alfreda</cname><ordTime>211</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Becki</cname><ordTime>223</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo 4:
 	Fries: 1
-</meal></order>
-<order><cname>Robinetta</cname><ordTime>218</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
-	Fries: 1
-</meal></order>
-<order><cname>Lidia</cname><ordTime>224</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 3:
-	Hamburger: 1
-	Fries: 1
-</meal></order>
-<order><cname>Brande</cname><ordTime>224</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo 4:
 	Hamburger: 2
-	Fries: 1
 </meal></order>
-<order><cname>Melisse</cname><ordTime>225</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo 1:
-	Hamburger: 1
-	12 oz. drink: 1
+<order><cname>Lila</cname><ordTime>230</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo 1:
 	Fries: 1
+	12 oz. drink: 1
+	Hamburger: 1
+</meal></order>
+<order><cname>Berte</cname><ordTime>236</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo 3:
+	Fries: 1
+	Hamburger: 1
 </meal></order>
 </listOfOrders>

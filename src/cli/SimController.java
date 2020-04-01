@@ -56,7 +56,7 @@ public class SimController {
         }
 
         defaultFood = new DefaultFood(); //Get the default food settings
-        settings = new Settings();
+        //settings = new Settings();
         //System.out.println(defaultFood.mapToString());
     }
 
@@ -164,6 +164,7 @@ public class SimController {
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders);
         Fifo f = new Fifo(allOrders);
+        int loadMealTime = 0;
 
         //UNCOMMENT THE CODE WHEN YOU HAVE KNAPSACK/FIFO REFACTORED
 
@@ -181,7 +182,7 @@ public class SimController {
                 if (droneRun == null) {
                     ordersStillToProcess = false;
                 } else {
-                    elapsedTime += n.getTimeSkipped();
+                    elapsedTime += n.getTimeSkipped() + loadMealTime;
                     //Find how long the delivery takes
                     elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
                     System.out.println("Time that delivery " + droneDeliveryNumber + " arrived: " + elapsedTime);
@@ -215,9 +216,7 @@ public class SimController {
                 if (droneRun == null) {
                     ordersStillToProcess = false;
                 } else {
-                    double test = f.getTimeSkipped();
-                    //System.out.println("f.getTimeSkipped()" + test);
-                    elapsedTime += test;
+                    elapsedTime += f.getTimeSkipped() + loadMealTime;
                     //Find how long the delivery takes
                     elapsedTime += TSP(droneRun)/droneSpeed + .5 * droneRun.size();
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
