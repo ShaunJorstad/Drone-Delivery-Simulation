@@ -145,23 +145,19 @@ public class FoodItems implements Initializable {
             TextField weightInput = new TextField(Float.toString(item.getWeight()));
 
             nameInput.getStyleClass().add("foodName");
-            nameInput.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    item.setName(nameInput.getText());
-                    item.setWeight(Float.parseFloat(weightInput.getText()));
-                    Settings.editFoodItem(item);
-                }
+            nameInput.setOnAction(actionEvent -> {
+                item.setName(nameInput.getText());
+                item.setWeight(Float.parseFloat(weightInput.getText()));
+                //updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
             });
 
             weightInput.getStyleClass().add("foodWeight");
-            weightInput.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    item.setName(nameInput.getText());
-                    item.setWeight(Float.parseFloat(weightInput.getText()));
-                    Settings.editFoodItem(item);
-                }
+            weightInput.setOnAction(actionEvent -> {
+                item.setName(nameInput.getText());
+                item.setWeight(Float.parseFloat(weightInput.getText()));
+                Settings.updateMeals(item);
+                //TODO: fix this. don't need to set the item
+                updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
             });
 
             // margins
@@ -177,16 +173,13 @@ public class FoodItems implements Initializable {
             icon.setPreserveRatio(true);
             Button removeFood = new Button("", icon);
             removeFood.getStyleClass().add("removeButton");
-            removeFood.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    // remove fields
-                    contentGrid.getChildren().remove(nameInput);
-                    contentGrid.getChildren().remove(weightInput);
-                    contentGrid.getChildren().remove(removeFood);
+            removeFood.setOnAction(actionEvent -> {
+                // remove fields
+                contentGrid.getChildren().remove(nameInput);
+                contentGrid.getChildren().remove(weightInput);
+                contentGrid.getChildren().remove(removeFood);
 
-                    Settings.removeFoodItem(item);
-                }
+                updateRunBtn("Not enough Food items", Settings.removeFoodItem(item));
             });
 
 //        add button
@@ -210,27 +203,17 @@ public class FoodItems implements Initializable {
         TextField weightInput = new TextField("0");
 
         nameInput.getStyleClass().add("foodName");
-        nameInput.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                newFood.setName(nameInput.getText());
-                newFood.setWeight(Float.parseFloat(weightInput.getText()));
-                if (Settings.editFoodItem(newFood)) {
-                    //TODO: update run button
-                }
-            }
+        nameInput.setOnAction(actionEvent12 -> {
+            newFood.setName(nameInput.getText());
+            newFood.setWeight(Float.parseFloat(weightInput.getText()));
+            updateRunBtn("Invalid food weight", Settings.editFoodItem(newFood));
         });
 
         weightInput.getStyleClass().add("foodWeight");
-        weightInput.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                newFood.setName(nameInput.getText());
-                newFood.setWeight(Float.parseFloat(weightInput.getText()));
-                if (Settings.editFoodItem(newFood)) {
-                    // TODO: update run button
-                }
-            }
+        weightInput.setOnAction(actionEvent13 -> {
+            newFood.setName(nameInput.getText());
+            newFood.setWeight(Float.parseFloat(weightInput.getText()));
+            updateRunBtn("Invalid Food Weight", Settings.editFoodItem(newFood));
         });
 
         // margins
@@ -266,16 +249,18 @@ public class FoodItems implements Initializable {
         gridIndex++;
 
         //insert item into settings
-        Settings.addFoodItem(newFood);
+        updateRunBtn("Invalid food items", Settings.addFoodItem(newFood));
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {
         if (valid) {
             runSimButton.setStyle("-fx-background-color: #0078D7");
             runSimButton.setText("Run");
+            runSimButton.setDisable(false);
         } else {
             runSimButton.setStyle("-fx-background-color: #EC2F08");
             runSimButton.setText(errMessage);
+            runSimButton.setDisable(true);
         }
     }
 }
