@@ -8,7 +8,10 @@ public class Main {
         for (int i = 0; i < simController.getNUMBER_OF_SIMULATIONS(); i++) {
             simController.generateOrders();
             simController.runAlgorithms();
+
         }
+
+        //GUIFunction(simController.getAggregatedResultsFIFO(), simController.getAggregatedResultsKnapsack());
 
     }
 }
