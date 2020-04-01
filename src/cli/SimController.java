@@ -1,6 +1,5 @@
 package cli;
 
-import menu.DefaultFood;
 import menu.Destination;
 import menu.Meal;
 import napsack.Knapsack;

@@ -20,6 +20,8 @@ public class Settings {
     static final FileChooser fileChooser = new FileChooser();
     private static Settings instance = new Settings();
 
+    private static int droneCapacity = 20;
+
     private Settings() {
         map = new ArrayList<>();
         foods = new HashSet<>();
@@ -92,32 +94,41 @@ public class Settings {
      * @return true if settings are valid. false otherwise
      */
     private static boolean verifyFoodItems() {
+        if (foods.size() == 0) {
+            return false;
+        }
+        for (FoodItem item : foods) {
+             if (item.getWeight() > droneCapacity) {
+                 System.out.println("over weight");
+                 return false;
+             }
+        }
         return true;
     }
 
     // Meal Items----------------------------------------------------------------
 
     /**
-     * TODO: write this method
      * adds provided meal
      *
      * @param meal meal being added
      * @return true if meals are all valid
      */
-    private boolean addMeal(Meal meal) {
-        return true;
+    public static boolean addMeal(Meal meal) {
+        meals.add(meal);
+        return verifyMeals();
     }
 
     /**
-     * TODO: write this method
      * edits a meal by removing the old and adding the edited meal object
      *
-     * @param oldMeal old meal being removed
-     * @param newMeal new meal being added
+     * @param editedMeal modified meal
      * @return true if meals are all valid
      */
-    private boolean editMeal(Meal oldMeal, Meal newMeal) {
-        return true;
+    public static boolean editMeal(Meal editedMeal) {
+        meals.remove(editedMeal);
+        meals.add(editedMeal);
+        return verifyMeals();
     }
 
     /**
@@ -127,8 +138,9 @@ public class Settings {
      * @param meal meal being removed
      * @return true if meal settings are valid
      */
-    private boolean removeMeal(Meal meal) {
-        return true;
+    public static boolean removeMeal(Meal meal) {
+        meals.remove(meal);
+        return verifyMeals();
     }
 
     /**
@@ -137,7 +149,23 @@ public class Settings {
      *
      * @return true if meal settings are correct
      */
-    private boolean verifyMeals() {
+    public static boolean verifyMeals() {
+        double totalDist = 0.0;
+        if (meals.isEmpty()) {
+            return false;
+        }
+        for (Meal meal : meals) {
+            if (meal.getWeight() > droneCapacity) {
+                return false;
+            }
+            if (meal.getFoodItems().isEmpty()) {
+                return false;
+            }
+            totalDist += meal.getDistribution();
+        }
+        if (totalDist != 1) {
+            return false;
+        }
         return true;
     }
 
@@ -375,7 +403,7 @@ public class Settings {
                         for (Iterator<FoodItem> it = foods.iterator(); it.hasNext(); ) {
                             FoodItem f = it.next();
                             if (f.getName().equals(food))
-                                combo.addFoodItem(f, quantity);
+                                combo.incrementFoodItem(f, quantity);
                         }
                     }
                     meals.add(combo);

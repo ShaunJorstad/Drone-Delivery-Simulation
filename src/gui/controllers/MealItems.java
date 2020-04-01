@@ -7,9 +7,9 @@
 
 package gui.controllers;
 
-import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -29,7 +29,9 @@ import simulation.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class MealItems implements Initializable {
     public VBox navBarContainer;
@@ -145,7 +147,9 @@ public class MealItems implements Initializable {
     }
 
     public void inflateMeals() {
-        for (Meal meal : Settings.getMeals()) {
+        Set<Meal> meals = new HashSet<>();
+        meals.addAll(Settings.getMeals());
+        for (Meal meal : meals) {
             addMeal(meal);
         }
     }
@@ -170,6 +174,9 @@ public class MealItems implements Initializable {
         mealName.getStyleClass().add("mealName");
         mealName.setOnAction(actionEvent -> {
             // update name within settings
+            meal.setName(mealName.getText());
+            // TODO: question: This line below is unecessary correct?
+            //Settings.editMeal(meal);
         });
 
         Text mealWeight = new Text("Weight (lbs): ");
@@ -182,25 +189,37 @@ public class MealItems implements Initializable {
         mealGrid.add(mealName, 1, 0);
         GridPane.setMargin(mealName, new Insets(0, 0, 0, 34));
 
-        Text distributionTitle = new Text("Distribution:");
+        Text distributionTitle = new Text("Distribution(%):");
         distributionTitle.getStyleClass().add("distributionTitle");
 
-        TextField distribution = new TextField("% " + Float.toString(meal.getDistribution()));
+        TextField distribution = new TextField(Float.toString(meal.getDistribution()));
         distribution.getStyleClass().add("distribution");
         distribution.setOnAction(actionEvent -> {
             // update menu item in settings
-            // check settings for correctness
+            meal.setDistribution(Float.parseFloat(distribution.getText()));
+            // TODO: question: This is unecessary
+            updateRunBtn("Invalid Meal Distributions", Settings.editMeal(meal));
         });
+
 
         Button addItemBtn = new Button();
         addItemBtn.setText("Add Item");
         addItemBtn.getStyleClass().add("smallGrayButton");
         addItemBtn.setOnAction(actionEvent -> {
-            // TODO: add item handler
-            addFood(mealGrid, new FoodItem("", 0), 0);
-            // TODO: re-evaluate distributions and stuff
+            FoodItem newFoodItem = meal.getOutstandingFoodItems().get(0);
+            meal.incrementFoodItem(newFoodItem, 0);
+            addFood(mealGrid, newFoodItem, meal, weight, addItemBtn, 0);
             // TODO: update settings
+            updateRunBtn("Invalid Food Items", Settings.editMeal(meal));
+            if (meal.getOutstandingFoodItems().isEmpty()) {
+                addItemBtn.setDisable(true);
+                addItemBtn.setVisible(false);
+            }
         });
+        if (meal.getOutstandingFoodItems().isEmpty()) {
+            addItemBtn.setDisable(true);
+            addItemBtn.setVisible(false);
+        }
 
         Button deleteMealBtn = new Button();
         deleteMealBtn.setText("Remove Meal");
@@ -208,8 +227,7 @@ public class MealItems implements Initializable {
         deleteMealBtn.setOnAction(actionEvent -> {
             mealsVBox.getChildren().remove(mealGrid);
             mealsVBox.getChildren().remove(controlGrid);
-            // TODO: update settings
-            // TODO: check for correct settings (distributions)
+            Settings.removeMeal(meal);
         });
 
         controlGrid.add(distributionTitle, 0, 0);
@@ -220,37 +238,50 @@ public class MealItems implements Initializable {
         controlGrid.add(weight, 1, 1);
 
         meal.getFoodItems().forEach((key, value) -> {
-            addFood(mealGrid, key, value);
+            addFood(mealGrid, key, meal, weight, addItemBtn, value);
         });
 
         mealsVBox.getChildren().add(mealGrid);
         mealsVBox.getChildren().add(controlGrid);
+
+        if (!Settings.getMeals().contains(meal)) {
+            updateRunBtn("Invalid Meal Settings", Settings.addMeal(meal));
+        }
     }
 
-    public void addFood(GridPane grid, FoodItem food, int num) {
+    public void addFood(GridPane grid, FoodItem food, Meal meal, Text weight, Button addItemBtn, int num) {
         MenuButton foodName = new MenuButton();
         foodName.setText(food.getName());
         foodName.getStyleClass().add("foodName");
         foodName.setPrefWidth(200);
-        // add all food options
-        for (FoodItem item : Settings.getFoods()) {
-            MenuItem menuItem = new MenuItem(item.getName());
-            foodName.getItems().add(menuItem);
-            menuItem.setOnAction(actionEvent -> {
-                foodName.setText(item.getName() + ": " + Float.toString(item.getWeight()) + " oz");
-                // update menu item in settings
-                // re evaluate weight
-                // check weight under limit
-            });
-        }
 
-        TextField number = new TextField(Integer.toString(num));
-        number.getStyleClass().add("foodNumber");
-        number.setOnAction(actionEvent -> {
-            // update settings
-            // update weight attribute on meal
-            // verify settings are acurate
+        foodName.setOnMouseEntered(actionEvent -> {
+            updateMenuItems(foodName, meal, food, weight, addItemBtn);
         });
+//        foodName.fire();
+
+        Text number = new Text(String.valueOf(meal.getNumberOfFood(food)));
+        number.getStyleClass().add("foodNumber");
+
+        // add icons to increase and decrease
+        Button increase = new Button("up");
+        increase.getStyleClass().add("increase");
+        increase.setOnAction(actionEvent -> {
+            meal.incrementFoodItem(food);
+            weight.setText(String.valueOf(meal.getWeight()));
+            number.setText(String.valueOf((Integer.parseInt(number.getText()) + 1)));
+            // TODO: update run button
+        });
+
+        Button decrease = new Button("down");
+        decrease.getStyleClass().add("decrease");
+        decrease.setOnAction(actionEvent -> {
+            meal.decrementFoodItem(food, 1);
+            weight.setText(String.valueOf(meal.getWeight()));
+            number.setText(String.valueOf(meal.getNumberOfFood(food)));
+            // TODO: update run button
+        });
+
 
         File deleteMealPath = new File("assets/icons/remove.png");
         Image deleteMealImage = new Image(deleteMealPath.toURI().toString());
@@ -266,18 +297,57 @@ public class MealItems implements Initializable {
             grid.getChildren().remove(foodName);
             grid.getChildren().remove(number);
             grid.getChildren().remove(removeMeal);
+            grid.getChildren().remove(increase);
+            grid.getChildren().remove(decrease);
 
-            // TODO: delete from settings
-//                TODO: re calculate weiht
-            /* code */
+            meal.removeFoodItem(food);
+            weight.setText(String.valueOf(meal.getWeight()));
+            // TODO: update run button
+
+            // enable addItemButton
+            addItemBtn.setDisable(false);
+            addItemBtn.setVisible(true);
         });
-        grid.add(foodName, 2, gridIndex);
-        grid.add(number, 1, gridIndex);
-        grid.add(removeMeal, 3, gridIndex);
+        grid.add(foodName, 1, gridIndex);
+        grid.add(number, 2, gridIndex);
+        grid.add(decrease, 3, gridIndex);
+        grid.add(increase, 4, gridIndex);
+        grid.add(removeMeal, 5, gridIndex);
 
         GridPane.setMargin(foodName, new Insets(15, 0, 0, 30));
         GridPane.setMargin(number, new Insets(15, 0, 0, 34));
         GridPane.setMargin(removeMeal, new Insets(15, 0, 0, 15));
         gridIndex++;
+    }
+
+    public void updateMenuItems(MenuButton dropdown, Meal meal, FoodItem food, Text weight, Button addItemBtn) {
+        dropdown.getItems().clear();
+        for (FoodItem item : meal.getOutstandingFoodItems()) {
+            MenuItem menuItem = new MenuItem(item.getName());
+            dropdown.getItems().add(menuItem);
+            menuItem.setOnAction(actionEvent -> {
+                updateMenuItems(dropdown, meal, food, weight, addItemBtn);
+                dropdown.setText(item.getName() + ": " + Float.toString(item.getWeight()) + " oz");
+                meal.replaceFoodItem(food, item);
+                weight.setText(String.valueOf(meal.getWeight()));
+                if (meal.getOutstandingFoodItems().isEmpty()) {
+                    addItemBtn.setDisable(true);
+                    addItemBtn.setVisible(false);
+                }
+                updateMenuItems(dropdown, meal, food, weight, addItemBtn);
+            });
+        }
+    }
+
+    public void updateRunBtn(String errMessage, boolean valid) {
+        if (valid) {
+            runSimButton.setStyle("-fx-background-color: #0078D7");
+            runSimButton.setText("Run");
+            runSimButton.setDisable(false);
+        } else {
+            runSimButton.setStyle("-fx-background-color: #EC2F08");
+            runSimButton.setText(errMessage);
+            runSimButton.setDisable(true);
+        }
     }
 }

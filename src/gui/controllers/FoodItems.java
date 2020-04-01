@@ -150,7 +150,7 @@ public class FoodItems implements Initializable {
                 public void handle(ActionEvent actionEvent) {
                     item.setName(nameInput.getText());
                     item.setWeight(Float.parseFloat(weightInput.getText()));
-                    Settings.editFoodItem(item);
+                    //updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
                 }
             });
 
@@ -160,7 +160,7 @@ public class FoodItems implements Initializable {
                 public void handle(ActionEvent actionEvent) {
                     item.setName(nameInput.getText());
                     item.setWeight(Float.parseFloat(weightInput.getText()));
-                    Settings.editFoodItem(item);
+                    updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
                 }
             });
 
@@ -185,7 +185,7 @@ public class FoodItems implements Initializable {
                     contentGrid.getChildren().remove(weightInput);
                     contentGrid.getChildren().remove(removeFood);
 
-                    Settings.removeFoodItem(item);
+                    updateRunBtn("Not enough Food items", Settings.removeFoodItem(item));
                 }
             });
 
@@ -215,9 +215,7 @@ public class FoodItems implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 newFood.setName(nameInput.getText());
                 newFood.setWeight(Float.parseFloat(weightInput.getText()));
-                if (Settings.editFoodItem(newFood)) {
-                    //TODO: update run button
-                }
+                updateRunBtn("Invalid food weight", Settings.editFoodItem(newFood));
             }
         });
 
@@ -227,9 +225,7 @@ public class FoodItems implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 newFood.setName(nameInput.getText());
                 newFood.setWeight(Float.parseFloat(weightInput.getText()));
-                if (Settings.editFoodItem(newFood)) {
-                    // TODO: update run button
-                }
+                updateRunBtn("Invalid Food Weight", Settings.editFoodItem(newFood));
             }
         });
 
@@ -266,16 +262,18 @@ public class FoodItems implements Initializable {
         gridIndex++;
 
         //insert item into settings
-        Settings.addFoodItem(newFood);
+        updateRunBtn("Invalid food items", Settings.addFoodItem(newFood));
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {
         if (valid) {
             runSimButton.setStyle("-fx-background-color: #0078D7");
             runSimButton.setText("Run");
+            runSimButton.setDisable(false);
         } else {
             runSimButton.setStyle("-fx-background-color: #EC2F08");
             runSimButton.setText(errMessage);
+            runSimButton.setDisable(true);
         }
     }
 }
