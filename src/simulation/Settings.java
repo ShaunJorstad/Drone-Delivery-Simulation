@@ -84,7 +84,16 @@ public class Settings {
      */
     public static boolean removeFoodItem(FoodItem foodItem) {
         foods.remove(foodItem);
+        for (Meal meal : meals) {
+            meal.removeFoodItem(foodItem);
+        }
         return !foods.isEmpty();
+    }
+
+    public static void updateMeals(FoodItem foodItem) {
+        for (Meal meal : meals) {
+            meal.calcWeight();
+        }
     }
 
     /**

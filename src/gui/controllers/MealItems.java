@@ -173,10 +173,7 @@ public class MealItems implements Initializable {
         TextField mealName = new TextField(meal.getName());
         mealName.getStyleClass().add("mealName");
         mealName.setOnAction(actionEvent -> {
-            // update name within settings
             meal.setName(mealName.getText());
-            // TODO: question: This line below is unecessary correct?
-            //Settings.editMeal(meal);
         });
 
         Text mealWeight = new Text("Weight (lbs): ");
@@ -198,7 +195,7 @@ public class MealItems implements Initializable {
             // update menu item in settings
             meal.setDistribution(Float.parseFloat(distribution.getText()));
             // TODO: question: This is unecessary
-            updateRunBtn("Invalid Meal Distributions", Settings.editMeal(meal));
+            updateRunBtn("Invalid Meal Distributions", Settings.verifyMeals());
         });
 
 
@@ -210,7 +207,7 @@ public class MealItems implements Initializable {
             meal.incrementFoodItem(newFoodItem, 0);
             addFood(mealGrid, newFoodItem, meal, weight, addItemBtn, 0);
             // TODO: update settings
-            updateRunBtn("Invalid Food Items", Settings.editMeal(meal));
+            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
             if (meal.getOutstandingFoodItems().isEmpty()) {
                 addItemBtn.setDisable(true);
                 addItemBtn.setVisible(false);
@@ -247,6 +244,9 @@ public class MealItems implements Initializable {
         if (!Settings.getMeals().contains(meal)) {
             updateRunBtn("Invalid Meal Settings", Settings.addMeal(meal));
         }
+        else {
+            updateRunBtn("Invalid meal settings", Settings.verifyMeals());
+        }
     }
 
     public void addFood(GridPane grid, FoodItem food, Meal meal, Text weight, Button addItemBtn, int num) {
@@ -258,7 +258,6 @@ public class MealItems implements Initializable {
         foodName.setOnMouseEntered(actionEvent -> {
             updateMenuItems(foodName, meal, food, weight, addItemBtn);
         });
-//        foodName.fire();
 
         Text number = new Text(String.valueOf(meal.getNumberOfFood(food)));
         number.getStyleClass().add("foodNumber");
@@ -270,7 +269,7 @@ public class MealItems implements Initializable {
             meal.incrementFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
             number.setText(String.valueOf((Integer.parseInt(number.getText()) + 1)));
-            // TODO: update run button
+            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
         });
 
         Button decrease = new Button("down");
@@ -279,7 +278,7 @@ public class MealItems implements Initializable {
             meal.decrementFoodItem(food, 1);
             weight.setText(String.valueOf(meal.getWeight()));
             number.setText(String.valueOf(meal.getNumberOfFood(food)));
-            // TODO: update run button
+            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
         });
 
 
@@ -303,6 +302,7 @@ public class MealItems implements Initializable {
             meal.removeFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
             // TODO: update run button
+            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
 
             // enable addItemButton
             addItemBtn.setDisable(false);
@@ -318,6 +318,7 @@ public class MealItems implements Initializable {
         GridPane.setMargin(number, new Insets(15, 0, 0, 34));
         GridPane.setMargin(removeMeal, new Insets(15, 0, 0, 15));
         gridIndex++;
+        updateRunBtn("Invalid Food Items", Settings.verifyMeals());
     }
 
     public void updateMenuItems(MenuButton dropdown, Meal meal, FoodItem food, Text weight, Button addItemBtn) {
@@ -337,6 +338,7 @@ public class MealItems implements Initializable {
                 updateMenuItems(dropdown, meal, food, weight, addItemBtn);
             });
         }
+        updateRunBtn("Invalid Food Items", Settings.verifyMeals());
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {

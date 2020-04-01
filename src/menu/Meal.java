@@ -149,6 +149,13 @@ public class Meal {
         return foodItems.get(food);
     }
 
+    public void calcWeight() {
+        weight = 0;
+        foodItems.forEach((key, value) -> {
+            weight += key.getWeight() * value;
+        });
+    }
+
     @Override
     public String toString() {
         String out = name + ":\n";
