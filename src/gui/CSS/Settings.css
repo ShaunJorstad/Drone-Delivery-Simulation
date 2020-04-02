@@ -29,10 +29,15 @@
     -fx-font-size: 14pt;
 }
 
+.buttonIcon {
+    -fx-background-color: #153093;
+}
+
 .settingsControls{
     -fx-padding: 13 24 13 24;
     -fx-background-color: #2353FE;
     -fx-font-size: 13pt;
+    -fx-content-display: right;
 }
 
 .grayButton {
@@ -62,3 +67,5 @@
     -fx-background-color: transparent;
     /*-fx-background-color: transparent;*/
 }
+
+
