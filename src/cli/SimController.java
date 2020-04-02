@@ -25,8 +25,8 @@ public class SimController {
     File ordersFile; //xml file that saves the orders
     private static Settings settings;
     int MINUTES_IN_SIM = 240; //The number of minutes in the simulation
-    ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
-    ArrayList<Results> aggregatedResultsKnapsack;
+    private ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
+    private ArrayList<Results> aggregatedResultsKnapsack;
     int NUMBER_OF_SIMULATIONS = 50;
 
     ArrayList<PlacedOrder> test;
