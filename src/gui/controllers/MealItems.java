@@ -54,6 +54,8 @@ public class MealItems implements Initializable {
     public VBox settingButtons;
     public ScrollPane scrollpane;
     public VBox mealsVBox;
+    public ImageView uploadImage;
+    public ImageView downloadImage;
 
     private int gridIndex;
 
@@ -78,8 +80,24 @@ public class MealItems implements Initializable {
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
         gridIndex = 1;
+        loadIcons();
         inflateMeals();
     }
+
+    public void loadIcons() {
+        File backFile;
+        if (Navigation.isEmpty()) {
+            backFile = new File("assets/icons/backGray.png");
+        } else {
+            backFile = new File("assets/icons/backBlack.png");
+        }
+        Image backArrowImage = new Image(backFile.toURI().toString());
+        backImage.setImage(backArrowImage);
+
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));

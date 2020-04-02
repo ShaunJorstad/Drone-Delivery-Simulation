@@ -53,6 +53,20 @@ public class Settings {
 
     // Food Items----------------------------------------------------------------
 
+    public static String verifySettings() {
+        if (!verifyFoodItems()) {
+            return "Incorrect Food Items";
+        }
+        if (!verifyMeals()) {
+            return "Incorrect Meal Items";
+        }
+        if (!verifyDistribution()) {
+            return "Incorect Order Distribution";
+        }
+        return "";
+    }
+
+
     /**
      * Adds the provided food item
      *
@@ -198,7 +212,7 @@ public class Settings {
      *
      * @return true if valid settings
      */
-    private boolean verifyDistribution() {
+    public static boolean verifyDistribution() {
         return true;
     }
 
