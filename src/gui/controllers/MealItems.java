@@ -263,8 +263,14 @@ public class MealItems implements Initializable {
         number.getStyleClass().add("foodNumber");
 
         // add icons to increase and decrease
-        Button increase = new Button("up");
-        increase.getStyleClass().add("increase");
+        File increasePath = new File("assets/icons/plus.png");
+        Image increaseImage = new Image(increasePath.toURI().toString());
+        ImageView plus = new ImageView(increaseImage);
+        plus.setFitHeight(20);
+        plus.setFitWidth(20);
+        plus.setPreserveRatio(true);
+        Button increase = new Button("", plus);
+        increase.getStyleClass().add("removeButton");
         increase.setOnAction(actionEvent -> {
             meal.incrementFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
@@ -272,8 +278,14 @@ public class MealItems implements Initializable {
             updateRunBtn("Invalid Food Items", Settings.verifyMeals());
         });
 
-        Button decrease = new Button("down");
-        decrease.getStyleClass().add("decrease");
+        File decreasePath = new File("assets/icons/minus.png");
+        Image decreaseImage = new Image(decreasePath.toURI().toString());
+        ImageView minus = new ImageView(decreaseImage);
+        minus.setFitWidth(20);
+        minus.setFitHeight(20);
+        minus.setPreserveRatio(true);
+        Button decrease = new Button("", minus);
+        decrease.getStyleClass().add("removeButton");
         decrease.setOnAction(actionEvent -> {
             meal.decrementFoodItem(food, 1);
             weight.setText(String.valueOf(meal.getWeight()));
@@ -317,6 +329,9 @@ public class MealItems implements Initializable {
         GridPane.setMargin(foodName, new Insets(15, 0, 0, 30));
         GridPane.setMargin(number, new Insets(15, 0, 0, 34));
         GridPane.setMargin(removeMeal, new Insets(15, 0, 0, 15));
+        GridPane.setMargin(decrease, new Insets(15, 0, 0, 0));
+        GridPane.setMargin(increase, new Insets(15, 0, 0, 0));
+
         gridIndex++;
         updateRunBtn("Invalid Food Items", Settings.verifyMeals());
     }
