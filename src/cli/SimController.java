@@ -4,6 +4,7 @@ import menu.DefaultFood;
 import menu.Destination;
 import menu.Meal;
 import napsack.Knapsack;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -424,5 +425,21 @@ public class SimController {
             single_instance = new SimController();
         }
         return settings;
+    }
+    
+    public String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
+    	String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+    			"<data-set>";
+    	for (int i = 0; i < resultsFifo.size(); i++) {
+    		out += "\n\t<record>\n\t\t";
+    		out += "<Simulation Number>" + (i+1) + "</Simulation Number>\n\t\t";
+    		out += "<Fifo Average Time>" + resultsFifo.get(i).getAvgTime() + "</Fifo Average Time>\n\t\t";
+    		out += "<Fifo Worst Time>" + resultsFifo.get(i).getWorstTime() + "</Fifo Worst Time>\n\t";
+    		out += "<Knapsack Average Time>" + resultsKnapsack.get(i).getAvgTime() + "</Knapsack Average Time>\n\t\t";
+    		out += "<Knapsack Worst Time>" + resultsKnapsack.get(i).getWorstTime() + "</Knapsack Worst Time>\n\t";
+    		out += "</record>";
+    	}
+    	out += "\n<data-set>";
+    	return out;
     }
 }

@@ -36,15 +36,12 @@ public class Results {
 	}
 
 	
-	public void export(String url) throws Exception {
-		/* TODO: generate csv */
-	}
 
 	/**
 	 * Find the longest delivery time
 	 * @return
 	 */
-	private double getWorstTime() {
+	public double getWorstTime() {
 		double highest = times.get(0);
 		if (times.size() > 1) {
 			for (int i = 1; i < times.size(); i++) {
@@ -59,7 +56,7 @@ public class Results {
 	 * Find the average delivery time
 	 * @return
 	 */
-	private double getAvgTime() {
+	public double getAvgTime() {
 		double total = 0f;
 		for (double curr : times) {
 			total += curr;
