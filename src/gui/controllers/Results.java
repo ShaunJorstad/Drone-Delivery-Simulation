@@ -57,8 +57,8 @@ public class Results implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
-
-        if (SimController.hasResults()) {
+        SimController simController = SimController.getInstance();
+        if (simController.hasResults()) {
             displayResults();
         }
 
@@ -117,13 +117,13 @@ public class Results implements Initializable {
         ArrayList<simulation.Results> knapsackData = simController.getAggregatedResultsKnapsack();
 
         // FIFO: average, worst, total
-        double fifoWorst = simController.getWorstTime();
-        double fifoAverage = SimController.getFifoAverage();
-        double fifoTotal = SimController.getFifoTotal();
+        double fifoWorst = simController.getAggregatedWorstTime(fifoData);
+        double fifoAverage = simController.getAggregatedAvgTime(fifoData);
+        //double fifoTotal = SimController.getFifoTotal();
         // Knapsack: Average, worst, total
-        double knapsackWorst = SimController.getKnapsackAverage();
-        double knapsackAverage = SimController.getKnapsackWorst();
-        double knapsackTotal = SimController.getKnapsackTotal();
+        double knapsackWorst = simController.getAggregatedWorstTime(knapsackData);
+        double knapsackAverage = simController.getAggregatedAvgTime(knapsackData);
+        //double knapsackTotal = SimController.getKnapsackTotal();
 
 
 
