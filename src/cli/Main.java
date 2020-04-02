@@ -5,7 +5,11 @@ public class Main {
 
         System.out.println("testing");
         SimController simController = SimController.getInstance();
-        simController.generateOrders();
-        simController.runAlgorithms();
+        for (int i = 0; i < simController.getNUMBER_OF_SIMULATIONS(); i++) {
+            simController.generateOrders();
+            simController.runAlgorithms();
+
+        }
+
     }
 }
