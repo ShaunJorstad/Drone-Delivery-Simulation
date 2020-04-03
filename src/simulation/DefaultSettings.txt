@@ -1,0 +1,36 @@
+<d>	HAL	0	225	225
+<d>	MAP	375	675	772.1722606
+<d>	MEP	450	450	636.3961031
+<d>	Harker	225	450	503.1152949
+<d>	Hicks	-450	-225	503.1152949
+<d>	Hopemen	-600	450	750
+<d>	Ketler	-225	675	711.5124735
+<d>	Lincoln	-450	525	691.4658343
+<d>	Alumni	150	75	167.7050983
+<d>	Memorial	-450	900	1006.23059
+<d>	PEW	-600	-450	750
+<d>	Buhl	-375	75	382.4264635
+<d>	Crawford	-225	900	927.6987658
+<d>	Haberson	150	975	986.4709828
+<d>	Rathburn	450	975	1073.83658
+<d>	IM Fields	-525	-300	604.6693311
+<d>	Baseball Field	750	900	1171.537451
+<d>	Soccer Fields	900	525	1041.933299
+<d>	Football Field	-300	2025	2047.10161
+<d>	Appartments	-450	2250	2294.558781
+<d>	Rockwell	0	450	450
+<d>	Tennis Courts	75	2175	2176.292719
+<d>	Softball Field	675	750	1009.021804
+<d>	QUAD	0	750	750
+<d>	PLC	375	300	480.2343178
+<f>	Hamburger	6
+<f>	Fries	4
+<f>	Drink	14
+<m>	Combo1	0	0.55	hamburger	1	fries	1	drink	1
+<m>	Combo2	1	0.10	hamburger	2	fries	1	drink	1
+<m>	Combo3	2	0.20	hamburger	1	fries	1
+<m>	Combo4	3	0.15	hamburger	2	fries	1
+<o>	15
+<o>	17
+<o>	22
+<o>	15

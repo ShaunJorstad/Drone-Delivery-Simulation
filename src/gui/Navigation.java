@@ -13,6 +13,7 @@
 
 package gui;
 
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -109,6 +110,7 @@ public class Navigation {
         splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
         splashScene.getStylesheets().add("gui/CSS/Settings.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
+        splashScene.setCursor(Cursor.HAND);
         stage.setScene(splashScene);
     }
 

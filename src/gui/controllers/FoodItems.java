@@ -7,36 +7,29 @@
 
 package gui.controllers;
 
-import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menu.FoodItem;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class FoodItems implements Initializable {
@@ -72,10 +65,17 @@ public class FoodItems implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         foodItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
-        loadIcons();
-        injectCursorStates();
+        File backFile;
+        if (Navigation.isEmpty()) {
+            backFile = new File("assets/icons/backGray.png");
+        } else {
+            backFile = new File("assets/icons/backBlack.png");
+        }
+        Image backArrowImage = new Image(backFile.toURI().toString());
+        backImage.setImage(backArrowImage);
 
         gridIndex = 1;
+        loadIcons();
         inflateFoodItems();
     }
 
@@ -93,26 +93,6 @@ public class FoodItems implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
-    public void injectCursorStates() {
-
-        List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importSettingsButton, exportSettingsButton, addFood);
-        for (Button item : items) {
-            item.setOnMouseEntered(mouseEvent -> {
-                item.getScene().setCursor(Cursor.HAND);
-            });
-            item.setOnMouseExited(mouseEvent -> {
-                item.getScene().setCursor(Cursor.DEFAULT);
-            });
-        }
-    }
-    public void injectCursorStates(Button btn) {
-        btn.setOnMouseEntered(mouseEvent -> {
-            btn.getScene().setCursor(Cursor.HAND);
-        });
-        btn.setOnMouseExited(mouseEvent -> {
-            btn.getScene().setCursor(Cursor.DEFAULT);
-        });
-    }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
@@ -166,9 +146,11 @@ public class FoodItems implements Initializable {
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {
+        Settings.importSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
+        Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
@@ -176,25 +158,24 @@ public class FoodItems implements Initializable {
 
     public void inflateFoodItems() {
 //        load food items from settings object
-        for (FoodItem item : SimController.getDefaultFood().getFoods()) {
+        for (FoodItem item : Settings.getFoods()) {
             TextField nameInput = new TextField(item.getName());
+            TextField weightInput = new TextField(Float.toString(item.getWeight()));
+
             nameInput.getStyleClass().add("foodName");
-            nameInput.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-//                    update simcontroller data
-//                    verify weights
-                }
+            nameInput.setOnAction(actionEvent -> {
+                item.setName(nameInput.getText());
+                item.setWeight(Float.parseFloat(weightInput.getText()));
+                //updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
             });
 
-            TextField weightInput = new TextField(Float.toString(item.getWeight()));
             weightInput.getStyleClass().add("foodWeight");
-            weightInput.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    // update simcontroller data
-//                verify weights
-                }
+            weightInput.setOnAction(actionEvent -> {
+                item.setName(nameInput.getText());
+                item.setWeight(Float.parseFloat(weightInput.getText()));
+                Settings.updateMeals(item);
+                //TODO: fix this. don't need to set the item
+                updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
             });
 
             // margins
@@ -210,19 +191,14 @@ public class FoodItems implements Initializable {
             icon.setPreserveRatio(true);
             Button removeFood = new Button("", icon);
             removeFood.getStyleClass().add("removeButton");
-            removeFood.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    // remove fields
-                    contentGrid.getChildren().remove(nameInput);
-                    contentGrid.getChildren().remove(weightInput);
-                    contentGrid.getChildren().remove(removeFood);
+            removeFood.setOnAction(actionEvent -> {
+                // remove fields
+                contentGrid.getChildren().remove(nameInput);
+                contentGrid.getChildren().remove(weightInput);
+                contentGrid.getChildren().remove(removeFood);
 
-                    //TODO:  delete from settings
-                    /* code */
-                }
+                updateRunBtn("Not enough Food items", Settings.removeFoodItem(item));
             });
-            injectCursorStates(removeFood);
 
 //        add button
             contentGrid.add(nameInput, 0, gridIndex);
@@ -239,24 +215,23 @@ public class FoodItems implements Initializable {
 
     public void handleAddFoodItem(ActionEvent actionEvent) {
 //        insert new fields into table and change run button to red
+        FoodItem newFood = new FoodItem("food name", 0);
+
         TextField nameInput = new TextField("food name");
+        TextField weightInput = new TextField("0");
+
         nameInput.getStyleClass().add("foodName");
-        nameInput.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-//                    update simcontroller data
-//                    verify weights
-            }
+        nameInput.setOnAction(actionEvent12 -> {
+            newFood.setName(nameInput.getText());
+            newFood.setWeight(Float.parseFloat(weightInput.getText()));
+            updateRunBtn("Invalid food weight", Settings.editFoodItem(newFood));
         });
 
-        TextField weightInput = new TextField("0");
         weightInput.getStyleClass().add("foodWeight");
-        weightInput.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                // update simcontroller data
-//                verify weights
-            }
+        weightInput.setOnAction(actionEvent13 -> {
+            newFood.setName(nameInput.getText());
+            newFood.setWeight(Float.parseFloat(weightInput.getText()));
+            updateRunBtn("Invalid Food Weight", Settings.editFoodItem(newFood));
         });
 
         // margins
@@ -279,10 +254,8 @@ public class FoodItems implements Initializable {
             contentGrid.getChildren().remove(weightInput);
             contentGrid.getChildren().remove(removeFood);
 
-            // TODO: delete from settings
-            /* code */
+            updateRunBtn("Not enough Food items", Settings.removeFoodItem(newFood));
         });
-        injectCursorStates(removeFood);
 
         contentGrid.add(nameInput, 0, gridIndex);
         contentGrid.add(weightInput, 1, gridIndex);
@@ -293,17 +266,19 @@ public class FoodItems implements Initializable {
         GridPane.setMargin(removeFood, three);
         gridIndex++;
 
-        //insert
+        //insert item into settings
+        updateRunBtn("Invalid food items", Settings.addFoodItem(newFood));
     }
 
-    public void modifyRunButton(String text, boolean valid) {
+    public void updateRunBtn(String errMessage, boolean valid) {
         if (valid) {
-//            make button blue
             runSimButton.setStyle("-fx-background-color: #0078D7");
+            runSimButton.setText("Run");
+            runSimButton.setDisable(false);
         } else {
-//            make button red
             runSimButton.setStyle("-fx-background-color: #EC2F08");
+            runSimButton.setText(errMessage);
+            runSimButton.setDisable(true);
         }
-        runSimButton.setText(text);
     }
 }

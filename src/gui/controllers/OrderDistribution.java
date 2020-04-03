@@ -7,16 +7,13 @@
 
 package gui.controllers;
 
-import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -27,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -158,14 +156,16 @@ public class OrderDistribution implements Initializable {
     public void handleRunSimulation(ActionEvent actionEvent) {
     }
 
-    public void handleExportSettings(ActionEvent actionEvent) {
+    public void handleImportSettings(ActionEvent actionEvent) {
+        Settings.importSettings((Stage) home.getScene().getWindow());
     }
 
-    public void handleImportSettings(ActionEvent actionEvent) {
+    public void handleExportSettings(ActionEvent actionEvent) {
+        Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
     public void inflateOrderDistribution() {
-        for (Integer numOrders : SimController.getSettings().getOrderDistribution()) {
+        for (Integer numOrders : Settings.getOrderDistribution()) {
             addHour(numOrders);
         }
     }
@@ -177,9 +177,10 @@ public class OrderDistribution implements Initializable {
         TextField orderField = new TextField();
         orderField.setText(Integer.toString(numOrders));
         orderField.getStyleClass().add("orderField");
+        int distIndex = gridIndex -1;
         orderField.setOnAction(actionEvent -> {
-//            TODO: update settings object
-//            TODO: check settings for correctness
+            // TODO: sanitize input
+            Settings.editDistribution(distIndex, Integer.parseInt(orderField.getText()));
         });
 
         GridPane.setMargin(hourTitle, new Insets(15, 0, 0, 0));
