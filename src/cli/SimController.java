@@ -281,6 +281,7 @@ public class SimController {
                     //Get the destination
                     dname = e.getElementsByTagName("dest").item(0).getTextContent();
                     Scanner destScanner = new Scanner(dname);
+                    destScanner.useDelimiter("\t");
                     dest = new Destination(destScanner.next(), destScanner.nextInt(), destScanner.nextInt());
                     destScanner.close();
 
