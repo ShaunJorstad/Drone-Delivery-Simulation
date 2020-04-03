@@ -46,7 +46,7 @@
                     <Text id="nameTitle" styleClass="gridTitle" text="Name" fx:id="nameTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="0"/>
-                    <Text id="weightTitle" styleClass="gridTitle" fx:id="weightTitle" text="Weight (lbs)" fill="808080"
+                    <Text id="weightTitle" styleClass="gridTitle" fx:id="weightTitle" text="Weight (oz)" fill="808080"
                           GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
                 </GridPane>
                 <Button id="addFood" fx:id="addFood" styleClass="grayButton" text="Add Item" textFill="ffffff"

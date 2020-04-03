@@ -194,7 +194,7 @@ public class MealItems implements Initializable {
             meal.setName(mealName.getText());
         });
 
-        Text mealWeight = new Text("Weight (lbs): ");
+        Text mealWeight = new Text("Weight (oz): ");
         mealWeight.getStyleClass().add("weightTitle");
 
         Text weight = new Text(Float.toString(meal.getWeight()));
