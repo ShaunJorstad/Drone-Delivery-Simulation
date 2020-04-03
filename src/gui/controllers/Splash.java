@@ -38,7 +38,6 @@ public class Splash implements Initializable {
 
     @FXML
     public ImageView SplashImage;
-    public Button simButton;
     public VBox vBox;
     public HBox navBar;
     public Button home;
@@ -46,6 +45,7 @@ public class Splash implements Initializable {
     public Button results;
     public Button back;
     public ImageView backImage;
+    public Button nextButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,12 +67,10 @@ public class Splash implements Initializable {
 
         injectCursorStates();
 
-        //registers onclick handler
-        simButton.setOnAction(this::runSimulationHandler);
     }
 
     public void injectCursorStates() {
-        List<Button> items = Arrays.asList(home, settings, results, back, simButton);
+        List<Button> items = Arrays.asList(home, settings, results, back, nextButton);
         for (Button item : items) {
             item.setOnMouseEntered(mouseEvent -> {
                 item.getScene().setCursor(Cursor.HAND);
@@ -81,11 +79,6 @@ public class Splash implements Initializable {
                 item.getScene().setCursor(Cursor.DEFAULT);
             });
         }
-    }
-
-    @FXML
-    public void runSimulationHandler(ActionEvent event) {
-        System.out.println("You clicked me!");
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) {
@@ -110,5 +103,11 @@ public class Splash implements Initializable {
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+    }
+
+    public void handleNextButton(ActionEvent actionEvent) throws IOException {
+        Navigation.pushScene("Splash");
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
+        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
     }
 }

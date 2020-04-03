@@ -11,5 +11,7 @@ public class Main {
 
         }
 
+        //GUIFunction(simController.getAggregatedResultsFIFO(), simController.getAggregatedResultsKnapsack());
+
     }
 }
