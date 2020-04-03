@@ -55,8 +55,10 @@ public class SimController {
             System.out.println((e.getMessage()));
         }
 
-        settings =  getSettings();
-        //System.out.println(defaultFood.mapToString());
+        settings =  settings.getInstance();
+
+
+
     }
 
     //Singleton creator
@@ -420,12 +422,12 @@ public class SimController {
         return aggregatedResultsKnapsack;
     }
 
-    public static Settings getSettings() {
+    /*public static Settings getSettings() {
         if (single_instance == null) {
-            single_instance = new SimController();
+            single_instance = new Settings();
         }
         return settings;
-    }
+    }*/
 
     public int getNUMBER_OF_SIMULATIONS() {
         return NUMBER_OF_SIMULATIONS;

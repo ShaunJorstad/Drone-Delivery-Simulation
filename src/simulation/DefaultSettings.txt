@@ -26,7 +26,11 @@
 <f>	Hamburger	6
 <f>	Fries	4
 <f>	Drink	14
-<m>	Combo1	0	0.55f	hamburger	1	fries	1	drink	1
-<m>	Combo2	1	0.10f	hamburger	2	fries	1	drink	1
-<m>	Combo3	2	0.20f	hamburger	1	fries	1
-<m>	Combo4	3	0.15f	hamburger	2	fries	1
+<m>	Combo1	0	0.55	hamburger	1	fries	1	drink	1
+<m>	Combo2	1	0.10	hamburger	2	fries	1	drink	1
+<m>	Combo3	2	0.20	hamburger	1	fries	1
+<m>	Combo4	3	0.15	hamburger	2	fries	1
+<o>	15
+<o>	17
+<o>	22
+<o>	15
