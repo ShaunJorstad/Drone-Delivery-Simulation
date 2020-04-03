@@ -38,8 +38,8 @@
     </center>
     <bottom>
         <AnchorPane>
-            <Button id="nextButton" fx:id="simButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120" text="Next"
-                    textFill="ffffff"/>
+            <Button id="nextButton" fx:id="nextButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120" text="Next"
+                    textFill="ffffff" onAction="#handleNextButton"/>
         </AnchorPane>
     </bottom>
 </BorderPane>

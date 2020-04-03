@@ -11,6 +11,8 @@ public class Results {
 
 	private ArrayList<Double> times; //Saves the delivery time of all the orders of one run of the simulation
 	private final double MAXTIME = 120; //Maximum time for a item to be delivered in minutes
+	private double worstTime;
+	private double avgTime;
 	
 	public Results() {
 		times = new ArrayList<>();
@@ -41,7 +43,9 @@ public class Results {
 	 * Find the longest delivery time
 	 * @return
 	 */
-	public double getWorstTime() {
+
+	private double calcWorstTime() {
+
 		double highest = times.get(0);
 		if (times.size() > 1) {
 			for (int i = 1; i < times.size(); i++) {
@@ -49,19 +53,23 @@ public class Results {
 					highest = times.get(i);
 			}//for
 		}//if
-		return highest;
+		worstTime = highest;
+		return worstTime;
 	}
 
 	/**
 	 * Find the average delivery time
 	 * @return
 	 */
-	public double getAvgTime() {
+
+	private double calcAvgTime() {
+
 		double total = 0f;
 		for (double curr : times) {
 			total += curr;
 		}
-		return total / times.size();
+		avgTime = total/ times.size();
+		return avgTime;
 	}
 
 	/**
@@ -70,9 +78,24 @@ public class Results {
 	 * @param algorithm The name of the algorithm that the results are for
 	 */
 	public void getFinalResults(String algorithm) {
-		System.out.println("The worst time for " + algorithm + " is: " + getWorstTime());
-		System.out.println("The average time for " + algorithm + " is: " + getAvgTime());
+		System.out.println("The worst time for " + algorithm + " is: " + calcWorstTime());
+		System.out.println("The average time for " + algorithm + " is: " + calcAvgTime());
 	}
+
+	public double getWorstTime() {
+		return worstTime;
+	}
+
+	public double getAvgTime() {
+		return avgTime;
+	}
+
+
+
+
+
+
+
 
 
 	
