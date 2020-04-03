@@ -3,6 +3,7 @@ package cli;
 import menu.Destination;
 import menu.Meal;
 import napsack.Knapsack;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -58,9 +59,6 @@ public class SimController {
         }
 
         settings =  settings.getInstance();
-
-
-
     }
 
     //Singleton creator
@@ -162,6 +160,7 @@ public class SimController {
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders);
         Fifo f = new Fifo(allOrders);
+        int loadMealTime = 0;
 
         //UNCOMMENT THE CODE WHEN YOU HAVE KNAPSACK/FIFO REFACTORED
 
@@ -169,7 +168,7 @@ public class SimController {
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone in ft/minute
         int droneDeliveryNumber = 1;
-        /*
+
         try {
 
 
@@ -179,10 +178,10 @@ public class SimController {
                 if (droneRun == null) {
                     ordersStillToProcess = false;
                 } else {
-                    elapsedTime += n.getTimeSkipped();
+                    elapsedTime += n.getTimeSkipped() + loadMealTime;
                     //Find how long the delivery takes
                     elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
-                    System.out.println("Time that delivery " + droneDeliveryNumber + " arrived: " + elapsedTime);
+                    //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
                     results.processDelivery(elapsedTime, droneRun);
                     elapsedTime += 3;
                 }
@@ -193,10 +192,8 @@ public class SimController {
             System.out.println(e.getMessage());
         }
 
+
         aggregatedResultsKnapsack.add(results);
-         */
-
-
 
         try {
 
@@ -213,9 +210,7 @@ public class SimController {
                 if (droneRun == null) {
                     ordersStillToProcess = false;
                 } else {
-                    double test = f.getTimeSkipped();
-                    //System.out.println("f.getTimeSkipped()" + test);
-                    elapsedTime += test;
+                    elapsedTime += f.getTimeSkipped() + loadMealTime;
                     //Find how long the delivery takes
                     elapsedTime += TSP(droneRun)/droneSpeed + .5 * droneRun.size();
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
@@ -455,10 +450,24 @@ public class SimController {
         }
         return worst;
     }
+    public String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
+    	String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+    			"<data-set>";
+    	for (int i = 0; i < resultsFifo.size(); i++) {
+    		out += "\n\t<record>\n\t\t";
+    		out += "<Simulation Number>" + (i+1) + "</Simulation Number>\n\t\t";
+    		out += "<Fifo Average Time>" + resultsFifo.get(i).getAvgTime() + "</Fifo Average Time>\n\t\t";
+    		out += "<Fifo Worst Time>" + resultsFifo.get(i).getWorstTime() + "</Fifo Worst Time>\n\t";
+    		out += "<Knapsack Average Time>" + resultsKnapsack.get(i).getAvgTime() + "</Knapsack Average Time>\n\t\t";
+    		out += "<Knapsack Worst Time>" + resultsKnapsack.get(i).getWorstTime() + "</Knapsack Worst Time>\n\t";
+    		out += "</record>";
+    	}
+    	out += "\n<data-set>";
+    	return out;
+    }
 
     public boolean hasResults() {
         return simRan;
     }
-
 
 }
