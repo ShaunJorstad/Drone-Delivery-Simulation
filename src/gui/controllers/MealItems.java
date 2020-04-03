@@ -178,7 +178,7 @@ public class MealItems implements Initializable {
 
     public void addMeal(Meal meal) {
         GridPane mealGrid = new GridPane();
-        VBox.setMargin(mealGrid, new Insets(0, 0, 15, 0));
+        VBox.setMargin(mealGrid, new Insets(50, 0, 15, 0));
 
         GridPane controlGrid = new GridPane();
         controlGrid.setHgap(15);

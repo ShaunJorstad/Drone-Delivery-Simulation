@@ -58,9 +58,9 @@ public class Results implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-        if (SimController.hasResults()) {
-            displayResults();
-        }
+//        if (SimController.hasResults()) {
+//            displayResults();
+//        }
 
         injectCursorStates();
     }
@@ -88,7 +88,7 @@ public class Results implements Initializable {
     }
 
     public void handleExport(ActionEvent actionEvent) {
-        String exportData = SimController.exportResults();
+//        String exportData = SimController.exportResults();
         System.out.println();
     }
 
@@ -113,16 +113,16 @@ public class Results implements Initializable {
 
     public void displayResults() {
         // FIFO: average, worst, total
-        double fifoWorst = SimController.getFifoWorst();
-        double fifoAverage = SimController.getFifoAverage();
-        double fifoTotal = SimController.getFifoTotal();
-        // Knapsack: Average, worst, total
-        double knapsackWorst = SimController.getKnapsackAverage();
-        double knapsackAverage = SimController.getKnapsackWorst();
-        double knapsackTotal = SimController.getKnapsackTotal();
-
-        ArrayList<Results> fifoData = SimController.getFifoData();
-        ArrayList<Results> knapsackData = SimController.getKnapsackData();
+//        double fifoWorst = SimController.getFifoWorst();
+//        double fifoAverage = SimController.getFifoAverage();
+//        double fifoTotal = SimController.getFifoTotal();
+//        // Knapsack: Average, worst, total
+//        double knapsackWorst = SimController.getKnapsackAverage();
+//        double knapsackAverage = SimController.getKnapsackWorst();
+//        double knapsackTotal = SimController.getKnapsackTotal();
+//
+//        ArrayList<Results> fifoData = SimController.getFifoData();
+//        ArrayList<Results> knapsackData = SimController.getKnapsackData();
 
         // enable export button
         // insert graph view
