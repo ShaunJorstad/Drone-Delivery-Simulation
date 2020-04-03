@@ -58,9 +58,10 @@ public class Results implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-//        if (SimController.hasResults()) {
-//            displayResults();
-//        }
+        SimController simController = SimController.getInstance();
+        if (simController.hasResults()) {
+            displayResults();
+        }
 
         injectCursorStates();
     }
@@ -112,17 +113,19 @@ public class Results implements Initializable {
     }
 
     public void displayResults() {
-        // FIFO: average, worst, total
-//        double fifoWorst = SimController.getFifoWorst();
-//        double fifoAverage = SimController.getFifoAverage();
-//        double fifoTotal = SimController.getFifoTotal();
-//        // Knapsack: Average, worst, total
-//        double knapsackWorst = SimController.getKnapsackAverage();
-//        double knapsackAverage = SimController.getKnapsackWorst();
-//        double knapsackTotal = SimController.getKnapsackTotal();
-//
-//        ArrayList<Results> fifoData = SimController.getFifoData();
-//        ArrayList<Results> knapsackData = SimController.getKnapsackData();
+        SimController simController = SimController.getInstance();
+        ArrayList<simulation.Results> fifoData = simController.getAggregatedResultsFIFO();
+        ArrayList<simulation.Results> knapsackData = simController.getAggregatedResultsKnapsack();
+
+
+        double fifoWorst = simController.getAggregatedWorstTime(fifoData);
+        double fifoAverage = simController.getAggregatedAvgTime(fifoData);
+        //double fifoTotal = SimController.getFifoTotal();
+        // Knapsack: Average, worst, total
+        double knapsackWorst = simController.getAggregatedWorstTime(knapsackData);
+        double knapsackAverage = simController.getAggregatedAvgTime(knapsackData);
+        //double knapsackTotal = SimController.getKnapsackTotal();
+
 
         // enable export button
         // insert graph view
