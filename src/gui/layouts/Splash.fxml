@@ -24,13 +24,13 @@
     </top>
     <center>
         <HBox id="hBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <ImageView id="splashImage" fx:id="SplashImage" fitHeight="660.0" fitWidth="660.0" pickOnBounds="true"
+            <ImageView id="splashImage" fx:id="SplashImage" fitHeight="329.0" fitWidth="329.0" pickOnBounds="true"
                        preserveRatio="true"/>
             <VBox id="vBox" fx:id="vBox" prefHeight="200.0" prefWidth="730.0">
                 <Label id="splashTitle" text="Delivery Simulation"/>
-                <TextFlow id="splashText" prefHeight="200.0" prefWidth="200.0">
+                <TextFlow id="splashText" prefHeight="100.0" prefWidth="100.0">
                     <Text id="splashTextText" fill="#808080"
-                          text="This simulation compares delivery times of knapsack vs fifo delivery systems. Click next to continue to the simulation settings."/>
+                          text="This simulation compares delivery times of &#xD;knapsack vs fifo delivery systems. Click &#xD;next to continue to the simulation settings."/>
                 </TextFlow>
 
             </VBox>
@@ -38,7 +38,7 @@
     </center>
     <bottom>
         <AnchorPane>
-            <Button id="nextButton" fx:id="nextButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120" text="Next"
+            <Button id="nextButton" fx:id="nextButton" contentDisplay="CENTER" layoutX="590" layoutY="-120" text="Next"
                     textFill="ffffff" onAction="#handleNextButton"/>
         </AnchorPane>
     </bottom>

@@ -17,7 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("layouts/Splash.fxml"));
         primaryStage.setTitle("Cyan: Dromedary Drones");
 
-        Scene splashScene = new Scene(root, Navigation.scale(1000), Navigation.scale(700));
+        Scene splashScene = new Scene(root, 800, 600);
         splashScene.getStylesheets().add("gui/CSS/Splash.css");
         splashScene.getStylesheets().add("/gui/CSS/Settings.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
