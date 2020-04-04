@@ -62,17 +62,8 @@ public class FoodItems implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-        foodItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-
-        File backFile;
-        if (Navigation.isEmpty()) {
-            backFile = new File("assets/icons/backGray.png");
-        } else {
-            backFile = new File("assets/icons/backBlack.png");
-        }
-        Image backArrowImage = new Image(backFile.toURI().toString());
-        backImage.setImage(backArrowImage);
+        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
+        foodItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
         gridIndex = 1;
         loadIcons();
@@ -86,13 +77,20 @@ public class FoodItems implements Initializable {
         } else {
             backFile = new File("assets/icons/backBlack.png");
         }
+
+        VBox.setMargin(addFood, new Insets(0, 0, 500, 0));
+
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+        backImage.setFitHeight(16);
+        backImage.setFitWidth(16);
+        backImage.setPreserveRatio(true);
+
+        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
-
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));

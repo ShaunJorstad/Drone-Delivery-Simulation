@@ -64,19 +64,6 @@ public class MealItems implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         mealItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
-        File backFile;
-        if (Navigation.isEmpty()) {
-            backFile = new File("assets/icons/backGray.png");
-        } else {
-            backFile = new File("assets/icons/backBlack.png");
-        }
-        Image backArrowImage = new Image(backFile.toURI().toString());
-        backImage.setImage(backArrowImage);
-
-        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollpane.setFitToHeight(true);
-        scrollpane.setFitToWidth(true);
-
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
         gridIndex = 1;
@@ -93,6 +80,9 @@ public class MealItems implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+        backImage.setFitHeight(16);
+        backImage.setFitWidth(16);
+        backImage.setPreserveRatio(true);
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
