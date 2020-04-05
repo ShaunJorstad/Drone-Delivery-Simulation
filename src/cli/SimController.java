@@ -479,6 +479,10 @@ public class SimController {
         return currentSimulation;
     }
 
+    public static void setSimStatus(int simNumber) {
+        currentSimulation = simNumber;
+    }
+
     public static boolean exportResults(Stage stage) {
         fileChooser.setTitle("Export Settings");
         File file = fileChooser.showSaveDialog(stage);

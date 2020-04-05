@@ -108,6 +108,7 @@ public class FoodItems implements Initializable {
         } else if (status >= 0 && status < 50) { // simulation in progress
             runSimButton.setStyle("-fx-background-color: #1F232F");
             runSimButton.setDisable(true);
+            System.out.println("Calling statusThread.run()");
             statusThread.run();
         }
         else if (status == 50) {
@@ -176,7 +177,16 @@ public class FoodItems implements Initializable {
 
     public void handleRunSimulation(ActionEvent actionEvent) {
         // TODO: run the simulation
+        SimController simController = SimController.getInstance();
+        simController.setSimStatus(0);
         checkSimulationStatus();
+        for (int i = 0; i < simController.getNUMBER_OF_SIMULATIONS(); i++) {
+            simController.generateOrders();
+            simController.runAlgorithms();
+            simController.setSimStatus(i);
+        }
+
+        simController.setSimStatus(-1);
     }
 
     public void inflateFoodItems() {

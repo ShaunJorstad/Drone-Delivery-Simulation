@@ -19,6 +19,7 @@ public class ProgressThread implements Runnable{
 
     @Override
     public void run() {
+        System.out.println("Entered progress thread");
         long length= 5000;
         int status = SimController.getSimStatus();
         while (status < 50) {
@@ -30,6 +31,7 @@ public class ProgressThread implements Runnable{
             try {
                 wait(length);
             } catch (InterruptedException e) {
+                System.out.println("Progress thread wait broken");
                 e.printStackTrace();
             }
         }
