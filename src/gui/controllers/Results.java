@@ -66,6 +66,10 @@ public class Results implements Initializable {
             displayResults();
         }
 
+        if (SimController.getSimStatus() == 50) {
+            displayResults();
+        }
+
         injectCursorStates();
     }
 
@@ -124,11 +128,8 @@ public class Results implements Initializable {
 
         double fifoWorst = simController.getAggregatedWorstTime(fifoData);
         double fifoAverage = simController.getAggregatedAvgTime(fifoData);
-        //double fifoTotal = SimController.getFifoTotal();
-        // Knapsack: Average, worst, total
         double knapsackWorst = simController.getAggregatedWorstTime(knapsackData);
         double knapsackAverage = simController.getAggregatedAvgTime(knapsackData);
-        //double knapsackTotal = SimController.getKnapsackTotal();
 
 
         // enable export button

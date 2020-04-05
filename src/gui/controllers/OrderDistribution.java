@@ -176,6 +176,8 @@ public class OrderDistribution implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+        // TODO: run the simulation
+        checkSimulationStatus();
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {

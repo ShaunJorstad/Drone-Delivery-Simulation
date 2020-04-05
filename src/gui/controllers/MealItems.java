@@ -183,6 +183,8 @@ public class MealItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+        // TODO: run the simulation
+        checkSimulationStatus();
     }
 
     public void inflateMeals() {
