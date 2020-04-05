@@ -25,7 +25,7 @@
     <center>
         <VBox id="vBox" fx:id="vBox" prefHeight="200.0" prefWidth="730.0">
             <Label id="resultsTitle" fx:id="resultsTitle" text="Simulation Results"/>
-            <GridPane hgap="90" vgap="80">
+            <GridPane fx:id="resultsGrid" hgap="90" vgap="80">
                 <padding>
                     <Insets top="50" right="115" bottom="25" left="115"/>
                 </padding>
@@ -35,8 +35,6 @@
                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <Text id="worstText" text="Worst Time"
                       GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <Text id="totalTime" text="Total Time"
-                      GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
                 <Text id="knapsack" text="Knapsack"
                       GridPane.columnIndex="0" GridPane.rowIndex="2"/>

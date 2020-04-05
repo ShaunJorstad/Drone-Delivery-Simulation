@@ -20,8 +20,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import simulation.Settings;
 
@@ -34,6 +36,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Results implements Initializable {
+    public GridPane resultsGrid;
     ProgressThread statusThread;
 
     public Button exportButton;
@@ -69,6 +72,8 @@ public class Results implements Initializable {
         if (SimController.getSimStatus() == 50) {
             displayResults();
         }
+
+        exportButton.setDisable(true);
 
         injectCursorStates();
     }
@@ -131,8 +136,22 @@ public class Results implements Initializable {
         double knapsackWorst = simController.getAggregatedWorstTime(knapsackData);
         double knapsackAverage = simController.getAggregatedAvgTime(knapsackData);
 
+        Text fWorst = new Text(Double.toString(fifoWorst));
+        Text fAverage = new Text(Double.toString(fifoAverage));
+        Text kWorst = new Text(Double.toString(knapsackWorst));
+        Text kAverage = new Text(Double.toString(knapsackAverage));
 
-        // enable export button
+        fWorst.getStyleClass().add("resultsTableText");
+        fAverage.getStyleClass().add("resultsTableText");
+        kAverage.getStyleClass().add("resultsTableText");
+        kWorst.getStyleClass().add("resultsTableText");
+
+        resultsGrid.add(fWorst, 2, 1);
+        resultsGrid.add(fAverage, 1, 1);
+        resultsGrid.add(kWorst, 2, 2);
+        resultsGrid.add(kAverage, 1, 2);
+
+        exportButton.setDisable(false);
         // insert graph view
     }
 }
