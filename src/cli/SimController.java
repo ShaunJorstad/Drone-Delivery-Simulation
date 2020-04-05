@@ -29,6 +29,7 @@ public class SimController {
     private ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
     private ArrayList<Results> aggregatedResultsKnapsack;
     int NUMBER_OF_SIMULATIONS = 50;
+    private static int currentSimulation = -1;
     boolean simRan;
 
     ArrayList<PlacedOrder> test;
@@ -470,4 +471,7 @@ public class SimController {
         return simRan;
     }
 
+    public static int getSimStatus() {
+        return currentSimulation;
+    }
 }

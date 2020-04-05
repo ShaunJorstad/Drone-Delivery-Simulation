@@ -7,6 +7,7 @@
 
 package gui.controllers;
 
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -53,6 +54,14 @@ public class Splash implements Initializable {
         Image droneImage = new Image(droneFile.toURI().toString());
         SplashImage.setImage(droneImage);
 
+        home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+
+        injectCursorStates();
+        loadIcons();
+        checkSimulationStatus();
+    }
+
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -62,11 +71,22 @@ public class Splash implements Initializable {
 
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+    }
 
-        home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-
-        injectCursorStates();
-
+    public void checkSimulationStatus() {
+        int status = SimController.getSimStatus();
+        if (status == -1 ) { // no simulation has been run
+            // TODO: check status of settings
+            return;
+        } else if (status >= 0 && status < 50) { // simulation in progress
+            // TODO: spawn thread to continuously poll singleton
+            // TODO: update button to be gray, disable button
+            // TODO: update button to show % complete
+        }
+        else if (status == 50) {
+            // TODO: update button to say sim complete
+            // TODO: edit handler to take user to results
+        }
     }
 
     public void injectCursorStates() {
