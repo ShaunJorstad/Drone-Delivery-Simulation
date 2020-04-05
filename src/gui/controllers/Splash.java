@@ -7,6 +7,7 @@
 
 package gui.controllers;
 
+import cli.ProgressThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
@@ -26,6 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Splash implements Initializable {
+    ProgressThread statusThread;
 
     @FXML
     public ImageView SplashImage;
@@ -55,6 +58,8 @@ public class Splash implements Initializable {
         SplashImage.setImage(droneImage);
 
         home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+
+        statusThread = new ProgressThread(nextButton);
 
         injectCursorStates();
         loadIcons();
@@ -76,16 +81,17 @@ public class Splash implements Initializable {
     public void checkSimulationStatus() {
         int status = SimController.getSimStatus();
         if (status == -1 ) { // no simulation has been run
-            // TODO: check status of settings
-            return;
+            String settingsValidity = Settings.verifySettings();
+            if (!settingsValidity.equals("")) {
+                updateRunBtn(settingsValidity, false);
+            }
         } else if (status >= 0 && status < 50) { // simulation in progress
-            // TODO: spawn thread to continuously poll singleton
-            // TODO: update button to be gray, disable button
-            // TODO: update button to show % complete
+            nextButton.setStyle("-fx-background-color: #1F232F");
+            nextButton.setDisable(true);
+            statusThread.run();
         }
         else if (status == 50) {
-            // TODO: update button to say sim complete
-            // TODO: edit handler to take user to results
+            nextButton.setText("Run another Sim");
         }
     }
 
@@ -129,5 +135,17 @@ public class Splash implements Initializable {
         Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
         Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
+    }
+
+    public void updateRunBtn(String errMessage, boolean valid) {
+        if (valid) {
+            nextButton.setStyle("-fx-background-color: #0078D7");
+            nextButton.setText("Run");
+            nextButton.setDisable(false);
+        } else {
+            nextButton.setStyle("-fx-background-color: #EC2F08");
+            nextButton.setText(errMessage);
+            nextButton.setDisable(true);
+        }
     }
 }

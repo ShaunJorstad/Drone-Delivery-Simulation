@@ -186,7 +186,7 @@ public class Settings {
             }
             totalDist += meal.getDistribution();
         }
-        if (totalDist != 1) {
+        if (Math.floor(totalDist) != 1) {
             return false;
         }
         return true;

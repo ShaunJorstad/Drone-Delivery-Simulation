@@ -7,6 +7,8 @@
 
 package gui.controllers;
 
+import cli.ProgressThread;
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,6 +35,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FoodItems implements Initializable {
+    ProgressThread statusThread;
+
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -77,6 +81,7 @@ public class FoodItems implements Initializable {
         gridIndex = 1;
         loadIcons();
         inflateFoodItems();
+        checkSimulationStatus();
     }
 
     public void loadIcons() {
@@ -93,6 +98,22 @@ public class FoodItems implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    public void checkSimulationStatus() {
+        int status = SimController.getSimStatus();
+        if (status == -1 ) { // no simulation has been run
+            String settingsValidity = Settings.verifySettings();
+            if (!settingsValidity.equals("")) {
+                updateRunBtn(settingsValidity, false);
+            }
+        } else if (status >= 0 && status < 50) { // simulation in progress
+            runSimButton.setStyle("-fx-background-color: #1F232F");
+            runSimButton.setDisable(true);
+            statusThread.run();
+        }
+        else if (status == 50) {
+            runSimButton.setText("Run another Sim");
+        }
+    }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));

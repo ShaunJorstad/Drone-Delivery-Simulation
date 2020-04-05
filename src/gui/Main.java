@@ -22,6 +22,8 @@ public class Main extends Application {
         splashScene.getStylesheets().add("/gui/CSS/Settings.css");
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
 
+        Navigation.setCurrentScene(splashScene);
+
         primaryStage.setScene(splashScene);
 
         primaryStage.show();

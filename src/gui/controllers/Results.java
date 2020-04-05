@@ -7,6 +7,7 @@
 
 package gui.controllers;
 
+import cli.ProgressThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Results implements Initializable {
+    ProgressThread statusThread;
 
     public Button exportButton;
     public Button results;
@@ -65,6 +68,7 @@ public class Results implements Initializable {
 
         injectCursorStates();
     }
+
 
     public void injectCursorStates() {
         List<Button> items = Arrays.asList(home, settings, results, back, exportButton);
