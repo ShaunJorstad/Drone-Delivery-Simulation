@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.FoodItems">
     <top>
         <VBox id="navBarContainer" fx:id="navBarContainer">

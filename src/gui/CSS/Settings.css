@@ -22,9 +22,9 @@
 }
 
 #runSimButton {
-    -fx-padding: 12 16 12 16;
+    -fx-padding: 7 9 7 9;
     -fx-background-color: #0078D7;
-    -fx-font-size: 12pt;
+    -fx-font-size: 9pt;
 }
 
 .buttonIcon {
@@ -32,9 +32,9 @@
 }
 
 .settingsControls{
-    -fx-padding: 9 12 9 12;
+    -fx-padding: 7 9 7 9;
     -fx-background-color: #2353FE;
-    -fx-font-size: 9pt;
+    -fx-font-size: 8pt;
     -fx-content-display: right;
 }
 
@@ -45,16 +45,16 @@
 }
 
 .smallGrayButton {
-    -fx-padding: 10 10 10 10;
+    -fx-padding: 4 4 4 4;
     -fx-background-color: #707070;
-    -fx-font-size: 9pt;
+    -fx-font-size: 7pt;
     -fx-text-fill: #E6E6E6;
 }
 
 .smallDeleteButton {
-    -fx-padding: 10 10 10 10;
+    -fx-padding: 4 4 4 4;
     -fx-background-color: #EC2F08;
-    -fx-font-size: 9pt;
+    -fx-font-size: 7pt;
     -fx-text-fill: #E6E6E6;
 }
 
@@ -67,3 +67,6 @@
 }
 
 
+.mealName {
+    -fx-font-size: 9pt;
+}
