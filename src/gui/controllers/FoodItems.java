@@ -186,7 +186,7 @@ public class FoodItems implements Initializable {
             simController.setSimStatus(i);
         }
 
-        simController.setSimStatus(-1);
+
     }
 
     public void inflateFoodItems() {

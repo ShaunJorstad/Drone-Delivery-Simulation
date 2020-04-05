@@ -36,6 +36,7 @@ public class ProgressThread implements Runnable{
             }
         }
         if (status == 50) {
+            SimController.setSimStatus(-1);
             simBtn.setText("view results");
             simBtn.setOnAction(actionEvent -> {
                 Navigation.pushScene("Splash");
