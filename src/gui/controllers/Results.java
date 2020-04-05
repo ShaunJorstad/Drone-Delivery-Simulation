@@ -102,8 +102,7 @@ public class Results implements Initializable {
     }
 
     public void handleExport(ActionEvent actionEvent) {
-//        String exportData = SimController.exportResults();
-        System.out.println();
+        SimController.exportResults((Stage) home.getScene().getWindow());
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {

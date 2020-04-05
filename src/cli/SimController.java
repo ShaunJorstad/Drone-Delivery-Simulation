@@ -1,5 +1,7 @@
 package cli;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import menu.Destination;
 import menu.Meal;
 import napsack.Knapsack;
@@ -26,11 +28,12 @@ public class SimController {
     File ordersFile; //xml file that saves the orders
     private static Settings settings;
     int MINUTES_IN_SIM = 240; //The number of minutes in the simulation
-    private ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
-    private ArrayList<Results> aggregatedResultsKnapsack;
+    private static ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
+    private static ArrayList<Results> aggregatedResultsKnapsack;
     int NUMBER_OF_SIMULATIONS = 50;
     private static int currentSimulation = -1;
     boolean simRan;
+    static final FileChooser fileChooser = new FileChooser();
 
     ArrayList<PlacedOrder> test;
 
@@ -415,11 +418,11 @@ public class SimController {
         return newProbability;
     }
 
-    public ArrayList<Results> getAggregatedResultsFIFO() {
+    public static ArrayList<Results> getAggregatedResultsFIFO() {
         return aggregatedResultsFIFO;
     }
 
-    public ArrayList<Results> getAggregatedResultsKnapsack() {
+    public static ArrayList<Results> getAggregatedResultsKnapsack() {
         return aggregatedResultsKnapsack;
     }
 
@@ -452,7 +455,7 @@ public class SimController {
         }
         return worst;
     }
-    public String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
+    public static String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
     	String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
     			"<data-set>";
     	for (int i = 0; i < resultsFifo.size(); i++) {
@@ -474,5 +477,26 @@ public class SimController {
 
     public static int getSimStatus() {
         return currentSimulation;
+    }
+
+    public static boolean exportResults(Stage stage) {
+        fileChooser.setTitle("Export Settings");
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            //TODO: pipe this string into the file
+            try {
+                FileWriter fw = new FileWriter(file, false);
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println(exportResults(getAggregatedResultsFIFO(),getAggregatedResultsKnapsack() ));
+
+                fw.close();
+                pw.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 }
