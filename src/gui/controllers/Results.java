@@ -63,15 +63,11 @@ public class Results implements Initializable {
         backImage.setImage(backArrowImage);
 
         SimController simController = SimController.getInstance();
+        exportButton.setDisable(true);
         if (simController.hasResults()) {
             displayResults();
+            exportButton.setDisable(false);
         }
-
-//        if (SimController.getSimStatus() == 50) {
-//            displayResults();
-//        }
-
-        exportButton.setDisable(true);
 
         injectCursorStates();
     }
