@@ -10,21 +10,30 @@ package gui.controllers;
 import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import settings.Settings;
+import menu.Destination;
+import cli.SimController;
 
 public class Map implements Initializable {
     SimulationThread statusThread;
@@ -44,6 +53,12 @@ public class Map implements Initializable {
     public Button drone;
     public Button back;
     public ImageView backImage;
+    public Button runSimButton;
+    public Button importMapButton;
+    public Button exportMapButton;
+    public ImageView uploadImage;
+    public ImageView downloadImage;
+    public VBox settingButtons;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,11 +77,42 @@ public class Map implements Initializable {
         backImage.setFitWidth(16);
         backImage.setPreserveRatio(true);
 
+        loadIcons();
+        injectCursorStates();
         
         File map = new File("assets/mapImage.png");
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
     }
+    
+    
+    public void loadIcons() {
+        File backFile;
+        if (Navigation.isEmpty()) {
+            backFile = new File("assets/icons/backGray.png");
+        } else {
+            backFile = new File("assets/icons/backBlack.png");
+        }
+        Image backArrowImage = new Image(backFile.toURI().toString());
+        backImage.setImage(backArrowImage);
+
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
+    public void injectCursorStates() {
+
+        List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importMapButton, exportMapButton);
+        for (Button item : items) {
+            item.setOnMouseEntered(mouseEvent -> {
+                item.getScene().setCursor(Cursor.HAND);
+            });
+            item.setOnMouseExited(mouseEvent -> {
+                item.getScene().setCursor(Cursor.DEFAULT);
+            });
+        }
+    }
+    
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
@@ -122,5 +168,31 @@ public class Map implements Initializable {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
     }
+    
+    public void handleImportMap(ActionEvent actionEvent) {
+    }
 
+    public void handleExportMap(ActionEvent actionEvent) {
+    }
+
+    public void handleRunSimulation(ActionEvent actionEvent) {
+    }
+    
+    public void inflateMapPoints() {
+		for (Destination curr : SimController.getSettings().getDestinations()) {
+			
+			//Name of destination
+    		TextField destName = new TextField(curr.getDestName());
+    		destName.getStyleClass().add("foodName");
+            destName.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+//                    update simcontroller destinations
+                }
+            });
+            
+            
+            
+    	}
+    }
 }

@@ -36,17 +36,34 @@
         </VBox>
 
     </top>
-    <center>
-    	<HBox id="hBox" prefHeight="600.0" prefWidth="1200.0" alignment="CENTER">
+    <left>
+    	<HBox id="hBox" prefHeight="600.0" prefWidth="1200.0" alignment="TOP_LEFT">
             <ImageView id="mapImage" fx:id="mapImage" fitHeight="600.0" fitWidth="1200.0" pickOnBounds="true"
                        preserveRatio="true"/>
         </HBox>
-    </center>
+    </left>
     <right>
-        <VBox>
-            <!--            import settings-->
-            <!--            export settings-->
-            <!--            run simulation-->
+        <VBox id="controls" fx:id="settingButtons" spacing="600" alignment="BASELINE_RIGHT">
+            <VBox spacing="10" alignment="BASELINE_RIGHT">
+                <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importMapButton"
+                        text="Import Map   " textFill="ffffff"
+                        onAction="#handleImportMap">
+                    <graphic>
+                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
+                                   preserveRatio="true" />
+                    </graphic>
+                </Button>
+                <Button id="exportSettingsButton" styleClass="settingsControls" fx:id="exportMapButton"
+                        text="Export Map   " textFill="ffffff"
+                        onAction="#handleExportMap">
+                    <graphic>
+                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
+                                   preserveRatio="true" />
+                    </graphic>
+                </Button>
+            </VBox>
+            <Button id="runSimButton" fx:id="runSimButton" text="Run"
+                    onAction="#handleRunSimulation" textFill="ffffff"/>
         </VBox>
     </right>
 </BorderPane>
