@@ -276,7 +276,7 @@ public class Settings {
      */
     public static String unparseSettings() {
 
-        String info="";
+        String info = "";
         for(Destination d: map){
             info+="<d>\t"+d.getDestName()+"\t"+d.getX()+"\t"+
                     d.getY()+"\t"+ d.getDist()+"\n";
