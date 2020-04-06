@@ -7,21 +7,18 @@
 
 package gui.controllers;
 
-import cli.ProgressThread;
-import cli.SimController;
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +26,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Drone implements Initializable {
-    ProgressThread statusThread;
+    SimulationThread statusThread;
 
     public VBox navBarContainer;
     public HBox navBar;

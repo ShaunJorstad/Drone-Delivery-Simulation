@@ -7,11 +7,10 @@
 
 package gui.controllers;
 
-import cli.ProgressThread;
+import cli.SimulationThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -36,7 +35,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class MealItems implements Initializable {
-    ProgressThread statusThread;
+    SimulationThread statusThread;
 
     public VBox navBarContainer;
     public HBox navBar;
@@ -81,6 +80,8 @@ public class MealItems implements Initializable {
         scrollpane.setFitToHeight(true);
         scrollpane.setFitToWidth(true);
 
+        SimController.setCurrentButton(runSimButton);
+
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
         gridIndex = 1;
@@ -104,20 +105,20 @@ public class MealItems implements Initializable {
     }
 
     public void checkSimulationStatus() {
-        int status = SimController.getSimStatus();
-        if (status == -1 ) { // no simulation has been run
-            String settingsValidity = Settings.verifySettings();
-            if (!settingsValidity.equals("")) {
-                updateRunBtn(settingsValidity, false);
-            }
-        } else if (status >= 0 && status < 50) { // simulation in progress
-            runSimButton.setStyle("-fx-background-color: #1F232F");
-            runSimButton.setDisable(true);
-            statusThread.run();
-        }
-        else if (status == 50) {
-            runSimButton.setText("Run another Sim");
-        }
+//        int status = SimController.getSimStatus();
+//        if (status == -1 ) { // no simulation has been run
+//            String settingsValidity = Settings.verifySettings();
+//            if (!settingsValidity.equals("")) {
+//                updateRunBtn(settingsValidity, false);
+//            }
+//        } else if (status >= 0 && status < 50) { // simulation in progress
+//            runSimButton.setStyle("-fx-background-color: #1F232F");
+//            runSimButton.setDisable(true);
+//            statusThread.run();
+//        }
+//        else if (status == 50) {
+//            runSimButton.setText("Run another Sim");
+//        }
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -183,8 +184,11 @@ public class MealItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
-        // TODO: run the simulation
-        checkSimulationStatus();
+        runSimButton.setStyle("-fx-background-color: #1F232F");
+        runSimButton.setText("running simulation");
+        runSimButton.setDisable(true);
+
+        SimController.runSimulations();
     }
 
     public void inflateMeals() {

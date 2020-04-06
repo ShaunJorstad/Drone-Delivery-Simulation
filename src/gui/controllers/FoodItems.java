@@ -7,11 +7,9 @@
 
 package gui.controllers;
 
-import cli.ProgressThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -35,7 +33,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FoodItems implements Initializable {
-    ProgressThread statusThread;
 
     public VBox navBarContainer;
     public HBox navBar;
@@ -78,6 +75,8 @@ public class FoodItems implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
+        SimController.setCurrentButton(runSimButton);
+
         gridIndex = 1;
         loadIcons();
         inflateFoodItems();
@@ -99,21 +98,7 @@ public class FoodItems implements Initializable {
     }
 
     public void checkSimulationStatus() {
-        int status = SimController.getSimStatus();
-        if (status == -1 ) { // no simulation has been run
-            String settingsValidity = Settings.verifySettings();
-            if (!settingsValidity.equals("")) {
-                updateRunBtn(settingsValidity, false);
-            }
-        } else if (status >= 0 && status < 50) { // simulation in progress
-            runSimButton.setStyle("-fx-background-color: #1F232F");
-            runSimButton.setDisable(true);
-            System.out.println("Calling statusThread.run()");
-            statusThread.run();
-        }
-        else if (status == 50) {
-            runSimButton.setText("Run another Sim");
-        }
+        // TODO: fill this in
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -176,17 +161,11 @@ public class FoodItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
-        // TODO: run the simulation
-        SimController simController = SimController.getInstance();
-        simController.setSimStatus(0);
-        checkSimulationStatus();
-        for (int i = 0; i < simController.getNUMBER_OF_SIMULATIONS(); i++) {
-            simController.generateOrders();
-            simController.runAlgorithms();
-            simController.setSimStatus(i);
-        }
+        runSimButton.setStyle("-fx-background-color: #1F232F");
+        runSimButton.setText("running simulation");
+        runSimButton.setDisable(true);
 
-
+        SimController.runSimulations();
     }
 
     public void inflateFoodItems() {

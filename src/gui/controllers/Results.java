@@ -7,7 +7,7 @@
 
 package gui.controllers;
 
-import cli.ProgressThread;
+import cli.SimulationThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
@@ -15,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -25,7 +24,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +35,7 @@ import java.util.ResourceBundle;
 
 public class Results implements Initializable {
     public GridPane resultsGrid;
-    ProgressThread statusThread;
+    SimulationThread statusThread;
 
     public Button exportButton;
     public Button results;
@@ -69,9 +67,9 @@ public class Results implements Initializable {
             displayResults();
         }
 
-        if (SimController.getSimStatus() == 50) {
-            displayResults();
-        }
+//        if (SimController.getSimStatus() == 50) {
+//            displayResults();
+//        }
 
         exportButton.setDisable(true);
 

@@ -7,11 +7,10 @@
 
 package gui.controllers;
 
-import cli.ProgressThread;
+import cli.SimulationThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,25 +19,20 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class Splash implements Initializable {
-    ProgressThread statusThread;
+    SimulationThread statusThread;
 
     @FXML
     public ImageView SplashImage;
@@ -59,7 +53,7 @@ public class Splash implements Initializable {
 
         home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
 
-        statusThread = new ProgressThread(nextButton);
+//        statusThread = new SimulationThread(nextButton);
 
         injectCursorStates();
         loadIcons();
@@ -79,20 +73,20 @@ public class Splash implements Initializable {
     }
 
     public void checkSimulationStatus() {
-        int status = SimController.getSimStatus();
-        if (status == -1 ) { // no simulation has been run
-            String settingsValidity = Settings.verifySettings();
-            if (!settingsValidity.equals("")) {
-                updateRunBtn(settingsValidity, false);
-            }
-        } else if (status >= 0 && status < 50) { // simulation in progress
-            nextButton.setStyle("-fx-background-color: #1F232F");
-            nextButton.setDisable(true);
-            statusThread.run();
-        }
-        else if (status == 50) {
-            nextButton.setText("Run another Sim");
-        }
+//        int status = SimController.getSimStatus();
+//        if (status == -1 ) { // no simulation has been run
+//            String settingsValidity = Settings.verifySettings();
+//            if (!settingsValidity.equals("")) {
+//                updateRunBtn(settingsValidity, false);
+//            }
+//        } else if (status >= 0 && status < 50) { // simulation in progress
+//            nextButton.setStyle("-fx-background-color: #1F232F");
+//            nextButton.setDisable(true);
+//            statusThread.run();
+//        }
+//        else if (status == 50) {
+//            nextButton.setText("Run another Sim");
+//        }
     }
 
     public void injectCursorStates() {

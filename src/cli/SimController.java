@@ -1,5 +1,6 @@
 package cli;
 
+import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -31,9 +32,11 @@ public class SimController {
     private static ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
     private static ArrayList<Results> aggregatedResultsKnapsack;
     int NUMBER_OF_SIMULATIONS = 50;
-    private static int currentSimulation = -1;
+    public static boolean simInProgress = false;
     boolean simRan;
     static final FileChooser fileChooser = new FileChooser();
+    private static SimulationThread simThread;
+    private static Button btn;
 
     ArrayList<PlacedOrder> test;
 
@@ -62,7 +65,7 @@ public class SimController {
             System.out.println((e.getMessage()));
         }
 
-        settings =  settings.getInstance();
+        settings = settings.getInstance();
     }
 
     //Singleton creator
@@ -131,8 +134,8 @@ public class SimController {
 
             } else { //If an order is not generated
                 curMin++;
-                if (curMin %60 == 0 && curMin < MINUTES_IN_SIM) {
-                    chanceOfOrderPerM = adjustProbability(ordersPerHour.get(curMin/60));
+                if (curMin % 60 == 0 && curMin < MINUTES_IN_SIM) {
+                    chanceOfOrderPerM = adjustProbability(ordersPerHour.get(curMin / 60));
                 }
             }
 
@@ -216,12 +219,12 @@ public class SimController {
                 } else {
                     elapsedTime += f.getTimeSkipped() + loadMealTime;
                     //Find how long the delivery takes
-                    elapsedTime += TSP(droneRun)/droneSpeed + .5 * droneRun.size();
+                    elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
                     results.processDelivery(elapsedTime, droneRun);
                     elapsedTime += 3;
                 }
-                	droneDeliveryNumber++;
+                droneDeliveryNumber++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -234,7 +237,6 @@ public class SimController {
         simRan = true;
 
     }
-
 
     /**
      * Get all of the order in the xml file
@@ -259,7 +261,7 @@ public class SimController {
             NodeList nodeList = document.getElementsByTagName("order");
 
             //Variables that go in a placed order
-            String cname,dname, mealString, mname;
+            String cname, dname, mealString, mname;
             int ordTime;
             Destination dest;
             Meal chosenMeal = new Meal("Temp", 0);
@@ -292,7 +294,7 @@ public class SimController {
                     mealScanner.useDelimiter(":");
                     mname = mealScanner.next();
                     mealScanner.close();
-                    for(int m = 0; m < meals.size(); m++) {
+                    for (int m = 0; m < meals.size(); m++) {
                         if (mname.equals(meals.get(m).getName())) {
                             chosenMeal = meals.get(m);
                             break;
@@ -394,13 +396,14 @@ public class SimController {
     /**
      * Adjust the probability so that generateOrders produces the correct number of orders
      * even though multiple orders can come in a single minute
+     *
      * @param ordersPerHour The number of orders per this hour
      * @return The adjusted probability
      */
     private double adjustProbability(int ordersPerHour) {
         //The probability that we would be shooting for if we were not allowing multiple orders to
         //come in the same minute
-        double idealProbability = ordersPerHour/60.0;
+        double idealProbability = ordersPerHour / 60.0;
 
         double newProbability = idealProbability; //The new probability that we will use
 
@@ -412,7 +415,7 @@ public class SimController {
         //number of orders per hours
         while (extrapolatedProbability > idealProbability) {
             newProbability -= .01;
-            extrapolatedProbability = newProbability/(1-newProbability); //Sum of a geometric series
+            extrapolatedProbability = newProbability / (1 - newProbability); //Sum of a geometric series
         }
 
         return newProbability;
@@ -442,7 +445,7 @@ public class SimController {
         for (int i = 0; i < aggregatedResults.size(); i++) {
             sum += aggregatedResults.get(i).getAvgTime();
         }
-        return sum/aggregatedResults.size();
+        return sum / aggregatedResults.size();
     }
 
     public double getAggregatedWorstTime(ArrayList<Results> aggregatedResults) {
@@ -455,32 +458,25 @@ public class SimController {
         }
         return worst;
     }
+
     public static String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
-    	String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
-    			"<data-set>";
-    	for (int i = 0; i < resultsFifo.size(); i++) {
-    		out += "\n\t<record>\n\t\t";
-    		out += "<Simulation Number>" + (i+1) + "</Simulation Number>\n\t\t";
-    		out += "<Fifo Average Time>" + resultsFifo.get(i).getAvgTime() + "</Fifo Average Time>\n\t\t";
-    		out += "<Fifo Worst Time>" + resultsFifo.get(i).getWorstTime() + "</Fifo Worst Time>\n\t";
-    		out += "<Knapsack Average Time>" + resultsKnapsack.get(i).getAvgTime() + "</Knapsack Average Time>\n\t\t";
-    		out += "<Knapsack Worst Time>" + resultsKnapsack.get(i).getWorstTime() + "</Knapsack Worst Time>\n\t";
-    		out += "</record>";
-    	}
-    	out += "\n<data-set>";
-    	return out;
+        String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
+                "<data-set>";
+        for (int i = 0; i < resultsFifo.size(); i++) {
+            out += "\n\t<record>\n\t\t";
+            out += "<Simulation Number>" + (i + 1) + "</Simulation Number>\n\t\t";
+            out += "<Fifo Average Time>" + resultsFifo.get(i).getAvgTime() + "</Fifo Average Time>\n\t\t";
+            out += "<Fifo Worst Time>" + resultsFifo.get(i).getWorstTime() + "</Fifo Worst Time>\n\t";
+            out += "<Knapsack Average Time>" + resultsKnapsack.get(i).getAvgTime() + "</Knapsack Average Time>\n\t\t";
+            out += "<Knapsack Worst Time>" + resultsKnapsack.get(i).getWorstTime() + "</Knapsack Worst Time>\n\t";
+            out += "</record>";
+        }
+        out += "\n<data-set>";
+        return out;
     }
 
     public boolean hasResults() {
         return simRan;
-    }
-
-    public static int getSimStatus() {
-        return currentSimulation;
-    }
-
-    public static void setSimStatus(int simNumber) {
-        currentSimulation = simNumber;
     }
 
     public static boolean exportResults(Stage stage) {
@@ -491,7 +487,7 @@ public class SimController {
             try {
                 FileWriter fw = new FileWriter(file, false);
                 PrintWriter pw = new PrintWriter(fw);
-                pw.println(exportResults(getAggregatedResultsFIFO(),getAggregatedResultsKnapsack() ));
+                pw.println(exportResults(getAggregatedResultsFIFO(), getAggregatedResultsKnapsack()));
 
                 fw.close();
                 pw.close();
@@ -502,5 +498,18 @@ public class SimController {
             return true;
         }
         return false;
+    }
+
+    public static void setCurrentButton(Button button) {
+        btn = button;
+    }
+
+    public static Button getCurrentButton() {
+        return btn;
+    }
+
+    public static void runSimulations() {
+        simThread = new SimulationThread();
+        simThread.run();
     }
 }
