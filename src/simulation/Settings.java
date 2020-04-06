@@ -274,8 +274,38 @@ public class Settings {
      *
      * @return string representation of object
      */
-    private static String unparseSettings() {
-        return "testing";
+    public static String unparseSettings() {
+
+        String info="";
+        for(Destination d: map){
+            info+="<d>\t"+d.getDestName()+"\t"+d.getX()+"\t"+
+                    d.getY()+"\t"+ d.getDist()+"\n";
+        }
+        for(FoodItem f:foods){
+            info+="<f>\t"+f.getName()+"\t"+f.getWeight()+"\n";
+        }
+        ArrayList<FoodItem> used = new ArrayList<>();
+        for(Meal m:meals){
+            info+="<m>\t"+m.getName()+"\t"+m.getId()+"\t"+m.getDistribution();
+            //System.out.println("bruH: "+m.getFoodItems().);
+            used.clear();
+            for(int i=0;i<m.getFoodItems().size();i++){
+                for(FoodItem f: foods) {
+                    if (m.getFoodItems().containsKey(f) && !used.contains(f)) {
+                        info +="\t"+ f.getName() + "\t" + m.getFoodItems().get(f);
+                        used.add(f);
+                        break;
+                    }
+                }
+                if(i==m.getFoodItems().size()-1)
+                    info+="\n";
+            }
+        }
+
+        for(Integer n: orderDistribution){
+            info+="<o>\t"+n+"\n";
+        }
+        return info;
     }
 
     private static boolean validateFile(File file) {
