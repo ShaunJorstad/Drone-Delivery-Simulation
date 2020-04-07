@@ -17,13 +17,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +34,8 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import settings.Settings;
+import simulation.Settings;
 import menu.Destination;
-import cli.SimController;
 
 public class Map implements Initializable {
     SimulationThread statusThread;
@@ -59,12 +61,15 @@ public class Map implements Initializable {
     public ImageView uploadImage;
     public ImageView downloadImage;
     public VBox settingButtons;
+    public ScrollPane scrollpane;
+    public GridPane contentGrid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         map.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-
+        
+        
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -83,6 +88,11 @@ public class Map implements Initializable {
         File map = new File("assets/mapImage.png");
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
+        
+
+        Insets mapInset = new Insets(20,0,0,20);
+        VBox.setMargin(mapImage, mapInset);
+        inflateMapPoints();
     }
     
     
@@ -179,10 +189,12 @@ public class Map implements Initializable {
     }
     
     public void inflateMapPoints() {
-		for (Destination curr : SimController.getSettings().getDestinations()) {
+    	int gridInd = 1;
+		for (Destination curr : Settings.getMap()) {
 			
 			//Name of destination
     		TextField destName = new TextField(curr.getDestName());
+    		System.out.println(curr.getDestName());
     		destName.getStyleClass().add("foodName");
             destName.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -190,7 +202,30 @@ public class Map implements Initializable {
 //                    update simcontroller destinations
                 }
             });
+            TextField xCoord = new TextField("" + curr.getX());
+    		System.out.println(curr.getDestName());
+    		xCoord.getStyleClass().add("foodName");
+            xCoord.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+//                    update simcontroller destinations
+                }
+            });
+            TextField yCoord = new TextField("" + curr.getY());
+    		System.out.println(curr.getDestName());
+    		yCoord.getStyleClass().add("foodName");
+            yCoord.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+//                    update simcontroller destinations
+                }
+            });
             
+            
+            contentGrid.add(destName, 0, gridInd);
+            contentGrid.add(xCoord, 1, gridInd);
+            contentGrid.add(yCoord, 1, gridInd);
+            gridInd++;
             
             
     	}
