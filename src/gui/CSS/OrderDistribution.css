@@ -1,9 +1,9 @@
 #hoursTitle, #ordersTitle {
-    -fx-font-size: 25pt;
+    -fx-font-size: 13pt;
 }
 
 .hourTitle, .orderField {
-    -fx-font-size: 13pt;
+    -fx-font-size: 9pt;
 }
 
 .hourTitle {
