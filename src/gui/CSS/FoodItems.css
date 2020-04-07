@@ -4,7 +4,7 @@
 }
 
 .gridTitle {
-    -fx-font-size: 25pt;
+    -fx-font-size: 15pt;
 }
 
 /*.foodName {*/
@@ -12,7 +12,7 @@
 /*}*/
 
 .foodName, .foodWeight {
-    -fx-font-size: 20px;
+    -fx-font-size: 12px;
 }
 
 .deleteButton {

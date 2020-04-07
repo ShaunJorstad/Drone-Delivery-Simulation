@@ -57,6 +57,9 @@ public class Results implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+        backImage.setFitHeight(16);
+        backImage.setFitWidth(16);
+        backImage.setPreserveRatio(true);
 
         SimController simController = SimController.getInstance();
         if (simController.hasResults()) {

@@ -61,21 +61,8 @@ public class MealItems implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-        mealItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-
-        File backFile;
-        if (Navigation.isEmpty()) {
-            backFile = new File("assets/icons/backGray.png");
-        } else {
-            backFile = new File("assets/icons/backBlack.png");
-        }
-        Image backArrowImage = new Image(backFile.toURI().toString());
-        backImage.setImage(backArrowImage);
-
-        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollpane.setFitToHeight(true);
-        scrollpane.setFitToWidth(true);
+        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
+        mealItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
@@ -93,6 +80,11 @@ public class MealItems implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+        backImage.setFitHeight(16);
+        backImage.setFitWidth(16);
+        backImage.setPreserveRatio(true);
+
+        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
@@ -215,6 +207,7 @@ public class MealItems implements Initializable {
             // TODO: question: This is unecessary
             updateRunBtn("Invalid Meal Distributions", Settings.verifyMeals());
         });
+        GridPane.setMargin(distribution, new Insets(0, 0, 0, -7));
 
 
         Button addItemBtn = new Button();
@@ -271,7 +264,7 @@ public class MealItems implements Initializable {
         MenuButton foodName = new MenuButton();
         foodName.setText(food.getName());
         foodName.getStyleClass().add("foodName");
-        foodName.setPrefWidth(200);
+//        foodName.setPrefWidth(200);
 
         foodName.setOnMouseEntered(actionEvent -> {
             updateMenuItems(foodName, meal, food, weight, addItemBtn);
@@ -284,8 +277,8 @@ public class MealItems implements Initializable {
         File increasePath = new File("assets/icons/plus.png");
         Image increaseImage = new Image(increasePath.toURI().toString());
         ImageView plus = new ImageView(increaseImage);
-        plus.setFitHeight(20);
-        plus.setFitWidth(20);
+        plus.setFitHeight(15);
+        plus.setFitWidth(15);
         plus.setPreserveRatio(true);
         Button increase = new Button("", plus);
         increase.getStyleClass().add("removeButton");
@@ -299,8 +292,8 @@ public class MealItems implements Initializable {
         File decreasePath = new File("assets/icons/minus.png");
         Image decreaseImage = new Image(decreasePath.toURI().toString());
         ImageView minus = new ImageView(decreaseImage);
-        minus.setFitWidth(20);
-        minus.setFitHeight(20);
+        minus.setFitWidth(15);
+        minus.setFitHeight(15);
         minus.setPreserveRatio(true);
         Button decrease = new Button("", minus);
         decrease.getStyleClass().add("removeButton");
@@ -315,8 +308,8 @@ public class MealItems implements Initializable {
         File deleteMealPath = new File("assets/icons/remove.png");
         Image deleteMealImage = new Image(deleteMealPath.toURI().toString());
         ImageView icon = new ImageView(deleteMealImage);
-        icon.setFitHeight(20);
-        icon.setFitWidth(20);
+        icon.setFitHeight(15);
+        icon.setFitWidth(15);
         icon.setPreserveRatio(true);
         Button removeMeal = new Button("", icon);
         removeMeal.getStyleClass().add("removeButton");
@@ -344,11 +337,11 @@ public class MealItems implements Initializable {
         grid.add(increase, 4, gridIndex);
         grid.add(removeMeal, 5, gridIndex);
 
-        GridPane.setMargin(foodName, new Insets(15, 0, 0, 30));
-        GridPane.setMargin(number, new Insets(15, 0, 0, 34));
-        GridPane.setMargin(removeMeal, new Insets(15, 0, 0, 15));
-        GridPane.setMargin(decrease, new Insets(15, 0, 0, 0));
-        GridPane.setMargin(increase, new Insets(15, 0, 0, 0));
+        GridPane.setMargin(foodName, new Insets(8, 0, 0, 35));
+        GridPane.setMargin(number, new Insets(8, 0, 0, 34));
+        GridPane.setMargin(removeMeal, new Insets(8, 0, 0, 15));
+        GridPane.setMargin(decrease, new Insets(8, 0, 0, 0));
+        GridPane.setMargin(increase, new Insets(8, 0, 0, 0));
 
         gridIndex++;
         updateRunBtn("Invalid Food Items", Settings.verifyMeals());

@@ -57,6 +57,9 @@ public class Map implements Initializable {
         }
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
+        backImage.setFitHeight(16);
+        backImage.setFitWidth(16);
+        backImage.setPreserveRatio(true);
 
         
         File map = new File("assets/mapImage.png");
