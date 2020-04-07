@@ -6,6 +6,8 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.chart.LineChart?>
 <BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Results">
     <top>
@@ -40,7 +42,6 @@
                       GridPane.columnIndex="0" GridPane.rowIndex="2"/>
                 <Text id="fifo" text="FIFO"
                       GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
             </GridPane>
         </VBox>
     </center>

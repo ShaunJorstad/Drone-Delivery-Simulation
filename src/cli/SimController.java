@@ -440,7 +440,7 @@ public class SimController {
         return NUMBER_OF_SIMULATIONS;
     }
 
-    public double getAggregatedAvgTime(ArrayList<Results> aggregatedResults) {
+    public static double getAggregatedAvgTime(ArrayList<Results> aggregatedResults) {
         double sum = 0;
         for (int i = 0; i < aggregatedResults.size(); i++) {
             sum += aggregatedResults.get(i).getAvgTime();
@@ -448,7 +448,7 @@ public class SimController {
         return sum / aggregatedResults.size();
     }
 
-    public double getAggregatedWorstTime(ArrayList<Results> aggregatedResults) {
+    public static double getAggregatedWorstTime(ArrayList<Results> aggregatedResults) {
         double worst = Double.MIN_VALUE;
         for (int i = 0; i < aggregatedResults.size(); i++) {
             if (aggregatedResults.get(i).getWorstTime() > worst) {
