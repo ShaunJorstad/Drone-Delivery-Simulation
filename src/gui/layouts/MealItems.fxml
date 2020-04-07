@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
-<BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<BorderPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MealItems">
     <top>
         <VBox id="navBarContainer" fx:id="navBarContainer">
@@ -41,7 +41,7 @@
             <VBox id="content" styleClass="content">
                 <Label styleClass="title" text="Meal Items" textFill="808080"/>
                 <Label styleClass="description" textFill="808080"
-                       text="TThe meals are comprised of food items. No Meal can exheed the maximum drone&#xD;carrying weight. (Can be modified in drone settings). The distribution of the meal is the&#xD;percentage that meal is ordered."/>
+                       text="The meals are comprised of food items. No Meal can exheed&#xD; the maximum drone carrying weight. (Can be modified&#xD; in drone settings). The distribution of the meal is the&#xD;percentage that meal is ordered."/>
 
                 <VBox id="meals" fx:id="mealsVBox">
 
@@ -53,13 +53,13 @@
         </ScrollPane>
     </center>
     <right>
-        <VBox id="controls" fx:id="settingButtons" spacing="600" alignment="BASELINE_RIGHT">
+        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
             <VBox spacing="10" alignment="BASELINE_RIGHT">
                 <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importSettingsButton"
                         text="Import Settings   " textFill="ffffff"
                         onAction="#handleImportSettings">
                     <graphic>
-                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
+                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="15" fitWidth="15" pickOnBounds="true"
                                    preserveRatio="true" />
                     </graphic>
                 </Button>
@@ -67,7 +67,7 @@
                         text="Export Settings   " textFill="ffffff"
                         onAction="#handleExportSettings">
                     <graphic>
-                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
+                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="15" fitWidth="15" pickOnBounds="true"
                                    preserveRatio="true" />
                     </graphic>
                 </Button>

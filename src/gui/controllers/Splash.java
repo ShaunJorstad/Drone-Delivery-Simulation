@@ -57,7 +57,6 @@ public class Splash implements Initializable {
 
         injectCursorStates();
         loadIcons();
-        checkSimulationStatus();
     }
 
     public void loadIcons() {
@@ -70,23 +69,13 @@ public class Splash implements Initializable {
 
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
-    }
+        backImage.setFitHeight(16);
+        backImage.setFitWidth(16);
+        backImage.setPreserveRatio(true);
 
-    public void checkSimulationStatus() {
-//        int status = SimController.getSimStatus();
-//        if (status == -1 ) { // no simulation has been run
-//            String settingsValidity = Settings.verifySettings();
-//            if (!settingsValidity.equals("")) {
-//                updateRunBtn(settingsValidity, false);
-//            }
-//        } else if (status >= 0 && status < 50) { // simulation in progress
-//            nextButton.setStyle("-fx-background-color: #1F232F");
-//            nextButton.setDisable(true);
-//            statusThread.run();
-//        }
-//        else if (status == 50) {
-//            nextButton.setText("Run another Sim");
-//        }
+        home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
+
+        injectCursorStates();
     }
 
     public void injectCursorStates() {

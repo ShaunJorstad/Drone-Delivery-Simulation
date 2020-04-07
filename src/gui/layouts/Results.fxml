@@ -27,27 +27,24 @@
     <center>
         <VBox id="vBox" fx:id="vBox" prefHeight="200.0" prefWidth="730.0">
             <Label id="resultsTitle" fx:id="resultsTitle" text="Simulation Results"/>
-            <GridPane fx:id="resultsGrid" hgap="90" vgap="80">
-                <padding>
-                    <Insets top="50" right="115" bottom="25" left="115"/>
-                </padding>
-                <Text id="algorithmText" text="Algorithm"
+            <GridPane hgap="30" vgap="20" fx:id="resultsGrid">
+                <Text id="algorithmText" text="Algorithm" styleClass="tableTitle"
                       GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <Text id="averageText" text="Average Time"
+                <Text id="averageText" text="Average Time" styleClass="tableTitle"
                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Text id="worstText" text="Worst Time"
+                <Text id="worstText" text="Worst Time" styleClass="tableTitle"
                       GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
-                <Text id="knapsack" text="Knapsack"
+                <Text id="knapsack" text="Knapsack" styleClass="tableTitle"
                       GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <Text id="fifo" text="FIFO"
+                <Text id="fifo" text="FIFO" styleClass="tableTitle"
                       GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             </GridPane>
         </VBox>
     </center>
     <bottom>
         <AnchorPane>
-            <Button id="exportButton" fx:id="exportButton" contentDisplay="CENTER" layoutX="1304" layoutY="-120"
+            <Button id="exportButton" fx:id="exportButton" contentDisplay="CENTER" layoutX="600" layoutY="-120"
                     text="Export Results" textFill="ffffff" onAction="#handleExport"/>
         </AnchorPane>
     </bottom>

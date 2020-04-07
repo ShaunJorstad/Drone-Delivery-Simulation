@@ -1,10 +1,16 @@
 .mealTitle, .distributionTitle, .weightTitle {
-    -fx-font-size: 19pt;
+    -fx-font-size: 10pt;
     -fx-fill: #707070;
 }
 
-.foodName {
+.foodName, .mealName, .distribution{
     -fx-text-alignment: right;
+    -fx-pref-width: 150;
+    -fx-font-size: 9;
+}
+
+.foodNumber {
+
 }
 
 .addItemBtn {

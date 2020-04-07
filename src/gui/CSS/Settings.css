@@ -1,32 +1,30 @@
-.settingsControls {
-}
-
 #scrollpane {
     -fx-background-color:transparent;
+    -fx-pref-height: 200;
 }
 
 .title {
-    -fx-font-size: 38pt;
+    -fx-font-size: 22pt;
 }
 
 .content {
-    -fx-padding: 80 0 0 115;
+    -fx-padding: 58 0 0 58;
 }
 
 .description {
-    -fx-font-size: 16pt;
-    -fx-line-spacing: 40px;
-    -fx-padding: 15 0 91 0;
+    -fx-font-size: 10pt;
+    -fx-line-spacing: 20px;
+    -fx-padding: 15 0 40 0;
 }
 
 #controls{
-    -fx-padding: 100 80 0 0;
+    -fx-padding: 65 80 0 0;
 }
 
 #runSimButton {
-    -fx-padding: 13 63 13 63;
+    -fx-padding: 7 9 7 9;
     -fx-background-color: #0078D7;
-    -fx-font-size: 14pt;
+    -fx-font-size: 9pt;
 }
 
 .buttonIcon {
@@ -34,29 +32,29 @@
 }
 
 .settingsControls{
-    -fx-padding: 13 24 13 24;
+    -fx-padding: 7 9 7 9;
     -fx-background-color: #2353FE;
-    -fx-font-size: 13pt;
+    -fx-font-size: 8pt;
     -fx-content-display: right;
 }
 
 .grayButton {
-    -fx-padding: 13 63 13 63;
+    -fx-padding: 9 12 9 12;
     -fx-background-color: #707070;
-    -fx-font-size: 14pt;
+    -fx-font-size: 9pt;
 }
 
 .smallGrayButton {
-    -fx-padding: 10 10 10 10;
+    -fx-padding: 4 4 4 4;
     -fx-background-color: #707070;
-    -fx-font-size: 9pt;
+    -fx-font-size: 7pt;
     -fx-text-fill: #E6E6E6;
 }
 
 .smallDeleteButton {
-    -fx-padding: 10 10 10 10;
+    -fx-padding: 4 4 4 4;
     -fx-background-color: #EC2F08;
-    -fx-font-size: 9pt;
+    -fx-font-size: 7pt;
     -fx-text-fill: #E6E6E6;
 }
 
@@ -69,3 +67,6 @@
 }
 
 
+.mealName {
+    -fx-font-size: 9pt;
+}
