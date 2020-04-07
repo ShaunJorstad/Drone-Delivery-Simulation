@@ -13,8 +13,10 @@ public class Results {
 	private final double MAXTIME = 120; //Maximum time for a item to be delivered in minutes
 	private double worstTime;
 	private double avgTime;
+	int orderCounter;
 	
 	public Results() {
+		orderCounter = 0;
 		times = new ArrayList<>();
 	}
 
@@ -32,8 +34,13 @@ public class Results {
 		//not too long, and then store the result
 		for (int i = 0; i < onDrone.size(); i++) {
 			deliveryTime = time - onDrone.get(i).getOrderedTime();
-			if (deliveryTime > MAXTIME) throw new Exception("Order #" + (i+1) + " was over the max time allowed.");
+			if (deliveryTime > MAXTIME) {
+				worstTime = 120;
+				avgTime = 120;
+				throw new Exception("Order #" + (orderCounter + 1) + " was over the max time allowed.");
+			}
 			times.add(deliveryTime);
+			orderCounter++;
 		}
 	}
 

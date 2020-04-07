@@ -82,15 +82,16 @@ public class Knapsack {
             while (currentWeight > maxWeight) {
                 double BiggestWeight = 0;
                 int pos = 0;
-                for (int j = 0; j < droneList.size(); j++) {
-                    //find the biggest weight
-                    if (droneList.get(j).getWeight() >= BiggestWeight) {
-                        BiggestWeight = droneList.get(j).getWeight();
+                for (int j = droneList.size()-1; j >= 0; j--) {
+                    //find the biggest weight, but while trying to load orders that have been skipped over
+                    if (droneList.get(j).getWeight()/((droneList.get(j).getTimesSkipped() + 1) << 4)   > BiggestWeight) {
+                        BiggestWeight = droneList.get(j).getWeight()/((droneList.get(j).getTimesSkipped()+1) << 4);
                         pos = j;
                     }
                 }
                 //remove the order and add it to the next list
                 currentWeight -= droneList.get(pos).getWeight();
+                droneList.get(pos).incrementTimeSkipped();
                 nextList.add(droneList.remove(pos));
 
             }
