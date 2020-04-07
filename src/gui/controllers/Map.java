@@ -27,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
