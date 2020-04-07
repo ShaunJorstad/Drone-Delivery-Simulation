@@ -7,6 +7,7 @@
 
 package gui.controllers;
 
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,6 +43,8 @@ public class Results implements Initializable {
     public Button back;
     public ImageView backImage;
 
+    boolean initial = true;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         results.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
@@ -54,6 +58,11 @@ public class Results implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
+        SimController simController = SimController.getInstance();
+        if (simController.hasResults()) {
+            displayResults();
+        }
+
         injectCursorStates();
     }
 
@@ -61,7 +70,11 @@ public class Results implements Initializable {
         List<Button> items = Arrays.asList(home, settings, results, back, exportButton);
         for (Button item : items) {
             item.setOnMouseEntered(mouseEvent -> {
-                item.getScene().setCursor(Cursor.HAND);
+                if (initial) {
+                    initial = false;
+                } else {
+                    item.getScene().setCursor(Cursor.HAND);
+                }
             });
             item.setOnMouseExited(mouseEvent -> {
                 item.getScene().setCursor(Cursor.DEFAULT);
@@ -76,6 +89,7 @@ public class Results implements Initializable {
     }
 
     public void handleExport(ActionEvent actionEvent) {
+//        String exportData = SimController.exportResults();
         System.out.println();
     }
 
@@ -89,7 +103,6 @@ public class Results implements Initializable {
         System.out.println("already in settings");
     }
 
-
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
         String lastScene = Navigation.popScene();
         if (lastScene == null)
@@ -97,5 +110,24 @@ public class Results implements Initializable {
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+    }
+
+    public void displayResults() {
+        SimController simController = SimController.getInstance();
+        ArrayList<simulation.Results> fifoData = simController.getAggregatedResultsFIFO();
+        ArrayList<simulation.Results> knapsackData = simController.getAggregatedResultsKnapsack();
+
+
+        double fifoWorst = simController.getAggregatedWorstTime(fifoData);
+        double fifoAverage = simController.getAggregatedAvgTime(fifoData);
+        //double fifoTotal = SimController.getFifoTotal();
+        // Knapsack: Average, worst, total
+        double knapsackWorst = simController.getAggregatedWorstTime(knapsackData);
+        double knapsackAverage = simController.getAggregatedAvgTime(knapsackData);
+        //double knapsackTotal = SimController.getKnapsackTotal();
+
+
+        // enable export button
+        // insert graph view
     }
 }

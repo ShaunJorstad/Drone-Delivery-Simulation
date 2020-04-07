@@ -177,9 +177,10 @@ public class OrderDistribution implements Initializable {
         TextField orderField = new TextField();
         orderField.setText(Integer.toString(numOrders));
         orderField.getStyleClass().add("orderField");
+        int distIndex = gridIndex -1;
         orderField.setOnAction(actionEvent -> {
-//            TODO: update settings object
-//            TODO: check settings for correctness
+            // TODO: sanitize input
+            Settings.editDistribution(distIndex, Integer.parseInt(orderField.getText()));
         });
 
         GridPane.setMargin(hourTitle, new Insets(15, 0, 0, 0));

@@ -26,7 +26,7 @@ public class Knapsack {
         //packingList = new ArrayList<>();
         nextList = new ArrayList<>();
         skippedOrder = false;
-        maxWeight = 12;
+        maxWeight = 12*16;
         currentWeight = 0;
         skippedTime = 0;
     }
@@ -34,59 +34,72 @@ public class Knapsack {
     public ArrayList<PlacedOrder> packDrone(double elapsedTime) {
         //copy of all orders
         try {
-            ArrayList<PlacedOrder> packingClone = (ArrayList<PlacedOrder>) packingList.clone();
-            System.out.println("PackingList Size: " + packingList.size());
-            System.out.println("nextList Size: " + nextList.size());
+            skippedTime = 0; //Amount of time skipped forward to the next ordered food
+            currentWeight = 0; //Amount of packed weight on the drone
+            droneList.clear(); //What is on the current drone
 
+
+            //All the orders have been shipped
             if (packingList.isEmpty() && nextList.isEmpty()) {
                 return null;
             }
 
-            //moves orders skipped to shippment
+            //moves orders skipped to shipment
             droneList.addAll(nextList);
             nextList.clear();
 
             //adds the weight of skipped orders
-            for (PlacedOrder m : droneList) {
-                currentWeight += m.getMeal().getWeight();
+            for (PlacedOrder placedOrder : droneList) {
+                currentWeight += placedOrder.getWeight();
             }
 
             // adds all orders to the drone
-            // and adds up the wight
-            int i;
-            for (i = 0; i < packingList.size(); i++) {
-                droneList.add(packingList.get(i));
-                currentWeight += packingList.get(i).getMeal().getWeight();
-                packingList.remove(i);
+            // and adds up the weight
+            int i = 0;
+            while(!packingList.isEmpty())  {
+                if (packingList.get(0).getOrderedTime() < elapsedTime) { //If it has been ordered
+                    //Add the order to the drone
+                    PlacedOrder placedOrder = packingList.remove(0);
+                    currentWeight += placedOrder.getWeight();
+                    droneList.add(placedOrder);
+                } else {
+                    if (i == 0) {
+                        //Skip forward in time and the order to the drone
+                        skippedTime = packingList.get(0).getOrderedTime() - elapsedTime;
+                        PlacedOrder placedOrder = packingList.remove(0);
+                        currentWeight += placedOrder.getWeight();
+                        droneList.add(placedOrder);
+                    } else {
+                        break;
+                    }
+                }
+                i++;
+
             }
 
-            int firstpos = 0;
+
             //removes the largest of the non skipped orders until the drone has a correct amount of weight
             while (currentWeight > maxWeight) {
                 double BiggestWeight = 0;
                 int pos = 0;
-                for (int j = nextList.size(); j < droneList.size(); j++) {
-                    //equal to pick the one later in the queue
-                    if (droneList.get(j).getMeal().getWeight() <= BiggestWeight) {
-                        BiggestWeight = droneList.get(j).getMeal().getWeight();
+                for (int j = 0; j < droneList.size(); j++) {
+                    //find the biggest weight
+                    if (droneList.get(j).getWeight() >= BiggestWeight) {
+                        BiggestWeight = droneList.get(j).getWeight();
                         pos = j;
                     }
                 }
-                currentWeight -= droneList.get(pos).getMeal().getWeight();
+                //remove the order and add it to the next list
+                currentWeight -= droneList.get(pos).getWeight();
                 nextList.add(droneList.remove(pos));
-                if (pos == firstpos)
-                    firstpos = pos + 1;
+
             }
-            if (elapsedTime < packingClone.get(firstpos).getOrderedTime() && firstpos == 0)
-                skippedTime = packingClone.get(firstpos).getOrderedTime() - elapsedTime;
+
 
         } catch (Exception e) {
             System.out.println((e.getMessage()));
         }
-        System.out.println("DroneList Size: " + droneList.size());
-        for (int i = 0; i < droneList.size(); i++ ) {
-            System.out.println(droneList.get(i));
-        }
+
         return droneList;
     }
 

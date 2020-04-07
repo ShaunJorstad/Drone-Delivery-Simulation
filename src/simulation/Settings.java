@@ -20,7 +20,7 @@ public class Settings {
     static final FileChooser fileChooser = new FileChooser();
     private static Settings instance = new Settings();
 
-    private static int droneCapacity = 20;
+    private static int droneCapacity = 192;
 
     private Settings() {
         map = new ArrayList<>();
@@ -52,6 +52,20 @@ public class Settings {
     public static ArrayList<Destination> getMap() { return map; }
 
     // Food Items----------------------------------------------------------------
+
+    public static String verifySettings() {
+        if (!verifyFoodItems()) {
+            return "Incorrect Food Items";
+        }
+        if (!verifyMeals()) {
+            return "Incorrect Meal Items";
+        }
+        if (!verifyDistribution()) {
+            return "Incorect Order Distribution";
+        }
+        return "";
+    }
+
 
     /**
      * Adds the provided food item
@@ -188,7 +202,11 @@ public class Settings {
      * @param distribution number of meals to be generated in that hour
      * @return true if valid settings
      */
-    private boolean editDistribution(int index, int distribution) {
+    public static  boolean editDistribution(int index, int distribution) {
+        if (index >= orderDistribution.size()) {
+            return false;
+        }
+        orderDistribution.set(index, distribution);
         return true;
     }
 
@@ -198,7 +216,7 @@ public class Settings {
      *
      * @return true if valid settings
      */
-    private boolean verifyDistribution() {
+    public static boolean verifyDistribution() {
         return true;
     }
 
