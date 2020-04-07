@@ -461,17 +461,23 @@ public class SimController {
 
     public static String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
         String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
-                "<data-set>";
+                "<data-set>\n\t" + "<record>\n\t\t" + 
+                "<Simulation_Number>1</Simulation_Number>\n\t\t" +
+                "<Fifo_Average_Time>6.663998369015784</Fifo_Average_Time>\n\t\t" +
+                "<Fifo_Worst_Time>12.402527638089623</Fifo_Worst_Time>\n\t\t" +
+                "<Knapsack_Average_Time>5.6679585828477075</Knapsack_Average_Time>\n\t\t" +
+                "<Knapsack_Worst_Time>12.12398691955238</Knapsack_Worst_Time>\n\t" +
+                "</record>";
         for (int i = 0; i < resultsFifo.size(); i++) {
             out += "\n\t<record>\n\t\t";
-            out += "<Simulation Number>" + (i + 1) + "</Simulation Number>\n\t\t";
-            out += "<Fifo Average Time>" + resultsFifo.get(i).getAvgTime() + "</Fifo Average Time>\n\t\t";
-            out += "<Fifo Worst Time>" + resultsFifo.get(i).getWorstTime() + "</Fifo Worst Time>\n\t";
-            out += "<Knapsack Average Time>" + resultsKnapsack.get(i).getAvgTime() + "</Knapsack Average Time>\n\t\t";
-            out += "<Knapsack Worst Time>" + resultsKnapsack.get(i).getWorstTime() + "</Knapsack Worst Time>\n\t";
+            out += "<Simulation_Number>" + (i + 1) + "</Simulation_Number>\n\t\t";
+            out += "<Fifo_Average_Time>" + resultsFifo.get(i).getAvgTime() + "</Fifo_Average_Time>\n\t\t";
+            out += "<Fifo_Worst_Time>" + resultsFifo.get(i).getWorstTime() + "</Fifo_Worst_Time>\n\t\t";
+            out += "<Knapsack_Average_Time>" + resultsKnapsack.get(i).getAvgTime() + "</Knapsack_Average_Time>\n\t\t";
+            out += "<Knapsack_Worst_Time>" + resultsKnapsack.get(i).getWorstTime() + "</Knapsack_Worst_Time>\n\t";
             out += "</record>";
         }
-        out += "\n<data-set>";
+        out += "\n</data-set>";
         return out;
     }
 
