@@ -85,8 +85,10 @@ public class Results {
 	 * @param algorithm The name of the algorithm that the results are for
 	 */
 	public void getFinalResults(String algorithm) {
-		System.out.println("The worst time for " + algorithm + " is: " + calcWorstTime());
-		System.out.println("The average time for " + algorithm + " is: " + calcAvgTime());
+		calcAvgTime();
+		calcWorstTime();
+		//System.out.println("The worst time for " + algorithm + " is: " + calcWorstTime());
+		//System.out.println("The average time for " + algorithm + " is: " + calcAvgTime());
 	}
 
 	public double getWorstTime() {
