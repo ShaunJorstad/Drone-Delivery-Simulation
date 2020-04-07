@@ -13,6 +13,7 @@ import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
@@ -38,6 +39,7 @@ import java.util.ResourceBundle;
 
 public class Results implements Initializable {
     public GridPane resultsGrid;
+    public VBox gridBox;
     SimulationThread statusThread;
 
     public Button exportButton;
@@ -154,13 +156,16 @@ public class Results implements Initializable {
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Simulation #");
-        yAxis.setLabel("Average runtime");
+        yAxis.setLabel("Average runtime (m)");
         LineChart<Number, Number> chart = new LineChart<Number, Number>(xAxis, yAxis);
-        chart.setTitle("Average runtime comparison");
+        chart.setTitle("Average Delivery Time");
         XYChart.Series<Number, Number> fifo = new XYChart.Series<>();
         fifo.setName("Fifo Average");
         XYChart.Series<Number, Number> knapsack = new XYChart.Series<>();
         knapsack.setName("Knapsack Average");
+
+        fifo.getData().removeAll();
+        knapsack.getData().removeAll();
 
         //populate lines with numbers
         int index = 0;
@@ -177,6 +182,7 @@ public class Results implements Initializable {
         chart.getData().add(fifo);
         chart.getData().add(knapsack);
 
-        vBox.getChildren().add(chart);
+        gridBox.getChildren().add(chart);
+        VBox.setMargin(chart, new Insets(20, 30, 200, 0));
     }
 }

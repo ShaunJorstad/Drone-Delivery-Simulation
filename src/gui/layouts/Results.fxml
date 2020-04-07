@@ -42,10 +42,18 @@
             </GridPane>
         </VBox>
     </center>
+    <right>
+        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
+            <VBox spacing="10" alignment="BASELINE_RIGHT">
+                <Button id="exportButton" styleClass="settingsControls" fx:id="exportButton"
+                        text="Export Results" textFill="ffffff"
+                        onAction="#handleExport"/>
+            </VBox>
+        </VBox>
+    </right>
     <bottom>
-        <AnchorPane>
-            <Button id="exportButton" fx:id="exportButton" contentDisplay="CENTER" layoutX="600" layoutY="-120"
-                    text="Export Results" textFill="ffffff" onAction="#handleExport"/>
-        </AnchorPane>
+        <VBox fx:id="gridBox" prefHeight="550">
+
+        </VBox>
     </bottom>
 </BorderPane>
