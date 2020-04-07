@@ -7,6 +7,7 @@
 
 package gui.controllers;
 
+import cli.SimulationThread;
 import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
@@ -14,13 +15,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -32,6 +37,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Results implements Initializable {
+    public GridPane resultsGrid;
+    SimulationThread statusThread;
 
     public Button exportButton;
     public Button results;
@@ -62,8 +69,10 @@ public class Results implements Initializable {
         backImage.setPreserveRatio(true);
 
         SimController simController = SimController.getInstance();
+        exportButton.setDisable(true);
         if (simController.hasResults()) {
             displayResults();
+            exportButton.setDisable(false);
         }
 
         injectCursorStates();
@@ -92,8 +101,7 @@ public class Results implements Initializable {
     }
 
     public void handleExport(ActionEvent actionEvent) {
-//        String exportData = SimController.exportResults();
-        System.out.println();
+        SimController.exportResults((Stage) home.getScene().getWindow());
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
@@ -116,21 +124,59 @@ public class Results implements Initializable {
     }
 
     public void displayResults() {
-        SimController simController = SimController.getInstance();
-        ArrayList<simulation.Results> fifoData = simController.getAggregatedResultsFIFO();
-        ArrayList<simulation.Results> knapsackData = simController.getAggregatedResultsKnapsack();
+        ArrayList<simulation.Results> fifoData = SimController.getAggregatedResultsFIFO();
+        ArrayList<simulation.Results> knapsackData = SimController.getAggregatedResultsKnapsack();
 
 
-        double fifoWorst = simController.getAggregatedWorstTime(fifoData);
-        double fifoAverage = simController.getAggregatedAvgTime(fifoData);
-        //double fifoTotal = SimController.getFifoTotal();
-        // Knapsack: Average, worst, total
-        double knapsackWorst = simController.getAggregatedWorstTime(knapsackData);
-        double knapsackAverage = simController.getAggregatedAvgTime(knapsackData);
-        //double knapsackTotal = SimController.getKnapsackTotal();
+        double fifoWorst = SimController.getAggregatedWorstTime(fifoData);
+        double fifoAverage = SimController.getAggregatedAvgTime(fifoData);
+        double knapsackWorst = SimController.getAggregatedWorstTime(knapsackData);
+        double knapsackAverage = SimController.getAggregatedAvgTime(knapsackData);
 
+        Text fWorst = new Text(Double.toString(fifoWorst));
+        Text fAverage = new Text(Double.toString(fifoAverage));
+        Text kWorst = new Text(Double.toString(knapsackWorst));
+        Text kAverage = new Text(Double.toString(knapsackAverage));
 
-        // enable export button
-        // insert graph view
+        fWorst.getStyleClass().add("resultsTableText");
+        fAverage.getStyleClass().add("resultsTableText");
+        kAverage.getStyleClass().add("resultsTableText");
+        kWorst.getStyleClass().add("resultsTableText");
+
+        resultsGrid.add(fWorst, 2, 1);
+        resultsGrid.add(fAverage, 1, 1);
+        resultsGrid.add(kWorst, 2, 2);
+        resultsGrid.add(kAverage, 1, 2);
+
+        exportButton.setDisable(false);
+
+        // inserts line graph
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Simulation #");
+        yAxis.setLabel("Average runtime");
+        LineChart<Number, Number> chart = new LineChart<Number, Number>(xAxis, yAxis);
+        chart.setTitle("Average runtime comparison");
+        XYChart.Series<Number, Number> fifo = new XYChart.Series<>();
+        fifo.setName("Fifo Average");
+        XYChart.Series<Number, Number> knapsack = new XYChart.Series<>();
+        knapsack.setName("Knapsack Average");
+
+        //populate lines with numbers
+        int index = 0;
+        for (simulation.Results point : fifoData) {
+            fifo.getData().add(new XYChart.Data<>(index, point.getAvgTime()));
+            index += 1;
+        }
+        index = 0;
+        for (simulation.Results point : knapsackData) {
+            knapsack.getData().add(new XYChart.Data<>(index, point.getAvgTime()));
+            index += 1;
+        }
+
+        chart.getData().add(fifo);
+        chart.getData().add(knapsack);
+
+        vBox.getChildren().add(chart);
     }
 }

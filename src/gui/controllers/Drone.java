@@ -7,12 +7,12 @@
 
 package gui.controllers;
 
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,6 +26,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Drone implements Initializable {
+    SimulationThread statusThread;
+
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;

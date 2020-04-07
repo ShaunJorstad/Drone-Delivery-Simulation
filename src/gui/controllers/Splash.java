@@ -7,9 +7,10 @@
 
 package gui.controllers;
 
+import cli.SimulationThread;
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,23 +19,20 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class Splash implements Initializable {
+    SimulationThread statusThread;
 
     @FXML
     public ImageView SplashImage;
@@ -53,6 +51,15 @@ public class Splash implements Initializable {
         Image droneImage = new Image(droneFile.toURI().toString());
         SplashImage.setImage(droneImage);
 
+        home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+
+//        statusThread = new SimulationThread(nextButton);
+
+        injectCursorStates();
+        loadIcons();
+    }
+
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -69,7 +76,6 @@ public class Splash implements Initializable {
         home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
         injectCursorStates();
-
     }
 
     public void injectCursorStates() {
@@ -112,5 +118,17 @@ public class Splash implements Initializable {
         Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
         Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
+    }
+
+    public void updateRunBtn(String errMessage, boolean valid) {
+        if (valid) {
+            nextButton.setStyle("-fx-background-color: #0078D7");
+            nextButton.setText("Run");
+            nextButton.setDisable(false);
+        } else {
+            nextButton.setStyle("-fx-background-color: #EC2F08");
+            nextButton.setText(errMessage);
+            nextButton.setDisable(true);
+        }
     }
 }

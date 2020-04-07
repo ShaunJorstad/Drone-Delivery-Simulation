@@ -7,9 +7,9 @@
 
 package gui.controllers;
 
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -33,6 +33,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FoodItems implements Initializable {
+
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -64,6 +65,8 @@ public class FoodItems implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
         foodItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
+
+        SimController.setCurrentButton(runSimButton);
 
         gridIndex = 1;
         loadIcons();
@@ -152,6 +155,11 @@ public class FoodItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+        runSimButton.setStyle("-fx-background-color: #1F232F");
+        runSimButton.setText("running simulation");
+        runSimButton.setDisable(true);
+
+        SimController.runSimulations();
     }
 
     public void inflateFoodItems() {

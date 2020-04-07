@@ -7,13 +7,13 @@
 
 package gui.controllers;
 
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Map implements Initializable {
+    SimulationThread statusThread;
 	
 	@FXML
     public ImageView mapImage;
@@ -121,4 +122,5 @@ public class Map implements Initializable {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
     }
+
 }

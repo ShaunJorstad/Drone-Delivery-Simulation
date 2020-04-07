@@ -6,6 +6,8 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.chart.LineChart?>
 <BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Results">
     <top>
@@ -25,8 +27,7 @@
     <center>
         <VBox id="vBox" fx:id="vBox" prefHeight="200.0" prefWidth="730.0">
             <Label id="resultsTitle" fx:id="resultsTitle" text="Simulation Results"/>
-            <GridPane hgap="30" vgap="20">
-
+            <GridPane hgap="30" vgap="20" fx:id="resultsGrid">
                 <Text id="algorithmText" text="Algorithm" styleClass="tableTitle"
                       GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <Text id="averageText" text="Average Time" styleClass="tableTitle"
@@ -38,7 +39,6 @@
                       GridPane.columnIndex="0" GridPane.rowIndex="2"/>
                 <Text id="fifo" text="FIFO" styleClass="tableTitle"
                       GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
             </GridPane>
         </VBox>
     </center>

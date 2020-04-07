@@ -7,9 +7,10 @@
 
 package gui.controllers;
 
+import cli.SimulationThread;
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -34,6 +35,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class MealItems implements Initializable {
+    SimulationThread statusThread;
+
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -64,11 +67,14 @@ public class MealItems implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
         mealItems.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
+        SimController.setCurrentButton(runSimButton);
+
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
         gridIndex = 1;
         loadIcons();
         inflateMeals();
+        checkSimulationStatus();
     }
 
     public void loadIcons() {
@@ -90,6 +96,22 @@ public class MealItems implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    public void checkSimulationStatus() {
+//        int status = SimController.getSimStatus();
+//        if (status == -1 ) { // no simulation has been run
+//            String settingsValidity = Settings.verifySettings();
+//            if (!settingsValidity.equals("")) {
+//                updateRunBtn(settingsValidity, false);
+//            }
+//        } else if (status >= 0 && status < 50) { // simulation in progress
+//            runSimButton.setStyle("-fx-background-color: #1F232F");
+//            runSimButton.setDisable(true);
+//            statusThread.run();
+//        }
+//        else if (status == 50) {
+//            runSimButton.setText("Run another Sim");
+//        }
+    }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
@@ -154,6 +176,11 @@ public class MealItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+        runSimButton.setStyle("-fx-background-color: #1F232F");
+        runSimButton.setText("running simulation");
+        runSimButton.setDisable(true);
+
+        SimController.runSimulations();
     }
 
     public void inflateMeals() {

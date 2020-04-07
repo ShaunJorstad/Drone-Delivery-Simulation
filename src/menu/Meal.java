@@ -130,6 +130,9 @@ public class Meal {
     }
 
     public void removeFoodItem(FoodItem food) {
+        if (!foodItems.containsKey(food)) {
+            return;
+        }
         weight -= food.getWeight() * foodItems.get(food);
         foodItems.remove(food);
     }

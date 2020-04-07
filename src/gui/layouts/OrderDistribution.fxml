@@ -6,6 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
 <BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.OrderDistribution">
     <top>
@@ -49,8 +50,6 @@
                     <Text id="ordersTitle" styleClass="gridTitle" fx:id="ordersTitle" text="# Orders" fill="808080"
                           GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
                 </GridPane>
-                <!--                <Button id="addFood" fx:id="addFood" styleClass="grayButton" text="Add Item" textFill="ffffff"-->
-                <!--                        onAction="#handleAddFoodItem"/>-->
             </VBox>
         </ScrollPane>
     </center>

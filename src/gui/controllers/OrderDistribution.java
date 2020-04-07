@@ -7,6 +7,8 @@
 
 package gui.controllers;
 
+import cli.SimulationThread;
+import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -34,6 +37,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class OrderDistribution implements Initializable {
+    SimulationThread statusThread;
+
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -68,9 +73,12 @@ public class OrderDistribution implements Initializable {
         GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
         gridIndex = 1;
 
+        SimController.setCurrentButton(runSimButton);
+
         loadIcons();
         injectCursorStates();
         inflateOrderDistribution();
+        checkSimulationStatus();
     }
 
     public void loadIcons() {
@@ -88,6 +96,23 @@ public class OrderDistribution implements Initializable {
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
+    public void checkSimulationStatus() {
+//        int status = SimController.getSimStatus();
+//        if (status == -1 ) { // no simulation has been run
+//            String settingsValidity = Settings.verifySettings();
+//            if (!settingsValidity.equals("")) {
+//                updateRunBtn(settingsValidity, false);
+//            }
+//        } else if (status >= 0 && status < 50) { // simulation in progress
+//            runSimButton.setStyle("-fx-background-color: #1F232F");
+//            runSimButton.setDisable(true);
+//            statusThread.run();
+//        }
+//        else if (status == 50) {
+//            runSimButton.setText("Run another Sim");
+//        }
     }
 
     public void injectCursorStates() {
@@ -157,6 +182,11 @@ public class OrderDistribution implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+        runSimButton.setStyle("-fx-background-color: #1F232F");
+        runSimButton.setText("running simulation");
+        runSimButton.setDisable(true);
+
+        SimController.runSimulations();
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {
@@ -193,5 +223,17 @@ public class OrderDistribution implements Initializable {
         contentGrid.add(orderField, 1, gridIndex);
 
         gridIndex++;
+    }
+
+    public void updateRunBtn(String errMessage, boolean valid) {
+        if (valid) {
+            runSimButton.setStyle("-fx-background-color: #0078D7");
+            runSimButton.setText("Run");
+            runSimButton.setDisable(false);
+        } else {
+            runSimButton.setStyle("-fx-background-color: #EC2F08");
+            runSimButton.setText(errMessage);
+            runSimButton.setDisable(true);
+        }
     }
 }

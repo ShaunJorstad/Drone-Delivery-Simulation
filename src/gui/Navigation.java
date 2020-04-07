@@ -16,10 +16,8 @@ package gui;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,6 +26,7 @@ public class Navigation {
     private static Navigation instance = null;
     public static ArrayList<String> sceneStack;
     private static ArrayList<String> scenes;
+    private static Scene currentScene;
 
     private static double SCALE = 1.6;
 
@@ -37,6 +36,12 @@ public class Navigation {
         String[] SCENES = {"Splash", "Results", "FoodItems", "MealItems", "OrderDistribution", "Map", "Drone"};
         scenes.addAll(Arrays.asList(SCENES));
     }
+
+    static void setCurrentScene(Scene scene) {
+        currentScene = scene;
+    }
+
+    public static Scene getCurrentScene() {return currentScene;}
 
     /**
      * pushes scene onto the scene stack
@@ -112,6 +117,7 @@ public class Navigation {
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
         splashScene.setCursor(Cursor.HAND);
         stage.setScene(splashScene);
+        currentScene = splashScene;
     }
 
     /**
