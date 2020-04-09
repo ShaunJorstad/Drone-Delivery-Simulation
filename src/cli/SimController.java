@@ -1,6 +1,7 @@
 package cli;
 
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -37,6 +38,7 @@ public class SimController {
     static final FileChooser fileChooser = new FileChooser();
     private static SimulationThread simThread;
     private static Button btn;
+    private static HBox hBox;
 
     ArrayList<PlacedOrder> test;
 
@@ -161,7 +163,7 @@ public class SimController {
      */
     public void runAlgorithms() {
         ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
-        System.out.println("Total number of orders: " + allOrders.size());
+        //System.out.println("Total number of orders: " + allOrders.size());
         Results results = new Results();
 
         //Initialize the knapsack and FIFO algorithms
@@ -513,6 +515,16 @@ public class SimController {
     public static Button getCurrentButton() {
         return btn;
     }
+
+    public static void setProgressBarHBox(HBox progessBarHBox) {
+        hBox = progessBarHBox;
+    }
+
+    public static HBox getProgressBarHBox() {
+        return hBox;
+    }
+
+
 
     public static void runSimulations() {
         simThread = new SimulationThread();

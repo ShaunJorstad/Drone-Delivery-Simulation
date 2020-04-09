@@ -8,15 +8,15 @@
 package gui.controllers;
 
 import cli.SimController;
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -31,10 +31,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class FoodItems implements Initializable {
 
     public VBox navBarContainer;
+    public HBox progressBar;
     public HBox navBar;
     public Button home;
     public Button settings;
@@ -155,11 +159,41 @@ public class FoodItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
-        runSimButton.setStyle("-fx-background-color: #1F232F");
-        runSimButton.setText("running simulation");
-        runSimButton.setDisable(true);
+        try {
+            SimulationThread simulationThread = new SimulationThread();
+            simulationThread.setOnRunning((successEvent) -> {
+                runSimButton.setStyle("-fx-background-color: #1F232F");
+                runSimButton.setText("running simulation");
+                runSimButton.setDisable(true);
 
-        SimController.runSimulations();
+                ProgressBar pb = new ProgressBar(.2);
+                Label label = new Label("Sim Progress: ");
+                ProgressIndicator progressIndicator = new ProgressIndicator(.2);
+                //progressIndicator.progressProperty().bind(simulationThread.progressProperty());
+                //pb.progressProperty().bind(simulationThread.progressProperty());
+                progressBar.setSpacing(5);
+                progressBar.setAlignment(Pos.BASELINE_CENTER);
+                progressBar.getChildren().addAll(label, pb, progressIndicator);
+            });
+
+            simulationThread.setOnSucceeded((successEvent) -> {
+                SimController.getCurrentButton().setText("view results");
+                SimController.getCurrentButton().setStyle("-fx-background-color: #0078D7");
+                SimController.getCurrentButton().setDisable(false);
+                SimController.simInProgress = false;
+            });
+
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(simulationThread);
+            executorService.shutdown();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+        //SimController.runSimulations();
     }
 
     public void inflateFoodItems() {
