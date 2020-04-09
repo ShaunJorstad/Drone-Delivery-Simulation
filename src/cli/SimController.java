@@ -33,7 +33,7 @@ public class SimController {
     private static ArrayList<Results> aggregatedResultsKnapsack;
     int NUMBER_OF_SIMULATIONS = 50;
     public static boolean simInProgress = false;
-    boolean simRan;
+    public static boolean simRan;
     static final FileChooser fileChooser = new FileChooser();
     private static SimulationThread simThread;
     private static Button btn;
