@@ -181,7 +181,13 @@ public class OrderDistribution implements Initializable {
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
     }
 
-    public void handleRunSimulation(ActionEvent actionEvent) {
+    public void handleRunSimulation(ActionEvent actionEvent) throws IOException {
+        if (SimController.simRan) {
+            Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+            Navigation.pushScene("Drone");
+            return;
+        }
         runSimButton.setStyle("-fx-background-color: #1F232F");
         runSimButton.setText("running simulation");
         runSimButton.setDisable(true);

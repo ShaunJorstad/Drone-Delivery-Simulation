@@ -78,6 +78,7 @@ public class Results implements Initializable {
         }
 
         injectCursorStates();
+        SimController.simRan = false;
     }
 
     public void injectCursorStates() {
