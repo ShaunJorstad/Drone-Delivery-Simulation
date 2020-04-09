@@ -157,7 +157,7 @@ public class FoodItems implements Initializable {
     public void handleRunSimulation(ActionEvent actionEvent) throws IOException {
         if (SimController.simRan) {
             Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-            Navigation.inflateScene(root, "Drone", (Stage) home.getScene().getWindow());
+            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
             Navigation.pushScene("FoodItems");
             return;
         }
