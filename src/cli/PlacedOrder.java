@@ -16,6 +16,7 @@ public class PlacedOrder {
     String clientName; //name of the client
     Meal meal; //The meal that was ordered
     Destination dest; //The destination of the delivery
+    int timesSkipped = 0; //How many times the order has been skipped in the Knapsack algorithm
 
     /**
      * Constructor
@@ -29,6 +30,7 @@ public class PlacedOrder {
         clientName = name;
         this.meal = meal;
         this.dest = dest;
+        timesSkipped = 0;
     }
 
     /**
@@ -74,6 +76,13 @@ public class PlacedOrder {
     public int getOrderedTime() {
         return orderedTime;
     }
+
+    public int getTimesSkipped() {return timesSkipped;}
+
+    public void incrementTimeSkipped() {
+        this.timesSkipped++;
+    }
+
 
     public float getWeight() {
         return meal.getWeight();
