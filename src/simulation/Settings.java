@@ -444,7 +444,7 @@ public class Settings {
                     name = line.next();
                     weight = line.nextFloat();
 
-                    System.out.print("yeah");
+
                     //Create a new food item
                     FoodItem f = new FoodItem(name, weight);
                     //System.out.print("?!?!?!"+f.getName());

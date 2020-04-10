@@ -8,15 +8,15 @@
 package gui.controllers;
 
 import cli.SimController;
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -31,6 +31,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class FoodItems implements Initializable {
 
@@ -58,6 +61,7 @@ public class FoodItems implements Initializable {
     public Button addFood;
     public ImageView uploadImage;
     public ImageView downloadImage;
+    public VBox runBtnVbox;
 
     private int gridIndex;
 
@@ -154,18 +158,41 @@ public class FoodItems implements Initializable {
         Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
-    public void handleRunSimulation(ActionEvent actionEvent) throws IOException {
-        if (SimController.simRan) {
-            Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
-            Navigation.pushScene("FoodItems");
-            return;
-        }
-        runSimButton.setStyle("-fx-background-color: #1F232F");
-        runSimButton.setText("running simulation");
-        runSimButton.setDisable(true);
+    public void handleRunSimulation(ActionEvent actionEvent) {
 
-        SimController.runSimulations();
+        ProgressBar pb = new ProgressBar();
+        try {
+            if (SimController.simRan) {
+                Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+                Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+                Navigation.pushScene("FoodItems");
+                return;
+            }
+            SimulationThread simulationThread = new SimulationThread();
+            simulationThread.setOnRunning((successEvent) -> {
+                runSimButton.setStyle("-fx-background-color: #1F232F");
+                runSimButton.setText("running simulation");
+                runSimButton.setDisable(true);
+
+                pb.progressProperty().bind(simulationThread.progressProperty());
+                runBtnVbox.getChildren().add(pb);
+            });
+
+            simulationThread.setOnSucceeded((successEvent) -> {
+                SimController.getCurrentButton().setText("view results");
+                SimController.getCurrentButton().setStyle("-fx-background-color: #0078D7");
+                SimController.getCurrentButton().setDisable(false);
+                SimController.simInProgress = false;
+                runBtnVbox.getChildren().remove(pb);
+            });
+
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(simulationThread);
+            executorService.shutdown();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void inflateFoodItems() {
@@ -283,6 +310,7 @@ public class FoodItems implements Initializable {
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {
+
         if (valid) {
             runSimButton.setStyle("-fx-background-color: #0078D7");
             runSimButton.setText("Run");
@@ -292,5 +320,7 @@ public class FoodItems implements Initializable {
             runSimButton.setText(errMessage);
             runSimButton.setDisable(true);
         }
+
+
     }
 }

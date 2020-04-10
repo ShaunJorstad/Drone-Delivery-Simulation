@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +35,9 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import simulation.Settings;
 import menu.Destination;
 
@@ -63,6 +67,7 @@ public class Map implements Initializable {
     public VBox settingButtons;
     public ScrollPane scrollpane;
     public GridPane contentGrid;
+    public VBox runBtnVbox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -190,11 +195,38 @@ public class Map implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
-    	runSimButton.setStyle("-fx-background-color: #1F232F");
-        runSimButton.setText("running simulation");
-        runSimButton.setDisable(true);
+        ProgressBar pb = new ProgressBar();
+        try {
+            if (SimController.simRan) {
+                Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+                Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+                Navigation.pushScene("Map");
+                return;
+            }
+            SimulationThread simulationThread = new SimulationThread();
+            simulationThread.setOnRunning((successEvent) -> {
+                runSimButton.setStyle("-fx-background-color: #1F232F");
+                runSimButton.setText("running simulation");
+                runSimButton.setDisable(true);
 
-        SimController.runSimulations();
+                pb.progressProperty().bind(simulationThread.progressProperty());
+                runBtnVbox.getChildren().add(pb);
+            });
+
+            simulationThread.setOnSucceeded((successEvent) -> {
+                SimController.getCurrentButton().setText("view results");
+                SimController.getCurrentButton().setStyle("-fx-background-color: #0078D7");
+                SimController.getCurrentButton().setDisable(false);
+                SimController.simInProgress = false;
+                runBtnVbox.getChildren().remove(pb);
+            });
+
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(simulationThread);
+            executorService.shutdown();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     public void inflateMapPoints() {
