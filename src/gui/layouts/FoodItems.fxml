@@ -74,10 +74,10 @@
                     </graphic>
                 </Button>
             </VBox>
-            <Button id="runSimButton" fx:id="runSimButton" text="Run"
-                    onAction="#handleRunSimulation" textFill="ffffff"/>
-            <HBox id="progressBar" fx:id="progressBar"
-            />
+            <VBox fx:id="runBtnVbox">
+                <Button id="runSimButton" fx:id="runSimButton" text="Run"
+                        onAction="#handleRunSimulation" textFill="ffffff"/>
+            </VBox>
         </VBox>
     </right>
 </BorderPane>

@@ -527,7 +527,7 @@ public class SimController {
 
 
     public static void runSimulations() {
-        simThread = new SimulationThread();
-        simThread.run();
+//        simThread = new SimulationThread();
+//        simThread.run();
     }
 }

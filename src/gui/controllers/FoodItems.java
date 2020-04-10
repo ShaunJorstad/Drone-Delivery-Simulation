@@ -38,7 +38,6 @@ import java.util.concurrent.Executors;
 public class FoodItems implements Initializable {
 
     public VBox navBarContainer;
-    public HBox progressBar;
     public HBox navBar;
     public Button home;
     public Button settings;
@@ -62,6 +61,7 @@ public class FoodItems implements Initializable {
     public Button addFood;
     public ImageView uploadImage;
     public ImageView downloadImage;
+    public VBox runBtnVbox;
 
     private int gridIndex;
 
@@ -159,20 +159,16 @@ public class FoodItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+        ProgressBar pb = new ProgressBar();
         try {
             SimulationThread simulationThread = new SimulationThread();
             simulationThread.setOnRunning((successEvent) -> {
                 runSimButton.setStyle("-fx-background-color: #1F232F");
                 runSimButton.setText("running simulation");
                 runSimButton.setDisable(true);
-                ProgressBar pb = new ProgressBar(.2);
-                Label label = new Label("Sim Progress: ");
-                ProgressIndicator progressIndicator = new ProgressIndicator(.2);
-                progressIndicator.progressProperty().bind(simulationThread.progressProperty());
+
                 pb.progressProperty().bind(simulationThread.progressProperty());
-                progressBar.setSpacing(5);
-                progressBar.setAlignment(Pos.BASELINE_CENTER);
-                progressBar.getChildren().addAll(label, pb, progressIndicator);
+                runBtnVbox.getChildren().add(pb);
             });
 
             simulationThread.setOnSucceeded((successEvent) -> {
@@ -180,6 +176,7 @@ public class FoodItems implements Initializable {
                 SimController.getCurrentButton().setStyle("-fx-background-color: #0078D7");
                 SimController.getCurrentButton().setDisable(false);
                 SimController.simInProgress = false;
+                runBtnVbox.getChildren().remove(pb);
             });
 
             ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -189,10 +186,6 @@ public class FoodItems implements Initializable {
             System.out.println(e.getMessage());
         }
 
-
-
-
-        //SimController.runSimulations();
     }
 
     public void inflateFoodItems() {
@@ -310,6 +303,7 @@ public class FoodItems implements Initializable {
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {
+        /*
         if (valid) {
             runSimButton.setStyle("-fx-background-color: #0078D7");
             runSimButton.setText("Run");
@@ -319,5 +313,7 @@ public class FoodItems implements Initializable {
             runSimButton.setText(errMessage);
             runSimButton.setDisable(true);
         }
+
+         */
     }
 }

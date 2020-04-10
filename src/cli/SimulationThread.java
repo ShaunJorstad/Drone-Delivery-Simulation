@@ -12,20 +12,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class SimulationThread extends Task<Void> {
 
-
     @Override
     protected Void call() throws Exception {
         SimController.simInProgress = true;
-        ProgressBar progressBar;
-        HBox hBox;
-        Label label = new Label("Sim Progress: ");
-        ProgressIndicator progressIndicator;
+//        ProgressBar progressBar;
+//        HBox hBox;
+//        Label label = new Label("Sim Progress: ");
+//        ProgressIndicator progressIndicator;
 
 
         // TODO: run the simulation
@@ -34,7 +34,6 @@ public class SimulationThread extends Task<Void> {
             updateProgress(i, simController.getNUMBER_OF_SIMULATIONS());
             simController.generateOrders();
             simController.runAlgorithms();
-
         }
         /*
         SimController.getCurrentButton().setText("view results");
