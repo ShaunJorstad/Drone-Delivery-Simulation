@@ -62,6 +62,7 @@ public class FoodItems implements Initializable {
     public Button addFood;
     public ImageView uploadImage;
     public ImageView downloadImage;
+    public VBox runBtnVbox;
 
     private int gridIndex;
 
@@ -166,14 +167,15 @@ public class FoodItems implements Initializable {
                 runSimButton.setText("running simulation");
                 runSimButton.setDisable(true);
 
-                ProgressBar pb = new ProgressBar(.2);
+                ProgressBar pb = new ProgressBar(10);
                 Label label = new Label("Sim Progress: ");
                 ProgressIndicator progressIndicator = new ProgressIndicator(.2);
-                //progressIndicator.progressProperty().bind(simulationThread.progressProperty());
-                //pb.progressProperty().bind(simulationThread.progressProperty());
-                progressBar.setSpacing(5);
-                progressBar.setAlignment(Pos.BASELINE_CENTER);
-                progressBar.getChildren().addAll(label, pb, progressIndicator);
+                progressIndicator.progressProperty().bind(simulationThread.progressProperty());
+                pb.progressProperty().bind(simulationThread.progressProperty());
+//                progressBar.setSpacing(5);
+//                progressBar.setAlignment(Pos.BASELINE_CENTER);
+//                progressBar.getChildren().addAll(label, pb, progressIndicator);
+                runBtnVbox.getChildren().addAll(pb, label, progressIndicator);
             });
 
             simulationThread.setOnSucceeded((successEvent) -> {
