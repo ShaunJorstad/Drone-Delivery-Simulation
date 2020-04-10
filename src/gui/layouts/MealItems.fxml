@@ -41,7 +41,7 @@
             <VBox id="content" styleClass="content">
                 <Label styleClass="title" text="Meal Items" textFill="808080"/>
                 <Label styleClass="description" textFill="808080"
-                       text="The meals are comprised of food items. No Meal can exheed&#xD; the maximum drone carrying weight. (Can be modified&#xD; in drone settings). The distribution of the meal is the&#xD;percentage that meal is ordered."/>
+                       text="The meals are comprised of food items. No Meal can exceed&#xD; the maximum drone carrying weight. (Can be modified&#xD; in drone settings). The distribution of the meal is the&#xD;percentage that meal is ordered."/>
 
                 <VBox id="meals" fx:id="mealsVBox">
 
