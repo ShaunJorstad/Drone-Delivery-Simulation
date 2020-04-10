@@ -39,15 +39,6 @@ public class SimulationThread extends Task<Void> {
         SimController.getCurrentButton().setText("view results");
         SimController.getCurrentButton().setStyle("-fx-background-color: #0078D7");
         SimController.getCurrentButton().setDisable(false);
-        SimController.getCurrentButton().setOnAction(actionEvent -> {
-            Navigation.pushScene("Splash");
-            try {
-                Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-                Navigation.inflateScene(root, "FoodItems", (Stage) Navigation.getCurrentScene().getWindow());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         SimController.simInProgress = false;
 
          */

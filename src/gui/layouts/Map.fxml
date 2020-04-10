@@ -37,13 +37,13 @@
 
     </top>
     <left>
-    	<VBox id="hBox" prefHeight="200.0" prefWidth="400.0" alignment="TOP_LEFT">
-            <ImageView id="mapImage" fx:id="mapImage" fitHeight="200.0" fitWidth="400.0" pickOnBounds="true"
+    	<VBox id="hBox" prefHeight="500.0" prefWidth="550.0" alignment="TOP_LEFT">
+            <ImageView id="mapImage" fx:id="mapImage" fitHeight="350.0" fitWidth="500.0" pickOnBounds="true"
                        preserveRatio="true"/>
-            <ScrollPane id="scrollpane" fx:id="scrollpane" prefWidth="700.0">
+            <ScrollPane id="scrollpane" fx:id="scrollpane" prefWidth="550.0">
 	            <VBox id="content" styleClass="content" spacing="10">
-	                <Label styleClass="gridTitle" text="Destination" textFill="808080"/>
-	                <GridPane id="contentGrid" fx:id="contentGrid" hgap="20">
+	                <Label styleClass="gridTitle" text="Destinations" textFill="808080"/>
+	                <GridPane id="contentGrid" fx:id="contentGrid" hgap="100">
 	                    <Text id="nameTitle"  text="Destination" fx:id="destinationName" fill="808080"
 	                          GridPane.columnIndex="0"
 	                          GridPane.rowIndex="0"/>
@@ -51,16 +51,16 @@
 	                          GridPane.columnIndex="1"
 	                          GridPane.rowIndex="0"/>
 	                    <Text id="yCoordTitle" fx:id="yCoordTitle" text="y coord" fill="808080"
-	                          GridPane.columnIndex="0"
-	                          GridPane.rowIndex="2"/>
+	                          GridPane.columnIndex="2"
+	                          GridPane.rowIndex="0"/>
 	                </GridPane>
 	            </VBox>
 	        </ScrollPane>
         </VBox>
     </left>
     <right>
-        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
-            <VBox spacing="10" alignment="BASELINE_RIGHT">
+        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BOTTOM_RIGHT">
+            <!--<VBox spacing="10" alignment="BASELINE_RIGHT">
                 <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importMapButton"
                         text="Import Map   " textFill="ffffff"
                         onAction="#handleImportMap">
@@ -77,10 +77,13 @@
                                    preserveRatio="true" />
                     </graphic>
                 </Button>
+            </VBox>-->
+            <VBox fx:id="runBtnVbox">
+                <Button id="runSimButton" fx:id="runSimButton" text="Run"
+                        onAction="#handleRunSimulation" textFill="ffffff"/>
             </VBox>
-            <Button id="runSimButton" fx:id="runSimButton" text="Run"
-                    onAction="#handleRunSimulation" textFill="ffffff"/>
         </VBox>
+
     </right>
     <bottom>
     </bottom>

@@ -6,26 +6,21 @@ import java.util.ArrayList;
 
 public class Knapsack {
 
-    //should be orders not meals
     private ArrayList<PlacedOrder> droneList; //what is on the drone
     private ArrayList<PlacedOrder> packingList; //what is ordered currently
     private ArrayList<PlacedOrder> nextList; // what is going on next shipment
 
-    private boolean skippedOrder;
-    private double maxWeight;
-    private double currentWeight;
-    private double skippedTime;
+    private double maxWeight; //Maximum weight the drone can carry
+    private double currentWeight; //How much weight is currently on the drone
+    private double skippedTime; //The amount of time skipped forward if the there are no waiting orders
 
 
     public Knapsack(ArrayList<PlacedOrder> listOfAllOrders) {
         //copy of all orders
         packingList = (ArrayList<PlacedOrder>) listOfAllOrders.clone();
 
-        //text
         droneList = new ArrayList<>();
-        //packingList = new ArrayList<>();
         nextList = new ArrayList<>();
-        skippedOrder = false;
         maxWeight = 12*16;
         currentWeight = 0;
         skippedTime = 0;

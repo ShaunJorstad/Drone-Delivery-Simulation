@@ -159,8 +159,15 @@ public class FoodItems implements Initializable {
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
+
         ProgressBar pb = new ProgressBar();
         try {
+            if (SimController.simRan) {
+                Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+                Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+                Navigation.pushScene("FoodItems");
+                return;
+            }
             SimulationThread simulationThread = new SimulationThread();
             simulationThread.setOnRunning((successEvent) -> {
                 runSimButton.setStyle("-fx-background-color: #1F232F");
@@ -303,7 +310,7 @@ public class FoodItems implements Initializable {
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {
-        /*
+
         if (valid) {
             runSimButton.setStyle("-fx-background-color: #0078D7");
             runSimButton.setText("Run");
@@ -314,6 +321,6 @@ public class FoodItems implements Initializable {
             runSimButton.setDisable(true);
         }
 
-         */
+
     }
 }
