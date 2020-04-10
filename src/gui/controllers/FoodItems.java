@@ -165,12 +165,11 @@ public class FoodItems implements Initializable {
                 runSimButton.setStyle("-fx-background-color: #1F232F");
                 runSimButton.setText("running simulation");
                 runSimButton.setDisable(true);
-
                 ProgressBar pb = new ProgressBar(.2);
                 Label label = new Label("Sim Progress: ");
                 ProgressIndicator progressIndicator = new ProgressIndicator(.2);
-                //progressIndicator.progressProperty().bind(simulationThread.progressProperty());
-                //pb.progressProperty().bind(simulationThread.progressProperty());
+                progressIndicator.progressProperty().bind(simulationThread.progressProperty());
+                pb.progressProperty().bind(simulationThread.progressProperty());
                 progressBar.setSpacing(5);
                 progressBar.setAlignment(Pos.BASELINE_CENTER);
                 progressBar.getChildren().addAll(label, pb, progressIndicator);

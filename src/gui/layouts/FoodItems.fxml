@@ -77,7 +77,7 @@
             <Button id="runSimButton" fx:id="runSimButton" text="Run"
                     onAction="#handleRunSimulation" textFill="ffffff"/>
             <HBox id="progressBar" fx:id="progressBar"
-                  />
+            />
         </VBox>
     </right>
 </BorderPane>
