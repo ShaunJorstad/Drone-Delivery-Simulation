@@ -9,6 +9,9 @@ public class Destination {
     private int x, y; //x and y coordinates of the destination
     private double dist; //The distance from the food source
 
+    //The distance the drone needs to travel to in order to get to the next destination
+    private double distToTravelTo;
+
     /**
      * Constructor for destination. Auto-calculates the distance
      * @param destName Name of destination
@@ -20,6 +23,7 @@ public class Destination {
         this.x = x;
         this.y = y;
         setDist();
+        distToTravelTo = -1;
     }
 
     /**
@@ -34,6 +38,15 @@ public class Destination {
         this.x = x;
         this.y = y;
         this.dist = dist;
+        distToTravelTo = -1;
+    }
+
+    public Destination(Destination other) {
+        this.destName = other.getDestName();
+        this.x = other.getX();
+        this.y = other.getY();
+        this.dist = other.getDist();
+        distToTravelTo = other.getDistToTravelTo();
     }
 
     public String getDestName() {
@@ -77,8 +90,21 @@ public class Destination {
         return Math.sqrt((x-d.getX())*(x-d.getX()) + (y-d.getY())*(y-d.getY()));
     }
 
+    public void setDistToTravelTo(double dist) {
+        distToTravelTo = dist;
+    }
+
+    public double getDistToTravelTo() {
+        return distToTravelTo;
+    }
+
+
     @Override
     public String toString() {
         return destName + "\t" + x + "\t" + y + "\t" + dist;
+    }
+
+    public boolean equals(Destination destination) {
+        return this.destName == destination.getDestName();
     }
 }

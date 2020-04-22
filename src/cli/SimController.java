@@ -38,6 +38,7 @@ public class SimController {
     private static SimulationThread simThread; //The thread that runs the simulation
     private static Button btn; //Button associated with running the simulation
 
+
     //pointer to the single instance of SimController
     private static SimController single_instance = null;
 
@@ -160,16 +161,19 @@ public class SimController {
         ArrayList<PlacedOrder> allOrders = getXMLOrders(); //All the xml orders placed
         //System.out.println("Total number of orders: " + allOrders.size());
         Results results = new Results(); //Save the results
+        TSPResult tspResult;
+        ArrayList<Destination> deliveryOrder;
 
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders);
         Fifo f = new Fifo(allOrders);
 
         int loadMealTime = 0; //In case, the loadMealTime gets adjusted
-        double elapsedTime = 3; //how far into the simulation are we
+        double elapsedTime = 2.5; //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
-        double droneSpeed = 20 * 5280 / 60; //Flight speed of the drone in ft/minute
+        double droneSpeed = 25 * 5280 / 60; //Flight speed of the drone in ft/minute
         int droneDeliveryNumber = 1; //Keeps track of what delivery it is
+        PlacedOrder currentOrder;
 
         try {
 
@@ -183,12 +187,24 @@ public class SimController {
                     elapsedTime += n.getTimeSkipped() + loadMealTime; //Calculate the current time
 
                     //Find how long the delivery takes
-                    elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
+                    tspResult = TSP(droneRun);
+                    deliveryOrder = tspResult.getDeliveryOrder();
+
+                    //Deliver the orders and process the results
+                    for (int i = 0; i < deliveryOrder.size(); i++) {
+                        currentOrder = findOrderOnDrone(droneRun, deliveryOrder.get(i));
+                        elapsedTime += (deliveryOrder.get(i).getDistToTravelTo() / droneSpeed) + .5;
+                        results.processSingleDelivery(elapsedTime, currentOrder);
+
+                    }
+
+                    //Return home
+                    elapsedTime += deliveryOrder.get(0).getDist()/droneSpeed;
 
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
 
-                    results.processDelivery(elapsedTime, droneRun); //Process the delivery
-                    elapsedTime += 3;
+                    //Turnaround time
+                    elapsedTime += 2.5;
                 }
                 droneDeliveryNumber++;
             }
@@ -201,7 +217,7 @@ public class SimController {
         try {
             //Reset the variables for FIFO
             results = new Results();
-            elapsedTime = 3;
+            elapsedTime = 2.5;
             ordersStillToProcess = true;
             droneDeliveryNumber = 1;
 
@@ -215,21 +231,34 @@ public class SimController {
                     elapsedTime += f.getTimeSkipped() + loadMealTime; //Calculate the current time
 
                     //Find how long the delivery takes
-                    elapsedTime += TSP(droneRun) / droneSpeed + .5 * droneRun.size();
+                    tspResult = TSP(droneRun);
+                    deliveryOrder = tspResult.getDeliveryOrder();
+
+                    //Deliver the orders and process the results
+                    for (int i = 0; i < deliveryOrder.size(); i++) {
+
+                        currentOrder = findOrderOnDrone(droneRun, deliveryOrder.get(i));
+                        elapsedTime += (deliveryOrder.get(i).getDistToTravelTo() / droneSpeed) + .5;
+                        results.processSingleDelivery(elapsedTime, currentOrder);
+
+                    }
+                    //System.out.println(elapsedTime);
+
+                    //Return home
+                    elapsedTime += deliveryOrder.get(0).getDist()/droneSpeed;
 
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
 
-                    results.processDelivery(elapsedTime, droneRun); //Process the delivery
-                    elapsedTime += 3;
+                    //Turnaround time
+                    elapsedTime += 2.5;
                 }
                 droneDeliveryNumber++;
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         results.getFinalResults("FIFO");
-
         aggregatedResultsFIFO.add(results); //Store the results
 
         simRan = true;
@@ -344,11 +373,12 @@ public class SimController {
      * @param orders ArrayList of placed orders to travel and deliver food to
      * @return The least cost distance to complete the delivery cycle
      */
-    public double TSP(ArrayList<PlacedOrder> orders) {
+    public TSPResult TSP(ArrayList<PlacedOrder> orders) {
         ArrayList<Destination> locations = new ArrayList<>(); //The destination of each order
 
         //The place where the drone leaves and returns to
         Destination home = new Destination("Home", 0, 0, 0);
+
 
         //Seed the location ArrayList with each destination from the order list
         for (int i = 0; i < orders.size(); i++) {
@@ -366,9 +396,10 @@ public class SimController {
      * @param lastDest  The last destination the algorithm visited
      * @return The least cost distance to visit all the locations and return
      */
-    private double recursiveTSP(ArrayList<Destination> locations, Destination lastDest) {
+    private TSPResult recursiveTSP(ArrayList<Destination> locations, Destination lastDest) {
+        TSPResult finalResult = new TSPResult();
         if (locations.size() == 0) { //base case
-            return lastDest.getDist(); //return to home
+            return new TSPResult(lastDest.getDist()); //return to home
         } else {
             double min = Double.MAX_VALUE; //minimum travel distance for given depth in the recursion tree
 
@@ -376,17 +407,29 @@ public class SimController {
             for (int d = 0; d < locations.size(); d++) {
                 Destination newDest = locations.remove(0); //remove the destination
 
+                double distanceBetween = lastDest.distanceBetween(newDest);
+                TSPResult newResult = recursiveTSP(locations, newDest);
+
+                newResult.addDistance(distanceBetween);
                 //recurse: it finds the fastest route in the subset and then adds the distance between the current
                 //          point and the subset. It then takes the minimum at the level so to help in the recursion in
                 //          the level above it
-                min = Math.min(min, recursiveTSP(locations, newDest) + lastDest.distanceBetween(newDest));
+                if (newResult.getTotalDistance() < min) {
+                    min = newResult.getTotalDistance();
+                    Destination temp = new Destination(newDest);
+                    temp.setDistToTravelTo(distanceBetween);
+                    newResult.addStop(temp);
+                    finalResult = newResult;
+
+
+                }
 
                 //Add back the location because each iteration of the loop on the same level should have the same
                 //number of locations to check
                 locations.add(newDest);
             }
             //return the shortest distance found in the given level
-            return min;
+            return finalResult;
         }
 
     }
@@ -526,4 +569,16 @@ public class SimController {
         simThread = new SimulationThread();
         simThread.run();
     }
+
+    private static PlacedOrder findOrderOnDrone(ArrayList<PlacedOrder> drone, Destination destination) {
+        for (int i = 0; i < drone.size(); i++) {
+            if (drone.get(i).getDest().equals(destination)) {
+                return drone.remove(i);
+            }
+        }
+        System.out.println(drone.get(0).getDest().getDestName());
+        System.out.println("ERROR in findOrderOnDrone");
+        return null;
+    }
+
 }
