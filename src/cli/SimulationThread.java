@@ -31,6 +31,7 @@ public class SimulationThread extends Task<Void> {
         // TODO: run the simulation
         SimController simController = SimController.getInstance();
         for (int i = 0; i < simController.getNUMBER_OF_SIMULATIONS(); i++) {
+
             updateProgress(i, simController.getNUMBER_OF_SIMULATIONS());
             simController.generateOrders();
             simController.runAlgorithms();
