@@ -25,11 +25,13 @@
 <f>	fries	4.0
 <f>	drink	14.0
 <f>	hamburger	6.0
-<m>	Combo1	0	0.55	fries	1	drink	1	hamburger	1
-<m>	Combo2	1	0.1	fries	1	drink	1	hamburger	2
-<m>	Combo3	2	0.2	fries	1	hamburger	1
-<m>	Combo4	3	0.15	fries	1	hamburger	2
-<o>	15
-<o>	17
-<o>	22
-<o>	15
+<m>	Combo1	0	0.50	fries	1	drink	1	hamburger	1
+<m>	Combo2	1	0.2	fries	1	drink	1	hamburger	2
+<m>	Combo3	2	0.15	fries	1	hamburger	1
+<m>	Combo4	3	0.10	fries	1	hamburger	2
+<m>	Combo5	4	0.05	fries	1
+<o>	38
+<o>	45
+<o>	60
+<o>	30
+<dr>	12.0	25	1200	120	30

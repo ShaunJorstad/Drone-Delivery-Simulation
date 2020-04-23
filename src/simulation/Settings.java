@@ -3,6 +3,7 @@ package simulation;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
+import menu.Drone;
 import menu.FoodItem;
 import menu.Meal;
 
@@ -15,6 +16,7 @@ public class Settings {
     private static ArrayList<Destination> map;
     private static Set<FoodItem> foods;
     private static List<Meal> meals;
+    private static Drone drone;
     private File settingsFile;
     private static final String defaultSettingsPath = "src/simulation/DefaultSettings.txt";
     static final FileChooser fileChooser = new FileChooser();
@@ -47,6 +49,10 @@ public class Settings {
 
     public static ArrayList<Integer> getOrderDistribution() {
         return orderDistribution;
+    }
+
+    public static Drone getDrone(){
+        return drone;
     }
 
     public static ArrayList<Destination> getMap() { return map; }
@@ -322,6 +328,15 @@ public class Settings {
         for(Integer n: orderDistribution){
             info+="<o>\t"+n+"\n";
         }
+
+        info+="<dr>\t"+
+                drone.getWeight()+"\t"+
+                drone.getSpeed()+"\t"+
+                drone.getMaxFlightTime()+"\t"+
+                drone.getTurnaroundTime()+"\t"+
+                drone.getDeliveryTime()+"\n";
+
+
         return info;
     }
 
@@ -386,7 +401,9 @@ public class Settings {
                         }
                         line.next();
                     }
-                } else {
+                }else if(tag.equals("<dr>")){
+
+                }else {
                     validFile = false;
                     break;
                 }
@@ -482,6 +499,22 @@ public class Settings {
                 } else if(tag.equals("<o>")){
                     while(line.hasNextInt())
                         orderDistribution.add(line.nextInt());
+                } else if(tag.equals("<dr>")){
+                    double weight = 0;
+                    double speed = 0;
+                    double MaxDeliveryTime = 0;
+                    double TurnaroundTime = 0;
+                    double DeliveryTime = 0;
+                    while(line.hasNext()){
+                        weight = line.nextDouble();
+                        speed = line.nextDouble();
+                        MaxDeliveryTime = line.nextDouble();
+                        TurnaroundTime = line.nextDouble();
+                        DeliveryTime = line.nextDouble();
+
+                    }
+                    drone = new Drone(weight,speed,MaxDeliveryTime, TurnaroundTime, DeliveryTime);
+
                 }
 
 
