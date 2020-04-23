@@ -26,7 +26,7 @@ public class Results {
 	 * @param onDrone The orders on the drone delivery
 	 * @throws Exception
 	 */
-	public void processDelivery(double time, ArrayList<PlacedOrder> onDrone) throws Exception {
+	public void processMultipleDeliveries(double time, ArrayList<PlacedOrder> onDrone) throws Exception {
 		//The difference in minutes between when the order was placed and the drone finished up its delivery
 		double deliveryTime = 0;
 
@@ -42,6 +42,30 @@ public class Results {
 			times.add(deliveryTime);
 			orderCounter++;
 		}
+	}
+
+	/**
+	 * Process one delivery of the drone
+	 * @param time The time the drone finished delivering one drone run
+	 * @param onDrone The orders on the drone delivery
+	 * @throws Exception
+	 */
+	public void processSingleDelivery(double time, PlacedOrder onDrone) throws Exception {
+		//The difference in minutes between when the order was placed and the drone finished up its delivery
+		double deliveryTime;
+
+		//For each order on the drone, find the delivery time, check to make sure that the delivery time is
+		//not too long, and then store the result
+		deliveryTime = time - onDrone.getOrderedTime();
+
+		if (deliveryTime > MAXTIME) {
+			worstTime = 120;
+			avgTime = 120;
+			throw new Exception("Order #" + (orderCounter + 1) + " was over the max time allowed.");
+		}
+		times.add(deliveryTime);
+		orderCounter++;
+
 	}
 
 	
