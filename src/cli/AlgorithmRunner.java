@@ -19,7 +19,13 @@ public class AlgorithmRunner {
     }
 
     public void runAlgorithms(ArrayList<PlacedOrder> allOrders) {
+        ArrayList<Drone> fleet = new ArrayList<>();
+        int fleetSize = 2;
         Drone drone = Settings.getDrone();
+        for (int i = 0; i < fleetSize; i++) {
+            fleet.add(new Drone(drone));
+        }
+
         //System.out.println("Total number of orders: " + allOrders.size());
         Results results = new Results(); //Save the results
         TSPResult tspResult;
@@ -40,6 +46,8 @@ public class AlgorithmRunner {
 
             //Knapsack
             while (ordersStillToProcess) {
+                drone = FindAvailableDrone(fleet);
+                elapsedTime = drone.getElapsedTime();
                 ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
                 if (droneRun == null) { //Finished delivering orders
                     ordersStillToProcess = false;
@@ -68,6 +76,7 @@ public class AlgorithmRunner {
 
                     //Turnaround time
                     elapsedTime += drone.getTurnaroundTime();
+                    drone.setElapsedTime(elapsedTime);
                 }
                 droneDeliveryNumber++;
             }
@@ -75,18 +84,22 @@ public class AlgorithmRunner {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        ResetElapsedTime(fleet);
         SimController.addAggregatedResultsKnapsack(results); //store the results
 
         try {
             //Reset the variables for FIFO
             results = new Results();
             elapsedTime = drone.getTurnaroundTime();
+            drone = Settings.getDrone();
             ordersStillToProcess = true;
             droneDeliveryNumber = 1;
 
 
             //FIFO
             while (ordersStillToProcess) {
+                drone = FindAvailableDrone(fleet);
+                elapsedTime = drone.getElapsedTime();
                 ArrayList<PlacedOrder> droneRun = f.packDrone(elapsedTime); //Get what is on the current drone
 
                 if (droneRun == null) { //No more orders to be delivered
@@ -115,6 +128,7 @@ public class AlgorithmRunner {
 
                     //Turnaround time
                     elapsedTime += drone.getTurnaroundTime();
+                    drone.setElapsedTime(elapsedTime);
                 }
                 droneDeliveryNumber++;
 
@@ -123,7 +137,7 @@ public class AlgorithmRunner {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
+        ResetElapsedTime(fleet);
         simController.addAggregatedResultsFIFO(results); //Store the results
     }
 
@@ -142,6 +156,24 @@ public class AlgorithmRunner {
         System.out.println(ordersOnDrone.get(0).getDest().getDestName());
         System.out.println("ERROR in findOrderOnDrone");
         return null;
+    }
+
+    private Drone FindAvailableDrone(ArrayList<Drone> fleet) {
+        double minTime = Double.MAX_VALUE;
+        Drone drone = fleet.get(0);
+        for (int i = 0; i < fleet.size(); i++) {
+            if (fleet.get(i).getElapsedTime() < minTime) {
+                drone = fleet.get(i);
+                minTime = drone.getElapsedTime();
+            }
+        }
+        return drone;
+    }
+
+    private void ResetElapsedTime(ArrayList<Drone> fleet) {
+        for (int i = 0; i < fleet.size(); i++) {
+            fleet.get(i).setElapsedTime(0);
+        }
     }
 
 }
