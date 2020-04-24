@@ -55,4 +55,15 @@ public class Drone {
     public void setDeliveryTime(double deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
+
+    @Override
+    public String toString() {
+        return "Drone{" +
+                "weight=" + weight +
+                ", speed=" + speed +
+                ", maxFlightTime=" + maxFlightTime +
+                ", turnaroundTime=" + turnaroundTime +
+                ", deliveryTime=" + deliveryTime +
+                '}';
+    }
 }

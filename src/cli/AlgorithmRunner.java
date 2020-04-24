@@ -1,9 +1,11 @@
 package cli;
 
 import menu.Destination;
+import menu.Drone;
 import napsack.Knapsack;
 import simulation.Fifo;
 import simulation.Results;
+import simulation.Settings;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class AlgorithmRunner {
     }
 
     public void runAlgorithms(ArrayList<PlacedOrder> allOrders) {
+        Drone drone = Settings.getDrone();
         //System.out.println("Total number of orders: " + allOrders.size());
         Results results = new Results(); //Save the results
         TSPResult tspResult;
@@ -27,16 +30,16 @@ public class AlgorithmRunner {
         Fifo f = new Fifo(allOrders);
 
         int loadMealTime = 0; //In case, the loadMealTime gets adjusted
-        double elapsedTime = 2.5; //how far into the simulation are we
+        double elapsedTime = drone.getTurnaroundTime(); //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
-        double droneSpeed = 25 * 5280 / 60; //Flight speed of the drone in ft/minute
+        double droneSpeed = drone.getSpeed() * 5280 / 60; //Flight speed of the drone in ft/minute
         int droneDeliveryNumber = 1; //Keeps track of what delivery it is
         PlacedOrder currentOrder;
 
         try {
 
             //Knapsack
-            while (ordersStillToProcess && droneDeliveryNumber < 100) {
+            while (ordersStillToProcess) {
                 ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
                 if (droneRun == null) { //Finished delivering orders
                     ordersStillToProcess = false;
@@ -52,7 +55,7 @@ public class AlgorithmRunner {
                     //Deliver the orders and process the results
                     for (int i = 0; i < deliveryOrder.size(); i++) {
                         currentOrder = findOrderOnDrone(droneRun, deliveryOrder.get(i));
-                        elapsedTime += .5;
+                        elapsedTime += drone.getDeliveryTime();
                         results.processSingleDelivery(elapsedTime, currentOrder);
                         elapsedTime += (deliveryOrder.get(i).getDistToTravelTo() / droneSpeed);
 
@@ -64,7 +67,7 @@ public class AlgorithmRunner {
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
 
                     //Turnaround time
-                    elapsedTime += 2.5;
+                    elapsedTime += drone.getTurnaroundTime();
                 }
                 droneDeliveryNumber++;
             }
@@ -77,7 +80,7 @@ public class AlgorithmRunner {
         try {
             //Reset the variables for FIFO
             results = new Results();
-            elapsedTime = 2.5;
+            elapsedTime = drone.getTurnaroundTime();
             ordersStillToProcess = true;
             droneDeliveryNumber = 1;
 
@@ -96,9 +99,10 @@ public class AlgorithmRunner {
                     deliveryOrder = tspResult.getDeliveryOrder();
 
                     elapsedTime += deliveryOrder.get(0).getDist()/droneSpeed;
+
                     //Deliver the orders and process the results
                     for (int i = 0; i < deliveryOrder.size(); i++) {
-                        elapsedTime += .5;
+                        elapsedTime += drone.getDeliveryTime();
                         currentOrder = findOrderOnDrone(droneRun, deliveryOrder.get(i));
                         results.processSingleDelivery(elapsedTime, currentOrder);
                         elapsedTime += (deliveryOrder.get(i).getDistToTravelTo() / droneSpeed);
@@ -106,17 +110,16 @@ public class AlgorithmRunner {
                     }
                     //System.out.println(elapsedTime);
 
-                    //Return home
-                    elapsedTime += deliveryOrder.get(0).getDist()/droneSpeed;
 
                     //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
 
                     //Turnaround time
-                    elapsedTime += 2.5;
+                    elapsedTime += drone.getTurnaroundTime();
                 }
                 droneDeliveryNumber++;
-            }
 
+            }
+            results.getFinalResults("FIFO");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
