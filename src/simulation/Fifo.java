@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import cli.PlacedOrder;
+import menu.Drone;
+
 import java.util.Queue;
 
 public class Fifo {
 	
 	private Queue<PlacedOrder> orders;
-	private float maxWeight;
+	private double maxWeight;
 	private double timePassed;
 	
 	public Fifo(ArrayList<PlacedOrder> orders) {
 		this.orders = new LinkedList<PlacedOrder>(orders);
-		maxWeight = 12 * 16; //12 pounds, with 16 oz per pound
+		Drone drone = Settings.getDrone();
+		maxWeight = drone.getWeight(); //12 pounds, with 16 oz per pound
 		timePassed = 0;
 	}
 	
@@ -27,7 +30,7 @@ public class Fifo {
 		
 		ArrayList<PlacedOrder> drone = new ArrayList<PlacedOrder>();
 		Boolean isFull = false;
-		float currentWeight = 0;
+		double currentWeight = 0;
 		
 		while (!orders.isEmpty() && !isFull) {
 			if (currentWeight + orders.peek().getWeight() <= maxWeight) {

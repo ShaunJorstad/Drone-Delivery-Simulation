@@ -8,6 +8,7 @@ public class Drone {
     private double turnaroundTime;
     private double deliveryTime;
     private double carryingCapacity;
+    private double elapsedTime;
 
     public Drone(double weight, double speed, double MFT, double turnaroundTime, double deliveryTime) {
         this.weight = weight;
@@ -16,7 +17,18 @@ public class Drone {
         this.turnaroundTime = turnaroundTime;
         this.deliveryTime = deliveryTime;
 //        this.carryingCapacity = carryingCapacity;
+        this.elapsedTime = 0;
     }
+
+    public Drone(Drone other) {
+        this.weight = other.weight;
+        this.speed = other.speed;
+        this.maxFlightTime = other.maxFlightTime;
+        this.turnaroundTime = other.turnaroundTime;
+        this.deliveryTime = other.deliveryTime;
+        this.elapsedTime = 0;
+    }
+
 
     public double getWeight() {
         return weight;
@@ -40,6 +52,10 @@ public class Drone {
 
 //    public double getCarryingCapacity() {return this.carryingCapacity;}
 
+    public double getElapsedTime() {
+        return elapsedTime;
+    }
+
     public void setWeight(double weight) {
         this.weight = weight;
     }
@@ -61,4 +77,19 @@ public class Drone {
     }
 
 //    public void setCarryingCapacity(double carryingCapacity) {this.carryingCapacity = carryingCapacity;}
+  
+    public void setElapsedTime(double elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Drone{" +
+                "weight=" + weight +
+                ", speed=" + speed +
+                ", maxFlightTime=" + maxFlightTime +
+                ", turnaroundTime=" + turnaroundTime +
+                ", deliveryTime=" + deliveryTime +
+                '}';
+    }
 }
