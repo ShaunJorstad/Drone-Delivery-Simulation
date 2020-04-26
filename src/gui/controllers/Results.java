@@ -72,7 +72,7 @@ public class Results implements Initializable {
 
         SimController simController = SimController.getInstance();
         exportButton.setDisable(true);
-        if (simController.hasResults()) {
+        if (!SimController.resultsLock) {
             displayResults();
             exportButton.setDisable(false);
         }

@@ -27,7 +27,6 @@ public class SimulationThread extends Task<Void> {
 //        Label label = new Label("Sim Progress: ");
 //        ProgressIndicator progressIndicator;
 
-
         // TODO: run the simulation
         SimController simController = SimController.getInstance();
         for (int i = 0; i < simController.getNUMBER_OF_SIMULATIONS(); i++) {
