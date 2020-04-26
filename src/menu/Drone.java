@@ -7,13 +7,15 @@ public class Drone {
     private double maxFlightTime;
     private double turnaroundTime;
     private double deliveryTime;
+    private double carryingCapacity;
 
-    public Drone(double weight, double speed, double MFT, double turnaroundTime, double deliveryTime){
+    public Drone(double weight, double speed, double MFT, double turnaroundTime, double deliveryTime) {
         this.weight = weight;
         this.speed = speed;
         this.maxFlightTime = MFT;
         this.turnaroundTime = turnaroundTime;
         this.deliveryTime = deliveryTime;
+//        this.carryingCapacity = carryingCapacity;
     }
 
     public double getWeight() {
@@ -36,6 +38,8 @@ public class Drone {
         return deliveryTime;
     }
 
+//    public double getCarryingCapacity() {return this.carryingCapacity;}
+
     public void setWeight(double weight) {
         this.weight = weight;
     }
@@ -55,4 +59,6 @@ public class Drone {
     public void setDeliveryTime(double deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
+
+//    public void setCarryingCapacity(double carryingCapacity) {this.carryingCapacity = carryingCapacity;}
 }
