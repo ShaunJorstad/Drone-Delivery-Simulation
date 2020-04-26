@@ -310,8 +310,10 @@ public class Drone implements Initializable {
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
     }
 
-    public void handleImportSettings(ActionEvent actionEvent) {
+    public void handleImportSettings(ActionEvent actionEvent) throws IOException {
         Settings.importSettings((Stage) home.getScene().getWindow());
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
+        Navigation.inflateScene(root, "Drone", (Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {

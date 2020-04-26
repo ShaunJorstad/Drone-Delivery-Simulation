@@ -100,7 +100,8 @@ public class Map implements Initializable {
         backImage.setPreserveRatio(true);
 
         loadIcons();
-        
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+
         Insets runInsets = new Insets(0,0,120,0);
         VBox.setMargin(runSimButton, runInsets);
         
@@ -125,8 +126,7 @@ public class Map implements Initializable {
         mapPoints = new ArrayList<>();
         isFirst = true;
     }
-    
-    
+
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -153,7 +153,6 @@ public class Map implements Initializable {
             });
         }
     }
-    
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
