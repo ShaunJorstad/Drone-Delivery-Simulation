@@ -241,6 +241,9 @@ public class MealItems implements Initializable {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double distribution = Double.parseDouble(newValue);
+                if (!Settings.isValidMealDistribution(distribution)) {
+                    throw new Exception("bad distribution");
+                }
                 meal.setDistribution((float) distribution);
                 field.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove(meal);

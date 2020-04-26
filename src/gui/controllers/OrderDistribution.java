@@ -257,6 +257,9 @@ public class OrderDistribution implements Initializable {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 int numOrders = Integer.parseInt(newValue);
+                if (numOrders < 0) {
+                    throw new Exception("invalid number of orders");
+                }
                 Settings.editDistribution(index, numOrders);
                 field.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove(Integer.valueOf(index));

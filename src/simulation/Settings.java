@@ -60,7 +60,7 @@ public class Settings {
     // Food Items----------------------------------------------------------------
 
     public static boolean isValidFoodWeight(double weight) {
-        return weight <= droneCapacity;
+        return weight <= droneCapacity && weight >= 0;
     }
 
     public static String verifySettings() {
@@ -142,6 +142,10 @@ public class Settings {
 
     // Meal Items----------------------------------------------------------------
 
+    public static boolean isValidMealDistribution(double dist) {
+        return dist <= 1 && dist >= 0;
+    }
+
     /**
      * adds provided meal
      *
@@ -204,6 +208,10 @@ public class Settings {
     }
 
     // Order Distributions ------------------------------------------------------
+
+    public static boolean isValidOrderDistribution(int dist) {
+        return dist >= 0;
+    }
 
     /**
      * TODO: write this method
@@ -294,7 +302,6 @@ public class Settings {
 
         return false;
     }
-
     // IO -----------------------------------------------------------------------
 
     /**

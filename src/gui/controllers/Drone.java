@@ -131,6 +131,9 @@ public class Drone implements Initializable {
         weightInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double val = Double.parseDouble(newValue);
+                if (val < 0) {
+                    throw new Exception("cannot be negative");
+                }
                 Settings.getDrone().setWeight(val);
                 weightInput.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove("weight");
@@ -151,6 +154,9 @@ public class Drone implements Initializable {
         flightSpeedInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double val = Double.parseDouble(newValue);
+                if (val < 0) {
+                    throw new Exception("cannot be negative");
+                }
                 Settings.getDrone().setSpeed(val);
                 flightSpeedInput.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove("flight speed");
@@ -171,6 +177,9 @@ public class Drone implements Initializable {
         maxFlightTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double val = Double.parseDouble(newValue);
+                if (val < 0) {
+                    throw new Exception("cannot be negative");
+                }
                 Settings.getDrone().setMaxFlightTime(val);
                 maxFlightTimeInput.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove("max flight time");
@@ -191,6 +200,9 @@ public class Drone implements Initializable {
         turnAroundTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double val = Double.parseDouble(newValue);
+                if (val < 0) {
+                    throw new Exception("cannot be negative");
+                }
                 Settings.getDrone().setTurnaroundTime(val);
                 turnAroundTimeInput.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove("turn around time");
@@ -211,6 +223,9 @@ public class Drone implements Initializable {
         deliveryTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double val = Double.parseDouble(newValue);
+                if (val < 0) {
+                    throw new Exception("cannot be negative");
+                }
                 Settings.getDrone().setDeliveryTime(val);
                 deliveryTimeInput.setStyle("-fx-border-width: 0 0 0 0;");
                 invalidFields.remove("delivery time");
