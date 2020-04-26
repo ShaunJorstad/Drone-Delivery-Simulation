@@ -1,6 +1,8 @@
 package napsack;
 
 import cli.PlacedOrder;
+import menu.Drone;
+import simulation.Settings;
 
 import java.util.ArrayList;
 
@@ -21,7 +23,8 @@ public class Knapsack {
 
         droneList = new ArrayList<>();
         nextList = new ArrayList<>();
-        maxWeight = 12*16;
+        Drone drone = Settings.getDrone();
+        maxWeight = drone.getWeight();
         currentWeight = 0;
         skippedTime = 0;
     }
