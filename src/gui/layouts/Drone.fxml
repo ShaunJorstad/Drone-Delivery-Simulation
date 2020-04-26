@@ -44,22 +44,22 @@
                 <Label styleClass="description" textFill="808080"
                        text="Drone settings can be overrided here to alter performance."/>
                 <GridPane id="contentGrid" fx:id="contentGrid" hgap="40" vgap="20">
-                    <Text styleClass="settingTitle" text="Weight" fx:id="weightTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Weight (oz)" fx:id="weightTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="0"/>
-                    <Text styleClass="settingTitle" text="Flight Speed" fx:id="flightSpeedTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Flight Speed (mph)" fx:id="flightSpeedTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="1"/>
-                    <Text styleClass="settingTitle" text="Carrying Capacity" fx:id="carryingCapacityTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Carrying Capacity (oz)" fx:id="carryingCapacityTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="2"/>
-                    <Text styleClass="settingTitle" text="Max Flight Time" fx:id="maxFlightTimeTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Max Flight Time (min)" fx:id="maxFlightTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="3"/>
-                    <Text styleClass="settingTitle" text="Turn Around Time" fx:id="turnAroundTimeTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Turn Around Time (min)" fx:id="turnAroundTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="4"/>
-                    <Text styleClass="settingTitle" text="Delivery Time" fx:id="deliveryTimeTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Delivery Time (min)" fx:id="deliveryTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="5"/>
 
