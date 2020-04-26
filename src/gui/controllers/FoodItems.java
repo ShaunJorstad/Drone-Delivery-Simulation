@@ -78,7 +78,7 @@ public class FoodItems implements Initializable {
         gridIndex = 1;
         loadIcons();
         inflateFoodItems();
-        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 
     public void loadIcons() {
@@ -266,7 +266,7 @@ public class FoodItems implements Initializable {
 
                 invalidFields.remove(item);
                 Settings.removeFoodItem(item);
-                Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
             });
 
 //        add button
@@ -317,7 +317,7 @@ public class FoodItems implements Initializable {
 
             invalidFields.remove(newFood);
             Settings.removeFoodItem(newFood);
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
         });
 
         contentGrid.add(nameInput, 0, gridIndex);
@@ -331,6 +331,6 @@ public class FoodItems implements Initializable {
 
         //insert item into settings
         Settings.addFoodItem(newFood);
-        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 }
