@@ -30,6 +30,7 @@ import simulation.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -64,6 +65,7 @@ public class FoodItems implements Initializable {
     public VBox runBtnVbox;
 
     private int gridIndex;
+    private ArrayList invalidFields;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,9 +74,11 @@ public class FoodItems implements Initializable {
 
         SimController.setCurrentButton(runSimButton);
 
+        invalidFields = new ArrayList();
         gridIndex = 1;
         loadIcons();
         inflateFoodItems();
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 
     public void loadIcons() {
@@ -195,6 +199,40 @@ public class FoodItems implements Initializable {
 
     }
 
+    public void bindName(TextField field, FoodItem foodItem) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            foodItem.setName(newValue);
+            Settings.editFoodItem(foodItem);
+        });
+    }
+
+    public void bindWeight(TextField field, FoodItem foodItem) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double newWeight = Double.parseDouble(newValue);
+                if (!Settings.isValidFoodWeight(newWeight)) {
+                    throw new Exception("invalid food weight");
+                }
+                foodItem.setWeight((float) newWeight);
+                Settings.editFoodItem(foodItem);
+                field.setStyle("-fx-border-width: 0 0 0 0;");
+
+                invalidFields.remove(foodItem);
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid food weights");
+                }
+            } catch (Exception e) {
+                field.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Inavlid food weight");
+                if (!invalidFields.contains(foodItem)) {
+                    invalidFields.add(foodItem);
+                }
+            }
+        });
+    }
+
     public void inflateFoodItems() {
 //        load food items from settings object
         for (FoodItem item : Settings.getFoods()) {
@@ -202,20 +240,10 @@ public class FoodItems implements Initializable {
             TextField weightInput = new TextField(Float.toString(item.getWeight()));
 
             nameInput.getStyleClass().add("foodName");
-            nameInput.setOnAction(actionEvent -> {
-                item.setName(nameInput.getText());
-                item.setWeight(Float.parseFloat(weightInput.getText()));
-                //updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
-            });
+            bindName(nameInput, item);
 
             weightInput.getStyleClass().add("foodWeight");
-            weightInput.setOnAction(actionEvent -> {
-                item.setName(nameInput.getText());
-                item.setWeight(Float.parseFloat(weightInput.getText()));
-                Settings.updateMeals(item);
-                //TODO: fix this. don't need to set the item
-                updateRunBtn("Invalid food weight", Settings.editFoodItem(item));
-            });
+            bindWeight(weightInput, item);
 
             // margins
             Insets one = new Insets(15, 0, 0, 0);
@@ -236,7 +264,9 @@ public class FoodItems implements Initializable {
                 contentGrid.getChildren().remove(weightInput);
                 contentGrid.getChildren().remove(removeFood);
 
-                updateRunBtn("Not enough Food items", Settings.removeFoodItem(item));
+                invalidFields.remove(item);
+                Settings.removeFoodItem(item);
+                Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
             });
 
 //        add button
@@ -260,18 +290,10 @@ public class FoodItems implements Initializable {
         TextField weightInput = new TextField("0");
 
         nameInput.getStyleClass().add("foodName");
-        nameInput.setOnAction(actionEvent12 -> {
-            newFood.setName(nameInput.getText());
-            newFood.setWeight(Float.parseFloat(weightInput.getText()));
-            updateRunBtn("Invalid food weight", Settings.editFoodItem(newFood));
-        });
+        bindName(nameInput, newFood);
 
         weightInput.getStyleClass().add("foodWeight");
-        weightInput.setOnAction(actionEvent13 -> {
-            newFood.setName(nameInput.getText());
-            newFood.setWeight(Float.parseFloat(weightInput.getText()));
-            updateRunBtn("Invalid Food Weight", Settings.editFoodItem(newFood));
-        });
+        bindWeight(weightInput, newFood);
 
         // margins
         Insets one = new Insets(15, 0, 0, 0);
@@ -293,7 +315,9 @@ public class FoodItems implements Initializable {
             contentGrid.getChildren().remove(weightInput);
             contentGrid.getChildren().remove(removeFood);
 
-            updateRunBtn("Not enough Food items", Settings.removeFoodItem(newFood));
+            invalidFields.remove(newFood);
+            Settings.removeFoodItem(newFood);
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
         });
 
         contentGrid.add(nameInput, 0, gridIndex);
@@ -306,21 +330,7 @@ public class FoodItems implements Initializable {
         gridIndex++;
 
         //insert item into settings
-        updateRunBtn("Invalid food items", Settings.addFoodItem(newFood));
-    }
-
-    public void updateRunBtn(String errMessage, boolean valid) {
-
-        if (valid) {
-            runSimButton.setStyle("-fx-background-color: #0078D7");
-            runSimButton.setText("Run");
-            runSimButton.setDisable(false);
-        } else {
-            runSimButton.setStyle("-fx-background-color: #EC2F08");
-            runSimButton.setText(errMessage);
-            runSimButton.setDisable(true);
-        }
-
-
+        Settings.addFoodItem(newFood);
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 }

@@ -30,6 +30,7 @@ import simulation.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -64,6 +65,7 @@ public class MealItems implements Initializable {
     public VBox runBtnVbox;
 
     private int gridIndex;
+    private ArrayList invalidFields;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,10 +76,12 @@ public class MealItems implements Initializable {
 
         VBox.setMargin(addMeal, new Insets(0, 0, 300, 0));
 
+        invalidFields = new ArrayList();
         gridIndex = 1;
         loadIcons();
         inflateMeals();
         checkSimulationStatus();
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 
     public void loadIcons() {
@@ -213,6 +217,34 @@ public class MealItems implements Initializable {
         }
     }
 
+    public void bindMealName(TextField field, Meal meal) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            meal.setName(newValue);
+        });
+    }
+
+    public void bindMealDistribution(TextField field, Meal meal) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double distribution = Double.parseDouble(newValue);
+                meal.setDistribution((float) distribution);
+                field.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove(meal);
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid meal distributions");
+                }
+            } catch (Exception e) {
+                field.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid meal distributions");
+                if (!invalidFields.contains(meal)) {
+                    invalidFields.add(meal);
+                }
+            }
+        });
+    }
+
     public void inflateMeals() {
         Set<Meal> meals = new HashSet<>();
         meals.addAll(Settings.getMeals());
@@ -239,9 +271,7 @@ public class MealItems implements Initializable {
 
         TextField mealName = new TextField(meal.getName());
         mealName.getStyleClass().add("mealName");
-        mealName.setOnAction(actionEvent -> {
-            meal.setName(mealName.getText());
-        });
+        bindMealName(mealName, meal);
 
         Text mealWeight = new Text("Weight (oz): ");
         mealWeight.getStyleClass().add("weightTitle");
@@ -258,12 +288,7 @@ public class MealItems implements Initializable {
 
         TextField distribution = new TextField(Float.toString(meal.getDistribution()));
         distribution.getStyleClass().add("distribution");
-        distribution.setOnAction(actionEvent -> {
-            // update menu item in settings
-            meal.setDistribution(Float.parseFloat(distribution.getText()));
-            // TODO: question: This is unecessary
-            updateRunBtn("Invalid Meal Distributions", Settings.verifyMeals());
-        });
+        bindMealDistribution(distribution, meal);
         GridPane.setMargin(distribution, new Insets(0, 0, 0, -7));
 
 
@@ -275,7 +300,7 @@ public class MealItems implements Initializable {
             meal.incrementFoodItem(newFoodItem, 0);
             addFood(mealGrid, newFoodItem, meal, weight, addItemBtn, 0);
             // TODO: update settings
-            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
             if (meal.getOutstandingFoodItems().isEmpty()) {
                 addItemBtn.setDisable(true);
                 addItemBtn.setVisible(false);
@@ -293,6 +318,7 @@ public class MealItems implements Initializable {
             mealsVBox.getChildren().remove(mealGrid);
             mealsVBox.getChildren().remove(controlGrid);
             Settings.removeMeal(meal);
+            invalidFields.remove(meal);
         });
 
         controlGrid.add(distributionTitle, 0, 0);
@@ -310,10 +336,11 @@ public class MealItems implements Initializable {
         mealsVBox.getChildren().add(controlGrid);
 
         if (!Settings.getMeals().contains(meal)) {
-            updateRunBtn("Invalid Meal Settings", Settings.addMeal(meal));
+            Settings.addMeal(meal);
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings() );
         }
         else {
-            updateRunBtn("Invalid meal settings", Settings.verifyMeals());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
         }
     }
 
@@ -343,7 +370,7 @@ public class MealItems implements Initializable {
             meal.incrementFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
             number.setText(String.valueOf((Integer.parseInt(number.getText()) + 1)));
-            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
         });
 
         File decreasePath = new File("assets/icons/minus.png");
@@ -358,7 +385,7 @@ public class MealItems implements Initializable {
             meal.decrementFoodItem(food, 1);
             weight.setText(String.valueOf(meal.getWeight()));
             number.setText(String.valueOf(meal.getNumberOfFood(food)));
-            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
         });
 
 
@@ -382,7 +409,7 @@ public class MealItems implements Initializable {
             meal.removeFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
             // TODO: update run button
-            updateRunBtn("Invalid Food Items", Settings.verifyMeals());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
 
             // enable addItemButton
             addItemBtn.setDisable(false);
@@ -401,7 +428,7 @@ public class MealItems implements Initializable {
         GridPane.setMargin(increase, new Insets(8, 0, 0, 0));
 
         gridIndex++;
-        updateRunBtn("Invalid Food Items", Settings.verifyMeals());
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 
     public void updateMenuItems(MenuButton dropdown, Meal meal, FoodItem food, Text weight, Button addItemBtn) {
@@ -421,18 +448,10 @@ public class MealItems implements Initializable {
                 updateMenuItems(dropdown, meal, food, weight, addItemBtn);
             });
         }
-        updateRunBtn("Invalid Food Items", Settings.verifyMeals());
-    }
-
-    public void updateRunBtn(String errMessage, boolean valid) {
-        if (valid) {
-            runSimButton.setStyle("-fx-background-color: #0078D7");
-            runSimButton.setText("Run");
-            runSimButton.setDisable(false);
+        if (invalidFields.isEmpty()) {
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
         } else {
-            runSimButton.setStyle("-fx-background-color: #EC2F08");
-            runSimButton.setText(errMessage);
-            runSimButton.setDisable(true);
+            Navigation.updateRunBtn(runSimButton, "Invalid meal distributions");
         }
     }
 }

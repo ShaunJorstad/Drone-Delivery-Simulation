@@ -33,6 +33,7 @@ import simulation.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -68,6 +69,7 @@ public class OrderDistribution implements Initializable {
     public VBox runBtnVbox;
 
     private int gridIndex;
+    private ArrayList invalidFields;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,6 +78,7 @@ public class OrderDistribution implements Initializable {
 
         GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
         gridIndex = 1;
+        invalidFields = new ArrayList();
 
         SimController.setCurrentButton(runSimButton);
 
@@ -83,6 +86,7 @@ public class OrderDistribution implements Initializable {
         injectCursorStates();
         inflateOrderDistribution();
         checkSimulationStatus();
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 
     public void loadIcons() {
@@ -235,6 +239,28 @@ public class OrderDistribution implements Initializable {
         }
     }
 
+    public void bindOrders(TextField field, int index) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int numOrders = Integer.parseInt(newValue);
+                Settings.editDistribution(index, numOrders);
+                field.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove(Integer.valueOf(index));
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid distribution of orders");
+                }
+            } catch (Exception e) {
+                field.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Inavlid distribution of orders");
+                if (!invalidFields.contains(index)) {
+                    invalidFields.add(Integer.valueOf(index));
+                }
+            }
+        });
+    }
+
     public void addHour(Integer numOrders) {
         Text hourTitle = new Text(Integer.toString(gridIndex));
         hourTitle.getStyleClass().add("hourTitle");
@@ -243,10 +269,7 @@ public class OrderDistribution implements Initializable {
         orderField.setText(Integer.toString(numOrders));
         orderField.getStyleClass().add("orderField");
         int distIndex = gridIndex -1;
-        orderField.setOnAction(actionEvent -> {
-            // TODO: sanitize input
-            Settings.editDistribution(distIndex, Integer.parseInt(orderField.getText()));
-        });
+        bindOrders(orderField, distIndex);
 
         GridPane.setMargin(hourTitle, new Insets(15, 0, 0, 0));
         GridPane.setMargin(orderField, new Insets(15, 0, 0, 40));
@@ -255,17 +278,5 @@ public class OrderDistribution implements Initializable {
         contentGrid.add(orderField, 1, gridIndex);
 
         gridIndex++;
-    }
-
-    public void updateRunBtn(String errMessage, boolean valid) {
-        if (valid) {
-            runSimButton.setStyle("-fx-background-color: #0078D7");
-            runSimButton.setText("Run");
-            runSimButton.setDisable(false);
-        } else {
-            runSimButton.setStyle("-fx-background-color: #EC2F08");
-            runSimButton.setText(errMessage);
-            runSimButton.setDisable(true);
-        }
     }
 }

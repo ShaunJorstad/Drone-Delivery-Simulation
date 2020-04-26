@@ -30,6 +30,7 @@ import simulation.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -75,14 +76,20 @@ public class Drone implements Initializable {
     public ImageView downloadImage;
     public ImageView uploadImage;
 
+    private ArrayList invalidFields;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
         drone.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
-        inflateSettings();
+        invalidFields = new ArrayList();
 
+        bindTextFields();
+        inflateSettings();
         loadIcons();
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 
     public void loadIcons() {
@@ -116,6 +123,108 @@ public class Drone implements Initializable {
         maxFlightTimeInput.setText(Double.toString(maxFlightTime));
         turnAroundTimeInput.setText(Double.toString(turnaroundTime));
         deliveryTimeInput.setText(Double.toString(deliveryTime));
+    }
+
+    public void bindTextFields() {
+        weightInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double val = Double.parseDouble(newValue);
+                Settings.getDrone().setWeight(val);
+                weightInput.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove("weight");
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid " + invalidFields.get(0));
+                }
+            } catch (Exception e) {
+                weightInput.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid drone weight");
+                if(!invalidFields.contains("weight")) {
+                    invalidFields.add("weight");
+                }
+            }
+        });
+
+        flightSpeedInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double val = Double.parseDouble(newValue);
+                Settings.getDrone().setSpeed(val);
+                flightSpeedInput.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove("flight speed");
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid " + invalidFields.get(0));
+                }
+            } catch (Exception e) {
+                flightSpeedInput.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid drone flight speed");
+                if(!invalidFields.contains("flight speed")) {
+                    invalidFields.add("flight speed");
+                }
+            }
+        });
+
+        maxFlightTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double val = Double.parseDouble(newValue);
+                Settings.getDrone().setMaxFlightTime(val);
+                maxFlightTimeInput.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove("max flight time");
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid " + invalidFields.get(0));
+                }
+            } catch (Exception e) {
+                maxFlightTimeInput.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid drone max flight time");
+                if(!invalidFields.contains("max flight time")) {
+                    invalidFields.add("max flight time");
+                }
+            }
+        });
+
+        turnAroundTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double val = Double.parseDouble(newValue);
+                Settings.getDrone().setTurnaroundTime(val);
+                turnAroundTimeInput.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove("turn around time");
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid " + invalidFields.get(0));
+                }
+            } catch (Exception e) {
+                turnAroundTimeInput.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid drone turn around time");
+                if (!invalidFields.contains("turn around time")) {
+                    invalidFields.add("turn around time");
+                }
+            }
+        });
+
+        deliveryTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double val = Double.parseDouble(newValue);
+                Settings.getDrone().setDeliveryTime(val);
+                deliveryTimeInput.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove("delivery time");
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid " + invalidFields.get(0));
+                }
+            } catch (Exception e) {
+                deliveryTimeInput.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid drone delivery time");
+                if (!invalidFields.contains("delivery time")) {
+                    invalidFields.add("delivery time");
+                }
+            }
+        });
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -214,41 +323,5 @@ public class Drone implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void updateRunBtn(String errMessage, boolean valid) {
-        if (valid) {
-            runSimButton.setStyle("-fx-background-color: #0078D7");
-            runSimButton.setText("Run");
-            runSimButton.setDisable(false);
-        } else {
-            runSimButton.setStyle("-fx-background-color: #EC2F08");
-            runSimButton.setText(errMessage);
-            runSimButton.setDisable(true);
-        }
-    }
-
-    public void handleUpdateWeight(ActionEvent actionEvent) {
-        Settings.getDrone().setWeight(Double.parseDouble(weightInput.getText()));
-    }
-
-    public void handleUpdateFlightSpeed(ActionEvent actionEvent) {
-        Settings.getDrone().setSpeed(Double.parseDouble(flightSpeedInput.getText()));
-    }
-
-    public void handleUpdateCarryingCapacity(ActionEvent actionEvent) {
-//        Settings.getDrone().(Double.parseDouble(weightInput.getText()));
-    }
-
-    public void handleUpdateMaxFlightTime(ActionEvent actionEvent) {
-        Settings.getDrone().setMaxFlightTime(Double.parseDouble(maxFlightTimeInput.getText()));
-    }
-
-    public void handleUpdateTurnAroundTime(ActionEvent actionEvent) {
-        Settings.getDrone().setTurnaroundTime(Double.parseDouble(turnAroundTimeInput.getText()));
-    }
-
-    public void handleUpdateDeliveryTime(ActionEvent actionEvent) {
-        Settings.getDrone().setDeliveryTime(Double.parseDouble(deliveryTimeInput.getText()));
     }
 }
