@@ -116,6 +116,7 @@ public class Map implements Initializable {
         VBox.setMargin(mapImage, mapInset);
         inflateMapPoints();
 
+        SimController.setCurrentButton(runSimButton);
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
