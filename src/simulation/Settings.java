@@ -242,38 +242,56 @@ public class Settings {
     // Map ----------------------------------------------------------------------
 
     /**
-     * TODO: write this method
      * adds map point
      *
+     * @param name
      * @param x
      * @param y
-     * @param dist
      */
-    private void addMapPoint(int x, int y, float dist) {
-
+    private void addMapPoint(String name, int x, int y) throws IllegalArgumentException {
+    	for (int i = 0; i < map.size(); i++) {
+    		if (map.get(i).getDestName().equals(name))
+    			throw new IllegalArgumentException("That name already exists on the map");
+    	}
+    	Destination newDest = new Destination(name,x,y);
+    	map.add(newDest);
     }
 
     /**
-     * TODO: write ths method
      * removes map point
      *
-     * @param x
-     * @param y
+     * @param name
      */
-    private void removeMapPoint(int x, int y) {
-
+    private void removeMapPoint(String name) throws IllegalArgumentException {
+    	for (int i = 0; i < map.size(); i++) {
+    		if (map.get(i).getDestName().equals(name)) {
+    			map.remove(i);
+    			return;
+    		}
+    	}
+    	throw new IllegalArgumentException("That name does not exist on the map");
     }
 
     /**
-     * TODO: write this method
      * edits map point
      *
+     *@param dest
      * @param x
      * @param y
-     * @param dist
      */
-    private void editMapPoint(int x, int y, float dist) {
-
+    private void editMapPoint(Destination dest, int x, int y) {
+    	dest.setX(x);
+    	dest.setY(y);
+    }
+    
+    /**
+     * 
+     * @param dest1
+     * @param dest2
+     * @return distance between them
+     */
+    public double calcDist(Destination dest1, Destination dest2) {
+    	return Math.sqrt(Math.pow(dest2.getY()-dest1.getY(),2) + Math.pow(dest2.getX()-dest1.getX(), 2));
     }
 
     /**
