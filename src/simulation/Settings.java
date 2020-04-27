@@ -283,6 +283,16 @@ public class Settings {
     	dest.setX(x);
     	dest.setY(y);
     }
+    
+    /**
+     * 
+     * @param dest1
+     * @param dest2
+     * @return distance between them
+     */
+    public double calcDist(Destination dest1, Destination dest2) {
+    	return Math.sqrt(Math.pow(dest2.getY()-dest1.getY(),2) + Math.pow(dest2.getX()-dest1.getX(), 2));
+    }
 
     /**
      * TODO: write this method
