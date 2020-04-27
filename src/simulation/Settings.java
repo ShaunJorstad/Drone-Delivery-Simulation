@@ -251,7 +251,7 @@ public class Settings {
     private void addMapPoint(String name, int x, int y) throws IllegalArgumentException {
     	for (int i = 0; i < map.size(); i++) {
     		if (map.get(i).getDestName().equals(name))
-    			throw new IllegalArgumentException("That name already exists on the map")
+    			throw new IllegalArgumentException("That name already exists on the map");
     	}
     	Destination newDest = new Destination(name,x,y);
     	map.add(newDest);
@@ -260,17 +260,16 @@ public class Settings {
     /**
      * removes map point
      *
-     * @param x
-     * @param y
+     * @param name
      */
-    private void removeMapPoint(int x, int y) throws IllegalArgumentException {
+    private void removeMapPoint(String name) throws IllegalArgumentException {
     	for (int i = 0; i < map.size(); i++) {
     		if (map.get(i).getDestName().equals(name)) {
     			map.remove(i);
     			return;
     		}
     	}
-    	throw new IllegalArgumentException("That name does not exist on the map")
+    	throw new IllegalArgumentException("That name does not exist on the map");
     }
 
     /**
