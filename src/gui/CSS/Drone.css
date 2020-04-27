@@ -1,0 +1,19 @@
+#hoursTitle, #ordersTitle {
+    -fx-font-size: 13pt;
+}
+
+.hourTitle, .orderField {
+    -fx-font-size: 9pt;
+}
+
+.hourTitle {
+}
+
+.orderField {
+    -fx-pref-width: 80px;
+}
+
+.settingTitle {
+    -fx-font-size: 13pt;
+}
+/*20px for fields*/

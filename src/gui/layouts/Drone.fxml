@@ -6,6 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
 <BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Drone">
     <top>
@@ -37,30 +38,73 @@
 
     </top>
     <center>
+        <ScrollPane id="scrollpane" fx:id="scrollpane">
+            <VBox id="content" styleClass="content" spacing="10">
+                <Label styleClass="title" text="Drone Settings" textFill="808080"/>
+                <Label styleClass="description" textFill="808080"
+                       text="Drone settings can be overrided here to alter performance."/>
+                <GridPane id="contentGrid" fx:id="contentGrid" hgap="40" vgap="20">
+                    <Text styleClass="settingTitle" text="Weight (oz)" fx:id="weightTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="0"/>
+                    <Text styleClass="settingTitle" text="Flight Speed (mph)" fx:id="flightSpeedTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="1"/>
+                    <Text styleClass="settingTitle" text="Carrying Capacity (oz)" fx:id="carryingCapacityTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="2"/>
+                    <Text styleClass="settingTitle" text="Max Flight Time (min)" fx:id="maxFlightTimeTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="3"/>
+                    <Text styleClass="settingTitle" text="Turn Around Time (min)" fx:id="turnAroundTimeTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="4"/>
+                    <Text styleClass="settingTitle" text="Delivery Time (min)" fx:id="deliveryTimeTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="5"/>
 
+                    <TextField styleClass="settingsInput" text="" fx:id="weightInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="0"/>
+                    <TextField styleClass="settingsInput" text="" fx:id="flightSpeedInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+                    <TextField styleClass="settingsInput" text="" fx:id="carryingCapacityInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="2"/>
+                    <TextField styleClass="settingsInput" text="" fx:id="maxFlightTimeInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+                    <TextField styleClass="settingsInput" text="" fx:id="turnAroundTimeInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="4"/>
+                    <TextField styleClass="settingsInput" text="" fx:id="deliveryTimeInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="5"/>
+                </GridPane>
+            </VBox>
+        </ScrollPane>
     </center>
     <right>
-        <VBox id="controls" fx:id="settingButtons" spacing="600" alignment="BASELINE_RIGHT">
+        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
             <VBox spacing="10" alignment="BASELINE_RIGHT">
                 <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importSettingsButton"
                         text="Import Settings   " textFill="ffffff"
                         onAction="#handleImportSettings">
                     <graphic>
-                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
-                                   preserveRatio="true" />
+                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="15" fitWidth="15"
+                                   pickOnBounds="true"
+                                   preserveRatio="true"/>
                     </graphic>
                 </Button>
                 <Button id="exportSettingsButton" styleClass="settingsControls" fx:id="exportSettingsButton"
                         text="Export Settings   " textFill="ffffff"
                         onAction="#handleExportSettings">
                     <graphic>
-                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="20" fitWidth="20" pickOnBounds="true"
-                                   preserveRatio="true" />
+                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="15" fitWidth="15"
+                                   pickOnBounds="true"
+                                   preserveRatio="true"/>
                     </graphic>
                 </Button>
             </VBox>
-            <Button id="runSimButton" fx:id="runSimButton" text="Run"
-                    onAction="#handleRunSimulation" textFill="ffffff"/>
+            <VBox fx:id="runBtnVbox">
+                <Button id="runSimButton" fx:id="runSimButton" text="Run"
+                        onAction="#handleRunSimulation" textFill="ffffff"/>
+            </VBox>
         </VBox>
     </right>
 </BorderPane>

@@ -21,6 +21,7 @@ public class SimController {
     int NUMBER_OF_SIMULATIONS = 50; //The number of simulations
     public static boolean simInProgress = false; //If the simulation is in progress
     public static boolean simRan; //If a simulation has ran
+    public static boolean resultsLock = true;
     static final FileChooser fileChooser = new FileChooser(); //Used for choosing a file
     private static SimulationThread simThread; //The thread that runs the simulation
     private static Button btn; //Button associated with running the simulation
@@ -65,9 +66,15 @@ public class SimController {
         ArrayList<PlacedOrder> allOrders = orderGenerator.getXMLOrders(); //All the xml orders placed
         algorithmRunner.runAlgorithms(allOrders);
         simRan = true;
-
+        resultsLock = false;
     }
 
+    public static void clearResults() {
+        if (!resultsLock) {
+            aggregatedResultsKnapsack.clear();
+            aggregatedResultsFIFO.clear();
+        }
+    }
 
     public static void addAggregatedResultsFIFO(Results results) {
         SimController.aggregatedResultsFIFO.add(results);

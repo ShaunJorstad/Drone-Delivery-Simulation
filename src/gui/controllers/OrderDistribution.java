@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -27,12 +28,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -68,6 +71,7 @@ public class OrderDistribution implements Initializable {
     public VBox runBtnVbox;
 
     private int gridIndex;
+    private ArrayList invalidFields;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,6 +80,7 @@ public class OrderDistribution implements Initializable {
 
         GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
         gridIndex = 1;
+        invalidFields = new ArrayList();
 
         SimController.setCurrentButton(runSimButton);
 
@@ -83,6 +88,7 @@ public class OrderDistribution implements Initializable {
         injectCursorStates();
         inflateOrderDistribution();
         checkSimulationStatus();
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
     }
 
     public void loadIcons() {
@@ -144,9 +150,20 @@ public class OrderDistribution implements Initializable {
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("OrderDistribution");
+        if (SimController.resultsLock) {
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner((Stage) home.getScene().getWindow());
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().add(new Text("A simulation has to be run\n and finish executing before\n you can navigate to the results page"));
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } else {
+            Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+            Navigation.pushScene("OrderDistribution");
+        }
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
@@ -195,6 +212,7 @@ public class OrderDistribution implements Initializable {
                 return;
             }
             SimulationThread simulationThread = new SimulationThread();
+            SimController.clearResults();
             simulationThread.setOnRunning((successEvent) -> {
                 runSimButton.setStyle("-fx-background-color: #1F232F");
                 runSimButton.setText("running simulation");
@@ -221,8 +239,10 @@ public class OrderDistribution implements Initializable {
 
     }
 
-    public void handleImportSettings(ActionEvent actionEvent) {
+    public void handleImportSettings(ActionEvent actionEvent) throws IOException {
         Settings.importSettings((Stage) home.getScene().getWindow());
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/OrderDistribution.fxml"));
+        Navigation.inflateScene(root, "OrderDistribution", (Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
@@ -235,6 +255,31 @@ public class OrderDistribution implements Initializable {
         }
     }
 
+    public void bindOrders(TextField field, int index) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int numOrders = Integer.parseInt(newValue);
+                if (numOrders < 0) {
+                    throw new Exception("invalid number of orders");
+                }
+                Settings.editDistribution(index, numOrders);
+                field.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove(Integer.valueOf(index));
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid distribution of orders");
+                }
+            } catch (Exception e) {
+                field.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Inavlid distribution of orders");
+                if (!invalidFields.contains(index)) {
+                    invalidFields.add(Integer.valueOf(index));
+                }
+            }
+        });
+    }
+
     public void addHour(Integer numOrders) {
         Text hourTitle = new Text(Integer.toString(gridIndex));
         hourTitle.getStyleClass().add("hourTitle");
@@ -243,10 +288,7 @@ public class OrderDistribution implements Initializable {
         orderField.setText(Integer.toString(numOrders));
         orderField.getStyleClass().add("orderField");
         int distIndex = gridIndex -1;
-        orderField.setOnAction(actionEvent -> {
-            // TODO: sanitize input
-            Settings.editDistribution(distIndex, Integer.parseInt(orderField.getText()));
-        });
+        bindOrders(orderField, distIndex);
 
         GridPane.setMargin(hourTitle, new Insets(15, 0, 0, 0));
         GridPane.setMargin(orderField, new Insets(15, 0, 0, 40));
@@ -255,17 +297,5 @@ public class OrderDistribution implements Initializable {
         contentGrid.add(orderField, 1, gridIndex);
 
         gridIndex++;
-    }
-
-    public void updateRunBtn(String errMessage, boolean valid) {
-        if (valid) {
-            runSimButton.setStyle("-fx-background-color: #0078D7");
-            runSimButton.setText("Run");
-            runSimButton.setDisable(false);
-        } else {
-            runSimButton.setStyle("-fx-background-color: #EC2F08");
-            runSimButton.setText(errMessage);
-            runSimButton.setDisable(true);
-        }
     }
 }

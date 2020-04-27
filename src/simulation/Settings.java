@@ -59,6 +59,10 @@ public class Settings {
 
     // Food Items----------------------------------------------------------------
 
+    public static boolean isValidFoodWeight(double weight) {
+        return weight <= droneCapacity && weight >= 0;
+    }
+
     public static String verifySettings() {
         if (!verifyFoodItems()) {
             return "Incorrect Food Items";
@@ -93,6 +97,7 @@ public class Settings {
     public static boolean editFoodItem(FoodItem updatedItem) {
         foods.remove(updatedItem);
         foods.add(updatedItem);
+        updateMeals(updatedItem);
         return verifyFoodItems();
     }
 
@@ -136,6 +141,10 @@ public class Settings {
     }
 
     // Meal Items----------------------------------------------------------------
+
+    public static boolean isValidMealDistribution(double dist) {
+        return dist <= 1 && dist >= 0;
+    }
 
     /**
      * adds provided meal
@@ -192,13 +201,17 @@ public class Settings {
             }
             totalDist += meal.getDistribution();
         }
-        if (Math.floor(totalDist) != 1) {
+        if (Math.floor(totalDist * 100)/100 != 1) {
             return false;
         }
         return true;
     }
 
     // Order Distributions ------------------------------------------------------
+
+    public static boolean isValidOrderDistribution(int dist) {
+        return dist >= 0;
+    }
 
     /**
      * TODO: write this method
@@ -289,7 +302,6 @@ public class Settings {
 
         return false;
     }
-
 
     private double longestMapDistance(){
 

@@ -7,9 +7,11 @@
 
 package gui.controllers;
 
+import cli.Coordinate;
 import cli.SimController;
 import cli.SimulationThread;
 import gui.Navigation;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,21 +19,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Insets;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,6 +52,8 @@ import menu.Destination;
 
 public class Map implements Initializable {
     SimulationThread statusThread;
+    ArrayList<Coordinate>  mapPoints;
+    boolean isFirst;
 	
 	@FXML
     public ImageView mapImage;
@@ -68,6 +79,7 @@ public class Map implements Initializable {
     public ScrollPane scrollpane;
     public GridPane contentGrid;
     public VBox runBtnVbox;
+    public Pane pointPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,7 +100,8 @@ public class Map implements Initializable {
         backImage.setPreserveRatio(true);
 
         loadIcons();
-        
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+
         Insets runInsets = new Insets(0,0,120,0);
         VBox.setMargin(runSimButton, runInsets);
         
@@ -102,9 +115,18 @@ public class Map implements Initializable {
         Insets mapInset = new Insets(20,0,0,50);
         VBox.setMargin(mapImage, mapInset);
         inflateMapPoints();
+
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                modifyPoints(e);
+            }
+        };
+        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        mapPoints = new ArrayList<>();
+        isFirst = true;
     }
-    
-    
+
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -131,7 +153,6 @@ public class Map implements Initializable {
             });
         }
     }
-    
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
@@ -146,9 +167,20 @@ public class Map implements Initializable {
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        if (SimController.resultsLock) {
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner((Stage) home.getScene().getWindow());
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().add(new Text("A simulation has to be run\n and finish executing before\n you can navigate to the results page"));
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } else {
+            Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+            Navigation.pushScene("Map");
+        }
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
@@ -204,6 +236,7 @@ public class Map implements Initializable {
                 return;
             }
             SimulationThread simulationThread = new SimulationThread();
+            SimController.clearResults();
             simulationThread.setOnRunning((successEvent) -> {
                 runSimButton.setStyle("-fx-background-color: #1F232F");
                 runSimButton.setText("running simulation");
@@ -268,4 +301,47 @@ public class Map implements Initializable {
             
     	}
     }
+
+    /**
+     * Modify points on the map
+     * @param mouseEvent
+     */
+    public void modifyPoints(MouseEvent mouseEvent) {
+        //Location of the mouse clock
+        Coordinate coordinate = new Coordinate((int)mouseEvent.getX(), (int)mouseEvent.getY());
+
+        //Make sure the click is in the correct part of the pane
+        if (mouseEvent.getY() < 350) {
+            if (!mouseEvent.isControlDown()) { //add a point
+                Circle circle = new Circle(4);
+                if (isFirst) { //Home base
+                    circle.setFill(Color.WHITESMOKE);
+                    coordinate.setFirst(true);
+                    isFirst = false;
+                } else {
+                    circle.setFill(Color.RED);
+                }
+
+                circle.setCenterX(coordinate.getX());
+                circle.setCenterY(coordinate.getY());
+                pointPane.getChildren().add(circle);
+                mapPoints.add(coordinate);
+
+            } else { //Remove a point
+                for (int i = 0; i < mapPoints.size(); i++) { //Find the closest
+                    if (coordinate.distanceBetween(mapPoints.get(i)) <= 5) {
+                        Coordinate removed = mapPoints.remove(i);
+                        if (removed.isFirst()) { //Home base was removed
+                            isFirst = true;
+                        }
+                        pointPane.getChildren().remove(i+1);
+                        return;
+                    }
+                }
+            }
+
+        }
+
+    }
+
 }

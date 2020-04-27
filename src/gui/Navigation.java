@@ -16,8 +16,10 @@ package gui;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -130,5 +132,33 @@ public class Navigation {
             instance = new Navigation();
         }
         return instance;
+    }
+
+    public static void updateRunBtn(Button runButton, String errorMessage) {
+        if (errorMessage.equals("")) {
+            runButton.setStyle("-fx-background-color: #0078D7");
+            runButton.setText("Run");
+            runButton.setDisable(false);
+        } else {
+            runButton.setStyle("-fx-background-color: #EC2F08");
+            runButton.setText(errorMessage);
+            runButton.setDisable(true);
+        }
+    }
+
+    public static void updateRunBtn(Button runButton, String errorMessage, ArrayList invalidFields) {
+        if (!invalidFields.isEmpty()) {
+            runButton.setStyle("-fx-background-color: #EC2F08");
+            runButton.setText("Invalid fields");
+            runButton.setDisable(true);
+        } else if (!errorMessage.equals("")) {
+            runButton.setStyle("-fx-background-color: #EC2F08");
+            runButton.setText(errorMessage);
+            runButton.setDisable(true);
+        } else {
+            runButton.setStyle("-fx-background-color: #0078D7");
+            runButton.setText("Run");
+            runButton.setDisable(false);
+        }
     }
 }
