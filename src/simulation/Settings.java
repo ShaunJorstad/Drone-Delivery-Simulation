@@ -302,6 +302,28 @@ public class Settings {
 
         return false;
     }
+
+    private double longestMapDistance(){
+
+        double longestDistance=0;
+        double currentDistance=0;
+
+        //compares all locations to each other
+        for(int start = 0; start < map.size() - 1; start++){
+            for(int end = start + 1; end < map.size(); end++){
+
+                //gets distance between 2 points
+                currentDistance = Math.sqrt((map.get(start).getX()-map.get(end).getX())+(map.get(start).getY()-map.get(end).getY()));
+
+                //updates langest Distance
+                if(currentDistance > longestDistance){
+                    longestDistance = currentDistance;
+                }
+            }
+        }
+        return longestDistance;
+    }
+
     // IO -----------------------------------------------------------------------
 
     /**
