@@ -20,9 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -54,6 +52,7 @@ public class Map implements Initializable {
     SimulationThread statusThread;
     ArrayList<Coordinate>  mapPoints;
     boolean isFirst;
+    boolean textboxIsUP;
 	
 	@FXML
     public ImageView mapImage;
@@ -126,6 +125,7 @@ public class Map implements Initializable {
         pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         mapPoints = new ArrayList<>();
         isFirst = true;
+        textboxIsUP = false;
     }
 
     public void loadIcons() {
@@ -308,6 +308,9 @@ public class Map implements Initializable {
      * @param mouseEvent
      */
     public void modifyPoints(MouseEvent mouseEvent) {
+        if (textboxIsUP) {
+            return;
+        }
         //Location of the mouse clock
         Coordinate coordinate = new Coordinate((int)mouseEvent.getX(), (int)mouseEvent.getY());
 
@@ -322,11 +325,21 @@ public class Map implements Initializable {
                 } else {
                     circle.setFill(Color.RED);
                 }
-
+                TextField textField = new TextField();
+                VBox nameVBox = new VBox();
+                Label label = new Label();
+                //label.setText("Name: ");
+                textField.setPromptText("Name: ");
                 circle.setCenterX(coordinate.getX());
                 circle.setCenterY(coordinate.getY());
+
+                nameVBox.setLayoutX(coordinate.getX());
+                nameVBox.setLayoutY(coordinate.getY());
+                nameVBox.getChildren().add(textField);
                 pointPane.getChildren().add(circle);
+                pointPane.getChildren().addAll(nameVBox);
                 mapPoints.add(coordinate);
+                textboxIsUP = true;
 
             } else { //Remove a point
                 for (int i = 0; i < mapPoints.size(); i++) { //Find the closest
