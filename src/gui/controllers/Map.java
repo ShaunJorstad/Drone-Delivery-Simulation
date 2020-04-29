@@ -78,6 +78,7 @@ public class Map implements Initializable {
     public GridPane contentGrid;
     public VBox runBtnVbox;
     public Pane pointPane;
+
     double scale;
     Coordinate homeCoordinate;
     TextField distanceTextField;
@@ -328,7 +329,7 @@ public class Map implements Initializable {
         Coordinate coordinate = new Coordinate((int)mouseEvent.getX(), (int)mouseEvent.getY());
 
         //Make sure the click is in the correct part of the pane
-        if (mouseEvent.getY() < 350) {
+        if (mouseEvent.getY() < 348) {
             if (!mouseEvent.isControlDown()) { //add a point
                 Circle circle = new Circle(4);
 
@@ -372,6 +373,11 @@ public class Map implements Initializable {
                         if (removed.isFirst()) { //Home base was removed
                             isFirst = true;
                         }
+                        try {
+                            Settings.removeMapPoint(removed);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
                         pointPane.getChildren().remove(i+1);
                         return;
                     }
@@ -399,9 +405,18 @@ public class Map implements Initializable {
                 scale = -1;
             }
 
+            String name = textField.getText();
+            Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
+            try {
+                Settings.addMapPoint(name, currentDest.getX(), currentDest.getY());
 
-            pointPane.getChildren().remove(pointPane.getChildren().size()-1);
-            textboxIsUP = false;
+                pointPane.getChildren().remove(pointPane.getChildren().size()-1);
+                textboxIsUP = false;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+
+            }
+
         }
     }
 

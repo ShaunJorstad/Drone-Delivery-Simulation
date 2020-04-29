@@ -59,4 +59,12 @@ public class Coordinate {
                 ", isFirst=" + isFirst +
                 '}';
     }
+
+    public boolean equals(Coordinate other) {
+        if (x == other.getX() && y == other.getY()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
