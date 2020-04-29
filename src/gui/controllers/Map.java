@@ -126,7 +126,6 @@ public class Map implements Initializable {
         isFirst = true;
     }
     
-    
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -153,7 +152,6 @@ public class Map implements Initializable {
             });
         }
     }
-    
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));

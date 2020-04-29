@@ -13,11 +13,20 @@
 
 package gui;
 
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -120,6 +129,62 @@ public class Navigation {
         splashScene.setCursor(Cursor.HAND);
         stage.setScene(splashScene);
         currentScene = splashScene;
+    }
+
+    /**
+     * Inflates a scene (navigating to a new screen)
+     *
+     * if there is invalid input (indicated by the invalidFields arrayList a popup asks the user if they want to confirm navigation and clear all invalid input
+     *
+     * @param root      fxml document being inflated
+     * @param nextScene name of the scene being inflated
+     * @param stage     current stage of the application
+     * @param invalidFields arraylist of invalid fields the use rhas modified
+     */
+    public static void inflateScene(Parent root, String nextScene, Stage stage, ArrayList invalidFields) {
+        if (!invalidFields.isEmpty()) {
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initStyle(StageStyle.UNDECORATED);
+            dialog.initOwner(stage);
+            VBox root_cntr = new VBox(20);
+            Text alert_txt = new Text("You have entered invalid input (denoted by red boxes) \nmoving to another screen will revert these fields to their prior input\n\nDo you want to continue?");
+            alert_txt.setTextAlignment(TextAlignment.CENTER);
+            root_cntr.getChildren().add(alert_txt);
+            root_cntr.setAlignment(Pos.CENTER);
+            Scene dialogScene = new Scene(root_cntr, 500, 200);
+            HBox buttons_cntr = new HBox(20);
+            buttons_cntr.setAlignment(Pos.CENTER);
+            Button cancel_btn = new Button("cancel");
+            cancel_btn.setOnMouseClicked((event) -> {
+                dialog.close();
+            });
+
+            Button continue_btn = new Button("continue");
+            continue_btn.setOnMouseClicked((event) -> {
+                Scene splashScene = new Scene(root, 800, 600);
+                splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
+                splashScene.getStylesheets().add("gui/CSS/Settings.css");
+                splashScene.getStylesheets().add("gui/CSS/Navigation.css");
+                splashScene.setCursor(Cursor.HAND);
+                stage.setScene(splashScene);
+                currentScene = splashScene;
+                dialog.close();
+            });
+
+            buttons_cntr.getChildren().addAll(cancel_btn, continue_btn);
+            root_cntr.getChildren().add(buttons_cntr);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } else {
+            Scene splashScene = new Scene(root, 800, 600);
+            splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
+            splashScene.getStylesheets().add("gui/CSS/Settings.css");
+            splashScene.getStylesheets().add("gui/CSS/Navigation.css");
+            splashScene.setCursor(Cursor.HAND);
+            stage.setScene(splashScene);
+            currentScene = splashScene;
+        }
     }
 
     /**

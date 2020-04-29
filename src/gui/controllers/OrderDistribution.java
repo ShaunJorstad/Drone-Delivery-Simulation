@@ -139,13 +139,13 @@ public class OrderDistribution implements Initializable {
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
-        Navigation.inflateScene(root, "Splash", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, "Splash", (Stage) home.getScene().getWindow(), invalidFields);
         Navigation.pushScene("OrderDistribution");
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
         Navigation.pushScene("OrderDistribution");
     }
 
@@ -161,20 +161,20 @@ public class OrderDistribution implements Initializable {
             dialog.show();
         } else {
             Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
+            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow(), invalidFields);
             Navigation.pushScene("OrderDistribution");
         }
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
         Navigation.pushScene("OrderDistribution");
     }
 
     public void handleNavigateMealItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/MealItems.fxml"));
-        Navigation.inflateScene(root, "MealItems", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, "MealItems", (Stage) home.getScene().getWindow(), invalidFields);
         Navigation.pushScene("OrderDistribution");
     }
 
@@ -183,13 +183,13 @@ public class OrderDistribution implements Initializable {
 
     public void handleNavigateMap(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Map.fxml"));
-        Navigation.inflateScene(root, "Map", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, "Map", (Stage) home.getScene().getWindow(), invalidFields);
         Navigation.pushScene("OrderDistribution");
     }
 
     public void handleNavigateDrone(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
-        Navigation.inflateScene(root, "Drone", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, "Drone", (Stage) home.getScene().getWindow(), invalidFields);
         Navigation.pushScene("OrderDistribution");
     }
 
@@ -199,7 +199,7 @@ public class OrderDistribution implements Initializable {
             return;
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
-        Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) throws IOException {
