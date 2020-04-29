@@ -1,5 +1,6 @@
 package simulation;
 
+import cli.Coordinate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -242,38 +243,87 @@ public class Settings {
     // Map ----------------------------------------------------------------------
 
     /**
-     * TODO: write this method
      * adds map point
      *
+     * @param name
      * @param x
      * @param y
-     * @param dist
      */
-    private void addMapPoint(int x, int y, float dist) {
-
+    public static void addMapPoint(String name, int x, int y) throws IllegalArgumentException {
+    	for (int i = 0; i < map.size(); i++) {
+    		if (map.get(i).getDestName().equals(name))
+    			throw new IllegalArgumentException("That name already exists on the map");
+    	}
+    	Destination newDest = new Destination(name,x,y);
+    	map.add(newDest);
     }
 
     /**
-     * TODO: write ths method
      * removes map point
      *
-     * @param x
-     * @param y
+     * @param name
      */
-    private void removeMapPoint(int x, int y) {
-
+    public static void removeMapPoint(String name) throws IllegalArgumentException {
+    	for (int i = 0; i < map.size(); i++) {
+    		if (map.get(i).getDestName().equals(name)) {
+    			map.remove(i);
+    			return;
+    		}
+    	}
+    	throw new IllegalArgumentException("That name does not exist on the map");
     }
 
     /**
-     * TODO: write this method
+     * removes map point
+     *
+     * @param coordinate
+     */
+    public static void removeMapPoint(Coordinate coordinate) throws IllegalArgumentException {
+        for (int i = 0; i < map.size(); i++) {
+            if (map.get(i).getCoordinates().equals(coordinate)) {
+                map.remove(i);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("That name does not exist on the map");
+    }
+
+    /**
      * edits map point
      *
+     *@param dest
      * @param x
      * @param y
-     * @param dist
      */
-    private void editMapPoint(int x, int y, float dist) {
+    public static void editMapPoint(Destination dest, int x, int y) {
+    	dest.setX(x);
+    	dest.setY(y);
+    }
 
+    public static double convertGUItoFEET(double GUI, double scale) {
+        return GUI*scale;
+    }
+
+    public static Coordinate convertGUItoFEET(Coordinate coordinate, double scale) {
+        Coordinate converted = new Coordinate((int)(coordinate.getX()*scale), (int)(coordinate.getY()*scale));
+        return converted;
+
+    }
+
+
+
+    public static double calculateScale(double userInput, double GUIDist) {
+        return userInput/GUIDist;
+    }
+    
+    /**
+     * 
+     * @param dest1
+     * @param dest2
+     * @return distance between them
+     */
+    public double calcDist(Destination dest1, Destination dest2) {
+    	return Math.sqrt(Math.pow(dest2.getY()-dest1.getY(),2) + Math.pow(dest2.getX()-dest1.getX(), 2));
     }
 
     /**
@@ -302,6 +352,28 @@ public class Settings {
 
         return false;
     }
+
+    private double longestMapDistance(){
+
+        double longestDistance=0;
+        double currentDistance=0;
+
+        //compares all locations to each other
+        for(int start = 0; start < map.size() - 1; start++){
+            for(int end = start + 1; end < map.size(); end++){
+
+                //gets distance between 2 points
+                currentDistance = Math.sqrt((map.get(start).getX()-map.get(end).getX())+(map.get(start).getY()-map.get(end).getY()));
+
+                //updates langest Distance
+                if(currentDistance > longestDistance){
+                    longestDistance = currentDistance;
+                }
+            }
+        }
+        return longestDistance;
+    }
+
     // IO -----------------------------------------------------------------------
 
     /**

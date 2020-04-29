@@ -180,8 +180,10 @@ public class MealItems implements Initializable {
         Navigation.navigateBack(root, lastScene, (Stage) home.getScene().getWindow(), invalidFields);
     }
 
-    public void handleImportSettings(ActionEvent actionEvent) {
+    public void handleImportSettings(ActionEvent actionEvent) throws IOException {
         Settings.importSettings((Stage) home.getScene().getWindow());
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/MealItems.fxml"));
+        Navigation.inflateScene(root, "MealItems", (Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
@@ -329,6 +331,7 @@ public class MealItems implements Initializable {
             mealsVBox.getChildren().remove(controlGrid);
             Settings.removeMeal(meal);
             invalidFields.remove(meal);
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
         });
 
         controlGrid.add(distributionTitle, 0, 0);
