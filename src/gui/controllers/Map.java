@@ -20,11 +20,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -40,10 +40,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -54,6 +51,7 @@ public class Map implements Initializable {
     SimulationThread statusThread;
     ArrayList<Coordinate>  mapPoints;
     boolean isFirst;
+    boolean textboxIsUP;
 	
 	@FXML
     public ImageView mapImage;
@@ -80,6 +78,11 @@ public class Map implements Initializable {
     public GridPane contentGrid;
     public VBox runBtnVbox;
     public Pane pointPane;
+
+    double scale;
+    Coordinate homeCoordinate;
+    TextField distanceTextField;
+    TextField textField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,15 +119,26 @@ public class Map implements Initializable {
         VBox.setMargin(mapImage, mapInset);
         inflateMapPoints();
 
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        SimController.setCurrentButton(runSimButton);
+        EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
                 modifyPoints(e);
             }
         };
-        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        EventHandler<KeyEvent> keyEventEventHandler = new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                processText(event);
+            }
+        };
+        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
+        pointPane.addEventFilter(KeyEvent.KEY_PRESSED, keyEventEventHandler);
         mapPoints = new ArrayList<>();
         isFirst = true;
+        textboxIsUP = false;
+        scale = -1;
+        homeCoordinate = new Coordinate(0, 0);
     }
 
     public void loadIcons() {
@@ -307,25 +321,50 @@ public class Map implements Initializable {
      * @param mouseEvent
      */
     public void modifyPoints(MouseEvent mouseEvent) {
+        //If the textbox is up, don't allow the user to add more points
+        if (textboxIsUP) {
+            return;
+        }
         //Location of the mouse clock
         Coordinate coordinate = new Coordinate((int)mouseEvent.getX(), (int)mouseEvent.getY());
 
         //Make sure the click is in the correct part of the pane
-        if (mouseEvent.getY() < 350) {
+        if (mouseEvent.getY() < 348) {
             if (!mouseEvent.isControlDown()) { //add a point
                 Circle circle = new Circle(4);
+
+                distanceTextField = new TextField();
+
                 if (isFirst) { //Home base
                     circle.setFill(Color.WHITESMOKE);
                     coordinate.setFirst(true);
                     isFirst = false;
+                    homeCoordinate = coordinate;
+                    distanceTextField.setVisible(false);
                 } else {
                     circle.setFill(Color.RED);
+                    if (scale < 0) {
+                        distanceTextField.setPromptText("Distance in ft");
+                    } else {
+                        distanceTextField.setText("" +Settings.convertGUItoFEET(coordinate.distanceBetween(homeCoordinate), scale));
+                    }
                 }
 
+
+                VBox nameVBox = new VBox();
+                textField = new TextField();
+                textField.setPromptText("Name: ");
                 circle.setCenterX(coordinate.getX());
                 circle.setCenterY(coordinate.getY());
+
+                nameVBox.setLayoutX(coordinate.getX());
+                nameVBox.setLayoutY(coordinate.getY());
+                nameVBox.getChildren().addAll(textField, distanceTextField);
                 pointPane.getChildren().add(circle);
+                pointPane.getChildren().add(nameVBox);
                 mapPoints.add(coordinate);
+                textboxIsUP = true;
+                System.out.println(coordinate);
 
             } else { //Remove a point
                 for (int i = 0; i < mapPoints.size(); i++) { //Find the closest
@@ -333,6 +372,11 @@ public class Map implements Initializable {
                         Coordinate removed = mapPoints.remove(i);
                         if (removed.isFirst()) { //Home base was removed
                             isFirst = true;
+                        }
+                        try {
+                            Settings.removeMapPoint(removed);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
                         }
                         pointPane.getChildren().remove(i+1);
                         return;
@@ -342,6 +386,38 @@ public class Map implements Initializable {
 
         }
 
+    }
+
+    public void processText(KeyEvent keyEvent) {
+
+        if (keyEvent.getCode().equals(KeyCode.getKeyCode("Enter"))) {
+            if (!textboxIsUP) { //If the textbox is not up, ignore the input
+                return;
+            }
+
+            //Convert the distance between current destination and homebase and turn it into a scale
+            String temp = distanceTextField.getText();
+            double distInFeet;
+            try {
+                distInFeet = Double.parseDouble(temp);
+                scale = Settings.calculateScale(distInFeet, mapPoints.get(mapPoints.size()-1).distanceBetween(homeCoordinate));
+            } catch (Exception exception) {
+                scale = -1;
+            }
+
+            String name = textField.getText();
+            Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
+            try {
+                Settings.addMapPoint(name, currentDest.getX(), currentDest.getY());
+
+                pointPane.getChildren().remove(pointPane.getChildren().size()-1);
+                textboxIsUP = false;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        }
     }
 
 }

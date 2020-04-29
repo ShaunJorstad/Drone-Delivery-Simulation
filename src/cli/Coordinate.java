@@ -51,5 +51,20 @@ public class Coordinate {
         return Math.sqrt((x - coordinate.getX())* (x - coordinate.getX()) + (y - coordinate.getY()) * (y - coordinate.getY()));
     }
 
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "x=" + x +
+                ", y=" + y +
+                ", isFirst=" + isFirst +
+                '}';
+    }
 
+    public boolean equals(Coordinate other) {
+        if (x == other.getX() && y == other.getY()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

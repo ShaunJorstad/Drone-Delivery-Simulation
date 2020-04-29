@@ -62,8 +62,8 @@
         </Pane>
     </left>
     <right>
-        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BOTTOM_RIGHT">
-            <!--<VBox spacing="10" alignment="BASELINE_RIGHT">
+        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
+            <VBox spacing="10" alignment="BASELINE_RIGHT">
                 <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importMapButton"
                         text="Import Map   " textFill="ffffff"
                         onAction="#handleImportMap">
@@ -80,7 +80,7 @@
                                    preserveRatio="true" />
                     </graphic>
                 </Button>
-            </VBox>-->
+            </VBox>
             <VBox fx:id="runBtnVbox">
                 <Button id="runSimButton" fx:id="runSimButton" text="Run"
                         onAction="#handleRunSimulation" textFill="ffffff"/>
