@@ -2,7 +2,7 @@ package cli;
 
 import menu.Destination;
 import menu.Drone;
-import napsack.Knapsack;
+import simulation.Knapsack;
 import simulation.Fifo;
 import simulation.Results;
 import simulation.Settings;
@@ -32,7 +32,7 @@ public class AlgorithmRunner {
         ArrayList<Destination> deliveryOrder;
 
         //Initialize the knapsack and FIFO algorithms
-        Knapsack n = new Knapsack(allOrders);
+        Knapsack n = new Knapsack(allOrders, Settings.calcMaxDeliveries());
         Fifo f = new Fifo(allOrders);
 
         int loadMealTime = 0; //In case, the loadMealTime gets adjusted
