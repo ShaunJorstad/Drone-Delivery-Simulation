@@ -33,19 +33,30 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import simulation.Settings;
 import menu.Destination;
+
+import static java.nio.file.StandardCopyOption.*;
 
 public class Map implements Initializable {
     SimulationThread statusThread;
@@ -71,6 +82,7 @@ public class Map implements Initializable {
     public Button runSimButton;
     //public Button importMapButton;
     //public Button exportMapButton;
+    public Button newMapButton;
     public ImageView uploadImage;
     public ImageView downloadImage;
     public VBox settingButtons;
@@ -78,6 +90,7 @@ public class Map implements Initializable {
     public GridPane contentGrid;
     public VBox runBtnVbox;
     public Pane pointPane;
+    
 
     double scale;
     Coordinate homeCoordinate;
@@ -236,8 +249,35 @@ public class Map implements Initializable {
     
     public void handleImportMap(ActionEvent actionEvent) {
     }
+    
+    
 
     public void handleExportMap(ActionEvent actionEvent) {
+    }
+    
+    public void handleNewMap(ActionEvent actionEvent) throws Exception {
+    	String fileName = "mapImage.png";
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Map Image File");
+    	fileChooser.getExtensionFilters().addAll(
+    	         new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+    	File selectedFile = fileChooser.showOpenDialog((Stage)home.getScene().getWindow());
+
+	    File newMap = new File("assets/mapImages/"+selectedFile.getName());
+	    System.out.println(newMap.getAbsolutePath());
+	    if (newMap.createNewFile()) {
+	        System.out.println("File created: " + newMap.getName());
+	      } else {
+	        System.out.println("File already exists.");
+	      }
+    	if (selectedFile != null) {
+    	    Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
+
+    	    newMap = new File("assets/mapImages/"+selectedFile.getName());
+            Image mapImageFile = new Image(newMap.toURI().toString());
+            mapImage.setImage(mapImageFile);
+    	}
+    	
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
