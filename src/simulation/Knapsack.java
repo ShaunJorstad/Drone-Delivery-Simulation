@@ -16,8 +16,10 @@ public class Knapsack {
     private double currentWeight; //How much weight is currently on the drone
     private double skippedTime; //The amount of time skipped forward if the there are no waiting orders
 
+    private int MaxDeliveries;
 
-    public Knapsack(ArrayList<PlacedOrder> listOfAllOrders) {
+    public Knapsack(ArrayList<PlacedOrder> listOfAllOrders, int MaxDeliveries) {
+      
         //copy of all orders
         packingList = (ArrayList<PlacedOrder>) listOfAllOrders.clone();
 
@@ -27,6 +29,7 @@ public class Knapsack {
         maxWeight = drone.getWeight();
         currentWeight = 0;
         skippedTime = 0;
+        this.MaxDeliveries = MaxDeliveries;
     }
 
     public ArrayList<PlacedOrder> packDrone(double elapsedTime) {
@@ -77,7 +80,8 @@ public class Knapsack {
 
 
             //removes the largest of the non skipped orders until the drone has a correct amount of weight
-            while (currentWeight > maxWeight) {
+            //if something breaks its because this has 2 conditions and the for in the middle doesnt allow for them to be met
+            while (currentWeight > maxWeight && droneList.size() > MaxDeliveries) {
                 double BiggestWeight = 0;
                 int pos = 0;
                 for (int j = droneList.size()-1; j >= 0; j--) {

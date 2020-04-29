@@ -24,6 +24,7 @@ public class Settings {
     private static Settings instance = new Settings();
 
     private static int droneCapacity = 192;
+    private int DroneFleetSize;
 
     private Settings() {
         map = new ArrayList<>();
@@ -58,6 +59,14 @@ public class Settings {
 
     public static ArrayList<Destination> getMap() { return map; }
 
+    public void setDroneFleetSize(int numDrones){
+        DroneFleetSize = numDrones;
+    }
+
+    public int getDroneFleetSize(){
+        return DroneFleetSize;
+    }
+
     // Food Items----------------------------------------------------------------
 
     public static boolean isValidFoodWeight(double weight) {
@@ -75,6 +84,14 @@ public class Settings {
             return "Incorect Order Distribution";
         }
         return "";
+    }
+
+    public static int calcMaxDeliveries(){
+        double time = drone.getMaxFlightTime() - 30;
+        double maxTime = longestMapDistance()/drone.getSpeed();
+
+        return (int)(time/maxTime);
+
     }
 
 
@@ -330,17 +347,41 @@ public class Settings {
      * TODO: write this method
      * exports map
      */
-    private void exportMap() {
+    /*private boolean exportMap(Stage stage) {
+        fileChooser.setTitle("Export Map Image");
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            //TODO: pipe this string into the file
+            try {
+                FileWriter fw = new FileWriter(file, false);
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println(unparseSettings());
 
+                fw.close();
+                pw.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
-
+*/
     /**
      * TODO: write this method
      * imports map
      */
-    private void importMap() {
+    /*private boolean importMap(Stage stage) {
 
-    }
+        fileChooser.setTitle("Import Map Image");
+        File file = fileChooser.showOpenDialog(stage);
+        if (file.getName().contains(".png")) {
+            // TODO: call method to parse the file and import into settings
+            return true;
+        }
+        return false;
+    }*/
 
     /**
      * TODO: write this method
@@ -353,7 +394,7 @@ public class Settings {
         return false;
     }
 
-    private double longestMapDistance(){
+    private static double longestMapDistance(){
 
         double longestDistance=0;
         double currentDistance=0;
@@ -654,4 +695,6 @@ public class Settings {
         }
         return false;
     }
+
+
 }

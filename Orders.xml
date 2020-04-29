@@ -1,376 +1,342 @@
 <listOfOrders>
-<order><cname>Dyana</cname><ordTime>2</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
+<order><cname>Wilone</cname><ordTime>5</ordTime><dest>Tennis Courts	75	2175	2176.292719</dest><meal>Combo2:
 	drink: 1
-</meal></order>
-<order><cname>Em</cname><ordTime>2</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Lyndsey</cname><ordTime>7</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo4:
 	hamburger: 2
 	fries: 1
 </meal></order>
-<order><cname>Jerrine</cname><ordTime>9</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
+<order><cname>Carol-Jean</cname><ordTime>6</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo1:
 	drink: 1
-</meal></order>
-<order><cname>Cary</cname><ordTime>13</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo1:
 	hamburger: 1
 	fries: 1
+</meal></order>
+<order><cname>Kaitlynn</cname><ordTime>10</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo1:
 	drink: 1
-</meal></order>
-<order><cname>Amitie</cname><ordTime>19</ordTime><dest>Rockwell	0	450	450.0</dest><meal>Combo1:
 	hamburger: 1
 	fries: 1
+</meal></order>
+<order><cname>Robena</cname><ordTime>17</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo1:
 	drink: 1
-</meal></order>
-<order><cname>Ofilia</cname><ordTime>20</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo3:
 	hamburger: 1
 	fries: 1
 </meal></order>
-<order><cname>Daisie</cname><ordTime>21</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
+<order><cname>Crissie</cname><ordTime>24</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo2:
 	drink: 1
-</meal></order>
-<order><cname>Tilda</cname><ordTime>23</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Lynsey</cname><ordTime>31</ordTime><dest>Football Field	-300	2025	2047.10161</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Michal</cname><ordTime>45</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Elysha</cname><ordTime>48</ordTime><dest>PLC	375	300	480.2343178</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Sharon</cname><ordTime>48</ordTime><dest>Softball Field	675	750	1009.021804</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Mavis</cname><ordTime>50</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Deerdre</cname><ordTime>58</ordTime><dest>Tennis Courts	75	2175	2176.292719</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Noni</cname><ordTime>62</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo5:
-	fries: 1
-</meal></order>
-<order><cname>Korie</cname><ordTime>63</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Maryjane</cname><ordTime>70</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Minna</cname><ordTime>70</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Christie</cname><ordTime>75</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Susan</cname><ordTime>81</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Reggie</cname><ordTime>90</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Wenonah</cname><ordTime>108</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Karita</cname><ordTime>112</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Fredia</cname><ordTime>115</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Linnell</cname><ordTime>115</ordTime><dest>IM Fields	-525	-300	604.6693311</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Aurel</cname><ordTime>115</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo5:
-	fries: 1
-</meal></order>
-<order><cname>Kristyn</cname><ordTime>115</ordTime><dest>Tennis Courts	75	2175	2176.292719</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Darlleen</cname><ordTime>115</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Petrina</cname><ordTime>117</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo4:
 	hamburger: 2
 	fries: 1
 </meal></order>
-<order><cname>Bette</cname><ordTime>121</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Ashly</cname><ordTime>123</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Mandi</cname><ordTime>123</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Norma</cname><ordTime>123</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Junia</cname><ordTime>127</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Karrie</cname><ordTime>127</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Bethena</cname><ordTime>130</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Aimil</cname><ordTime>132</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Maxie</cname><ordTime>134</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Koralle</cname><ordTime>134</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Dalia</cname><ordTime>137</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Inge</cname><ordTime>143</ordTime><dest>Softball Field	675	750	1009.021804</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Bernelle</cname><ordTime>143</ordTime><dest>PLC	375	300	480.2343178</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Lynette</cname><ordTime>144</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo5:
-	fries: 1
-</meal></order>
-<order><cname>Cathleen</cname><ordTime>144</ordTime><dest>PLC	375	300	480.2343178</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Leone</cname><ordTime>144</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Shanda</cname><ordTime>145</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Cloe</cname><ordTime>146</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo5:
-	fries: 1
-</meal></order>
-<order><cname>Pansie</cname><ordTime>153</ordTime><dest>Rockwell	0	450	450.0</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Dion</cname><ordTime>153</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Ileane</cname><ordTime>154</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Indira</cname><ordTime>163</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Edyth</cname><ordTime>165</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo2:
-	hamburger: 2
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Lyndsey</cname><ordTime>166</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Benita</cname><ordTime>167</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Robinetta</cname><ordTime>169</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Doloritas</cname><ordTime>178</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Trina</cname><ordTime>179</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Marleah</cname><ordTime>180</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo4:
+<order><cname>Raquela</cname><ordTime>26</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo4:
 	hamburger: 2
 	fries: 1
 </meal></order>
-<order><cname>Cristin</cname><ordTime>180</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo1:
+<order><cname>Robbie</cname><ordTime>42</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo3:
 	hamburger: 1
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Patty</cname><ordTime>186</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo1:
+<order><cname>Fedora</cname><ordTime>46</ordTime><dest>Tennis Courts	75	2175	2176.292719</dest><meal>Combo5:
+	fries: 1
+</meal></order>
+<order><cname>Isa</cname><ordTime>48</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo1:
+	drink: 1
 	hamburger: 1
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Lesya</cname><ordTime>186</ordTime><dest>Softball Field	675	750	1009.021804</dest><meal>Combo4:
+<order><cname>Tansy</cname><ordTime>48</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Jerrine</cname><ordTime>49</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo2:
+	drink: 1
 	hamburger: 2
 	fries: 1
 </meal></order>
-<order><cname>Yetty</cname><ordTime>193</ordTime><dest>Rockwell	0	450	450.0</dest><meal>Combo1:
+<order><cname>Glynnis</cname><ordTime>50</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo3:
 	hamburger: 1
 	fries: 1
+</meal></order>
+<order><cname>Shay</cname><ordTime>52</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo1:
 	drink: 1
-</meal></order>
-<order><cname>Ernesta</cname><ordTime>195</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo1:
 	hamburger: 1
 	fries: 1
+</meal></order>
+<order><cname>Dallas</cname><ordTime>56</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo1:
 	drink: 1
-</meal></order>
-<order><cname>Mimi</cname><ordTime>198</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo3:
 	hamburger: 1
 	fries: 1
 </meal></order>
-<order><cname>Jilli</cname><ordTime>200</ordTime><dest>Football Field	-300	2025	2047.10161</dest><meal>Combo1:
+<order><cname>Freddie</cname><ordTime>59</ordTime><dest>Softball Field	675	750	1009.021804</dest><meal>Combo3:
 	hamburger: 1
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Tracee</cname><ordTime>207</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo2:
+<order><cname>Nettie</cname><ordTime>60</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo4:
 	hamburger: 2
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Shelley</cname><ordTime>207</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo1:
+<order><cname>Bethena</cname><ordTime>60</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo1:
+	drink: 1
 	hamburger: 1
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Norry</cname><ordTime>208</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
+<order><cname>Hazel</cname><ordTime>62</ordTime><dest>MEP	450	450	636.3961031</dest><meal>Combo1:
+	drink: 1
 	hamburger: 1
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Cissiee</cname><ordTime>210</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo2:
+<order><cname>Dorette</cname><ordTime>63</ordTime><dest>Softball Field	675	750	1009.021804</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Coraline</cname><ordTime>67</ordTime><dest>IM Fields	-525	-300	604.6693311</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Shane</cname><ordTime>74</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo2:
+	drink: 1
 	hamburger: 2
 	fries: 1
+</meal></order>
+<order><cname>Odelle</cname><ordTime>75</ordTime><dest>IM Fields	-525	-300	604.6693311</dest><meal>Combo2:
 	drink: 1
-</meal></order>
-<order><cname>Lita</cname><ordTime>215</ordTime><dest>PLC	375	300	480.2343178</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Maryann</cname><ordTime>226</ordTime><dest>Rockwell	0	450	450.0</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Shelia</cname><ordTime>228</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Noemi</cname><ordTime>228</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo1:
-	hamburger: 1
-	fries: 1
-	drink: 1
-</meal></order>
-<order><cname>Valerye</cname><ordTime>228</ordTime><dest>Tennis Courts	75	2175	2176.292719</dest><meal>Combo3:
-	hamburger: 1
-	fries: 1
-</meal></order>
-<order><cname>Lindsey</cname><ordTime>228</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo2:
 	hamburger: 2
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Barbabra</cname><ordTime>231</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo5:
+<order><cname>Nell</cname><ordTime>75</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
 	fries: 1
 </meal></order>
-<order><cname>Carrie</cname><ordTime>235</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo2:
+<order><cname>Roana</cname><ordTime>82</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Maudie</cname><ordTime>82</ordTime><dest>Harker	225	450	503.1152949</dest><meal>Combo2:
+	drink: 1
 	hamburger: 2
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Corey</cname><ordTime>236</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo1:
+<order><cname>Nessa</cname><ordTime>85</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo1:
+	drink: 1
 	hamburger: 1
 	fries: 1
-	drink: 1
 </meal></order>
-<order><cname>Ethyl</cname><ordTime>236</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
+<order><cname>Carolina</cname><ordTime>91</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo1:
+	drink: 1
 	hamburger: 1
 	fries: 1
+</meal></order>
+<order><cname>Karee</cname><ordTime>98</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Margie</cname><ordTime>99</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo1:
 	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Anstice</cname><ordTime>100</ordTime><dest>Softball Field	675	750	1009.021804</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Margalo</cname><ordTime>104</ordTime><dest>Alumni	150	75	167.7050983</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Vivi</cname><ordTime>105</ordTime><dest>Ketler	-225	675	711.5124735</dest><meal>Combo4:
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Rosalie</cname><ordTime>113</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Glori</cname><ordTime>114</ordTime><dest>PEW	-600	-450	750.0</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Crin</cname><ordTime>117</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo5:
+	fries: 1
+</meal></order>
+<order><cname>Imojean</cname><ordTime>118</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo4:
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Fara</cname><ordTime>132</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Lib</cname><ordTime>137</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Calypso</cname><ordTime>137</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Matilda</cname><ordTime>137</ordTime><dest>Rockwell	0	450	450.0</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Abbey</cname><ordTime>137</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Terry</cname><ordTime>141</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Lydia</cname><ordTime>141</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Gabie</cname><ordTime>145</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo5:
+	fries: 1
+</meal></order>
+<order><cname>Aveline</cname><ordTime>146</ordTime><dest>Memorial	-450	900	1006.23059</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Mechelle</cname><ordTime>149</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Monique</cname><ordTime>150</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Jenda</cname><ordTime>163</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Hedwiga</cname><ordTime>165</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Filia</cname><ordTime>166</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Audie</cname><ordTime>166</ordTime><dest>Soccer Fields	900	525	1041.933299</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Denys</cname><ordTime>167</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Glad</cname><ordTime>169</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Lindie</cname><ordTime>170</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Karoly</cname><ordTime>170</ordTime><dest>PLC	375	300	480.2343178</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Nalani</cname><ordTime>173</ordTime><dest>IM Fields	-525	-300	604.6693311</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Fidela</cname><ordTime>176</ordTime><dest>Appartments	-450	2250	2294.558781</dest><meal>Combo5:
+	fries: 1
+</meal></order>
+<order><cname>Elene</cname><ordTime>180</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Margaret</cname><ordTime>182</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Hyacintha</cname><ordTime>184</ordTime><dest>Crawford	-225	900	927.6987658</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Rubia</cname><ordTime>184</ordTime><dest>MAP	375	675	772.1722606</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Josselyn</cname><ordTime>193</ordTime><dest>Haberson	150	975	986.4709828</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Concordia</cname><ordTime>198</ordTime><dest>Baseball Field	750	900	1171.537451</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Lina</cname><ordTime>203</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Scarlet</cname><ordTime>203</ordTime><dest>Lincoln	-450	525	691.4658343</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Meggi</cname><ordTime>208</ordTime><dest>Rathburn	450	975	1073.83658</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Hortense</cname><ordTime>210</ordTime><dest>Buhl	-375	75	382.4264635</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Leonie</cname><ordTime>210</ordTime><dest>Rockwell	0	450	450.0</dest><meal>Combo2:
+	drink: 1
+	hamburger: 2
+	fries: 1
+</meal></order>
+<order><cname>Bessie</cname><ordTime>214</ordTime><dest>QUAD	0	750	750.0</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Joelle</cname><ordTime>222</ordTime><dest>IM Fields	-525	-300	604.6693311</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Legra</cname><ordTime>227</ordTime><dest>Hicks	-450	-225	503.1152949</dest><meal>Combo3:
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Dara</cname><ordTime>227</ordTime><dest>Tennis Courts	75	2175	2176.292719</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
+</meal></order>
+<order><cname>Dolorita</cname><ordTime>235</ordTime><dest>Hopemen	-600	450	750.0</dest><meal>Combo1:
+	drink: 1
+	hamburger: 1
+	fries: 1
 </meal></order>
 </listOfOrders>
