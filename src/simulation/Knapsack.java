@@ -18,8 +18,8 @@ public class Knapsack {
 
     private int MaxDeliveries;
 
-
     public Knapsack(ArrayList<PlacedOrder> listOfAllOrders, int MaxDeliveries) {
+      
         //copy of all orders
         packingList = (ArrayList<PlacedOrder>) listOfAllOrders.clone();
 
