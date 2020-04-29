@@ -23,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -79,6 +81,8 @@ public class Map implements Initializable {
     public GridPane contentGrid;
     public VBox runBtnVbox;
     public Pane pointPane;
+    double scale;
+    Coordinate homeCoordinate;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,16 +120,25 @@ public class Map implements Initializable {
         inflateMapPoints();
 
         SimController.setCurrentButton(runSimButton);
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
                 modifyPoints(e);
             }
         };
-        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        EventHandler<KeyEvent> keyEventEventHandler = new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                processText(event);
+            }
+        };
+        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
+        pointPane.addEventFilter(KeyEvent.KEY_PRESSED, keyEventEventHandler);
         mapPoints = new ArrayList<>();
         isFirst = true;
         textboxIsUP = false;
+        scale = -1;
+        homeCoordinate = new Coordinate(0, 0);
     }
 
     public void loadIcons() {
@@ -318,28 +331,36 @@ public class Map implements Initializable {
         if (mouseEvent.getY() < 350) {
             if (!mouseEvent.isControlDown()) { //add a point
                 Circle circle = new Circle(4);
+                TextField distanceTextField = new TextField();
                 if (isFirst) { //Home base
                     circle.setFill(Color.WHITESMOKE);
                     coordinate.setFirst(true);
                     isFirst = false;
+                    distanceTextField.setVisible(false);
                 } else {
                     circle.setFill(Color.RED);
+                    if (scale < 0) {
+                        distanceTextField.setPromptText("Distance in ft");
+                    } else {
+                        distanceTextField.setText("" +Settings.convertGUItoFEET(coordinate.distanceBetween(homeCoordinate), scale));
+                    }
                 }
-                TextField textField = new TextField();
+
+
                 VBox nameVBox = new VBox();
-                Label label = new Label();
-                //label.setText("Name: ");
+                TextField textField = new TextField();
                 textField.setPromptText("Name: ");
                 circle.setCenterX(coordinate.getX());
                 circle.setCenterY(coordinate.getY());
 
                 nameVBox.setLayoutX(coordinate.getX());
                 nameVBox.setLayoutY(coordinate.getY());
-                nameVBox.getChildren().add(textField);
+                nameVBox.getChildren().addAll(textField, distanceTextField);
                 pointPane.getChildren().add(circle);
-                pointPane.getChildren().addAll(nameVBox);
+                pointPane.getChildren().add(nameVBox);
                 mapPoints.add(coordinate);
                 textboxIsUP = true;
+                System.out.println(coordinate);
 
             } else { //Remove a point
                 for (int i = 0; i < mapPoints.size(); i++) { //Find the closest
@@ -356,6 +377,19 @@ public class Map implements Initializable {
 
         }
 
+    }
+
+    public void processText(KeyEvent keyEvent) {
+
+        if (keyEvent.getCode().equals(KeyCode.getKeyCode("Enter"))) {
+            if (!textboxIsUP) {
+                return;
+            }
+
+
+            pointPane.getChildren().remove(pointPane.getChildren().size()-1);
+            textboxIsUP = false;
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package simulation;
 
+import cli.Coordinate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -248,7 +249,7 @@ public class Settings {
      * @param x
      * @param y
      */
-    private void addMapPoint(String name, int x, int y) throws IllegalArgumentException {
+    public static void addMapPoint(String name, int x, int y) throws IllegalArgumentException {
     	for (int i = 0; i < map.size(); i++) {
     		if (map.get(i).getDestName().equals(name))
     			throw new IllegalArgumentException("That name already exists on the map");
@@ -262,7 +263,7 @@ public class Settings {
      *
      * @param name
      */
-    private void removeMapPoint(String name) throws IllegalArgumentException {
+    public static void removeMapPoint(String name) throws IllegalArgumentException {
     	for (int i = 0; i < map.size(); i++) {
     		if (map.get(i).getDestName().equals(name)) {
     			map.remove(i);
@@ -279,9 +280,19 @@ public class Settings {
      * @param x
      * @param y
      */
-    private void editMapPoint(Destination dest, int x, int y) {
+    public static void editMapPoint(Destination dest, int x, int y) {
     	dest.setX(x);
     	dest.setY(y);
+    }
+
+    public static double convertGUItoFEET(double GUI, double scale) {
+        return GUI*scale;
+    }
+
+
+
+    public static double calculateScale(double userInput, double GUIDist) {
+        return userInput/GUIDist;
     }
     
     /**

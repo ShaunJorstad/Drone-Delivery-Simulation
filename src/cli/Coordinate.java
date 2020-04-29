@@ -51,5 +51,12 @@ public class Coordinate {
         return Math.sqrt((x - coordinate.getX())* (x - coordinate.getX()) + (y - coordinate.getY()) * (y - coordinate.getY()));
     }
 
-
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "x=" + x +
+                ", y=" + y +
+                ", isFirst=" + isFirst +
+                '}';
+    }
 }
