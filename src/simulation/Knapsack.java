@@ -1,4 +1,4 @@
-package napsack;
+package simulation;
 
 import cli.PlacedOrder;
 import menu.Drone;

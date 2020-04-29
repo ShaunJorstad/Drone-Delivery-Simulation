@@ -2,7 +2,7 @@ package cli;
 
 import menu.Destination;
 import menu.Drone;
-import napsack.Knapsack;
+import simulation.Knapsack;
 import simulation.Fifo;
 import simulation.Results;
 import simulation.Settings;
