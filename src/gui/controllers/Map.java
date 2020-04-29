@@ -40,10 +40,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -83,6 +80,8 @@ public class Map implements Initializable {
     public Pane pointPane;
     double scale;
     Coordinate homeCoordinate;
+    TextField distanceTextField;
+    TextField textField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -321,6 +320,7 @@ public class Map implements Initializable {
      * @param mouseEvent
      */
     public void modifyPoints(MouseEvent mouseEvent) {
+        //If the textbox is up, don't allow the user to add more points
         if (textboxIsUP) {
             return;
         }
@@ -331,11 +331,14 @@ public class Map implements Initializable {
         if (mouseEvent.getY() < 350) {
             if (!mouseEvent.isControlDown()) { //add a point
                 Circle circle = new Circle(4);
-                TextField distanceTextField = new TextField();
+
+                distanceTextField = new TextField();
+
                 if (isFirst) { //Home base
                     circle.setFill(Color.WHITESMOKE);
                     coordinate.setFirst(true);
                     isFirst = false;
+                    homeCoordinate = coordinate;
                     distanceTextField.setVisible(false);
                 } else {
                     circle.setFill(Color.RED);
@@ -348,7 +351,7 @@ public class Map implements Initializable {
 
 
                 VBox nameVBox = new VBox();
-                TextField textField = new TextField();
+                textField = new TextField();
                 textField.setPromptText("Name: ");
                 circle.setCenterX(coordinate.getX());
                 circle.setCenterY(coordinate.getY());
@@ -382,8 +385,18 @@ public class Map implements Initializable {
     public void processText(KeyEvent keyEvent) {
 
         if (keyEvent.getCode().equals(KeyCode.getKeyCode("Enter"))) {
-            if (!textboxIsUP) {
+            if (!textboxIsUP) { //If the textbox is not up, ignore the input
                 return;
+            }
+
+            //Convert the distance between current destination and homebase and turn it into a scale
+            String temp = distanceTextField.getText();
+            double distInFeet;
+            try {
+                distInFeet = Double.parseDouble(temp);
+                scale = Settings.calculateScale(distInFeet, mapPoints.get(mapPoints.size()-1).distanceBetween(homeCoordinate));
+            } catch (Exception exception) {
+                scale = -1;
             }
 
 
