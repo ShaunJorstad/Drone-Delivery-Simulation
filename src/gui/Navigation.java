@@ -13,6 +13,8 @@
 
 package gui;
 
+import cli.SimController;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -37,9 +39,6 @@ public class Navigation {
     private static Navigation instance = null;
     public static ArrayList<String> sceneStack;
     private static ArrayList<String> scenes;
-    private static Scene currentScene;
-
-    private static double SCALE = 1.6;
 
     private Navigation() {
         sceneStack = new ArrayList<>();
@@ -47,12 +46,6 @@ public class Navigation {
         String[] SCENES = {"Splash", "Results", "FoodItems", "MealItems", "OrderDistribution", "Map", "Drone"};
         scenes.addAll(Arrays.asList(SCENES));
     }
-
-    static void setCurrentScene(Scene scene) {
-        currentScene = scene;
-    }
-
-    public static Scene getCurrentScene() {return currentScene;}
 
     /**
      * pushes scene onto the scene stack
@@ -81,6 +74,13 @@ public class Navigation {
         return sceneStack.remove(sceneStack.size() - 1);
     }
 
+    public static String peekScene() {
+        if (sceneStack.isEmpty() ) {
+            return null;
+        }
+        return sceneStack.get(sceneStack.size() -1);
+    }
+
     /**
      * Checks if scene stack is empty
      * Will be used when loading the image of the backbutton
@@ -92,26 +92,6 @@ public class Navigation {
             instance = new Navigation();
         }
         return sceneStack.isEmpty();
-    }
-
-    /**
-     * Scales the input value based upon the scale factor
-     *
-     * @param initial value to be scaled
-     * @return scaled value
-     */
-    public static int scale(int initial) {
-        return (int) (initial * SCALE);
-    }
-
-    /**
-     * Scales the input value based upon the scale factor
-     *
-     * @param initial value to be scaled
-     * @return scaled value
-     */
-    public static double scale(double initial) {
-        return initial * SCALE;
     }
 
     /**
@@ -128,7 +108,90 @@ public class Navigation {
         splashScene.getStylesheets().add("gui/CSS/Navigation.css");
         splashScene.setCursor(Cursor.HAND);
         stage.setScene(splashScene);
-        currentScene = splashScene;
+    }
+
+    public static void confirmNavigation(Parent root,String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        dialog.initOwner(stage);
+        VBox root_cntr = new VBox(20);
+        Text alert_txt = new Text("You have entered invalid input (denoted by red boxes) \nmoving to another screen will revert these fields to their prior input\n\nDo you want to continue?");
+        alert_txt.setTextAlignment(TextAlignment.CENTER);
+        root_cntr.getChildren().add(alert_txt);
+        root_cntr.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(root_cntr, 500, 200);
+        HBox buttons_cntr = new HBox(20);
+        buttons_cntr.setAlignment(Pos.CENTER);
+        Button cancel_btn = new Button("cancel");
+        cancel_btn.setOnMouseClicked((event) -> {
+            dialog.close();
+        });
+
+        Button continue_btn = new Button("continue");
+        continue_btn.setOnMouseClicked((event) -> {
+            dialog.close();
+            inflateScene(root,currentScene,nextScene,stage, new ArrayList());
+        });
+
+        buttons_cntr.getChildren().addAll(cancel_btn, continue_btn);
+        root_cntr.getChildren().add(buttons_cntr);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+    public static void confirmBackNavigation(Parent root,String currentScene, Stage stage, ArrayList invalidFields) {
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        dialog.initOwner(stage);
+        VBox root_cntr = new VBox(20);
+        Text alert_txt = new Text("You have entered invalid input (denoted by red boxes) \nmoving to another screen will revert these fields to their prior input\n\nDo you want to continue?");
+        alert_txt.setTextAlignment(TextAlignment.CENTER);
+        root_cntr.getChildren().add(alert_txt);
+        root_cntr.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(root_cntr, 500, 200);
+        HBox buttons_cntr = new HBox(20);
+        buttons_cntr.setAlignment(Pos.CENTER);
+        Button cancel_btn = new Button("cancel");
+        cancel_btn.setOnMouseClicked((event) -> {
+            dialog.close();
+        });
+
+        Button continue_btn = new Button("continue");
+        continue_btn.setOnMouseClicked((event) -> {
+            dialog.close();
+            navigateBack(root,currentScene,stage, new ArrayList());
+        });
+
+        buttons_cntr.getChildren().addAll(cancel_btn, continue_btn);
+        root_cntr.getChildren().add(buttons_cntr);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    public static void showSimulationPopup(Parent root, Stage stage) {
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        dialog.initOwner(stage);
+        VBox root_cntr = new VBox(20);
+        Text alert_txt = new Text("You must run a simulation before you can view the results page.\nA simulation can be run from the settings pages.");
+        alert_txt.setTextAlignment(TextAlignment.CENTER);
+        root_cntr.getChildren().add(alert_txt);
+        root_cntr.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(root_cntr, 500, 200);
+        HBox buttons_cntr = new HBox(20);
+        buttons_cntr.setAlignment(Pos.CENTER);
+
+        Button ok_btn = new Button("ok");
+        ok_btn.setOnMouseClicked((event) -> {
+            dialog.close();
+        });
+
+        buttons_cntr.getChildren().add(ok_btn);
+        root_cntr.getChildren().add(buttons_cntr);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     /**
@@ -141,41 +204,11 @@ public class Navigation {
      * @param stage     current stage of the application
      * @param invalidFields arraylist of invalid fields the use rhas modified
      */
-    public static void inflateScene(Parent root, String nextScene, Stage stage, ArrayList invalidFields) {
-        if (!invalidFields.isEmpty()) {
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initStyle(StageStyle.UNDECORATED);
-            dialog.initOwner(stage);
-            VBox root_cntr = new VBox(20);
-            Text alert_txt = new Text("You have entered invalid input (denoted by red boxes) \nmoving to another screen will revert these fields to their prior input\n\nDo you want to continue?");
-            alert_txt.setTextAlignment(TextAlignment.CENTER);
-            root_cntr.getChildren().add(alert_txt);
-            root_cntr.setAlignment(Pos.CENTER);
-            Scene dialogScene = new Scene(root_cntr, 500, 200);
-            HBox buttons_cntr = new HBox(20);
-            buttons_cntr.setAlignment(Pos.CENTER);
-            Button cancel_btn = new Button("cancel");
-            cancel_btn.setOnMouseClicked((event) -> {
-                dialog.close();
-            });
-
-            Button continue_btn = new Button("continue");
-            continue_btn.setOnMouseClicked((event) -> {
-                Scene splashScene = new Scene(root, 800, 600);
-                splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
-                splashScene.getStylesheets().add("gui/CSS/Settings.css");
-                splashScene.getStylesheets().add("gui/CSS/Navigation.css");
-                splashScene.setCursor(Cursor.HAND);
-                stage.setScene(splashScene);
-                currentScene = splashScene;
-                dialog.close();
-            });
-
-            buttons_cntr.getChildren().addAll(cancel_btn, continue_btn);
-            root_cntr.getChildren().add(buttons_cntr);
-            dialog.setScene(dialogScene);
-            dialog.show();
+    public static void inflateScene(Parent root,String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
+        if(nextScene.equals("Results") && SimController.resultsLock) {
+            showSimulationPopup(root, stage);
+        } else if  (!invalidFields.isEmpty()) {
+            confirmNavigation(root, currentScene, nextScene, stage, invalidFields);
         } else {
             Scene splashScene = new Scene(root, 800, 600);
             splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
@@ -183,7 +216,24 @@ public class Navigation {
             splashScene.getStylesheets().add("gui/CSS/Navigation.css");
             splashScene.setCursor(Cursor.HAND);
             stage.setScene(splashScene);
-            currentScene = splashScene;
+            Navigation.pushScene(currentScene);
+        }
+    }
+
+    public static void navigateBack(Parent root,String currentScene, Stage stage, ArrayList invalidFields) {
+        if  (!invalidFields.isEmpty()) {
+            confirmBackNavigation(root, currentScene, stage, invalidFields);
+        } else {
+            String lastScene = popScene();
+            if (lastScene == null) {
+                return;
+            }
+            Scene splashScene = new Scene(root, 800, 600);
+            splashScene.getStylesheets().add("gui/CSS/" + lastScene + ".css");
+            splashScene.getStylesheets().add("gui/CSS/Settings.css");
+            splashScene.getStylesheets().add("gui/CSS/Navigation.css");
+            splashScene.setCursor(Cursor.HAND);
+            stage.setScene(splashScene);
         }
     }
 

@@ -124,14 +124,12 @@ public class MealItems implements Initializable {
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
-        Navigation.inflateScene(root, "Splash", (Stage) home.getScene().getWindow(), invalidFields);
-        Navigation.pushScene("MealItems");
+        Navigation.inflateScene(root,"MealItems", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
-        Navigation.pushScene("MealItems");
+        Navigation.inflateScene(root,"MealItems", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
@@ -146,15 +144,13 @@ public class MealItems implements Initializable {
             dialog.show();
         } else {
             Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow(), invalidFields);
-            Navigation.pushScene("MealItems");
+            Navigation.inflateScene(root,"MealItems",  "Results", (Stage) home.getScene().getWindow(), invalidFields);
         }
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
-        Navigation.pushScene("MealItems");
+        Navigation.inflateScene(root, "MealItems", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMealItems(ActionEvent actionEvent) throws IOException {
@@ -162,29 +158,26 @@ public class MealItems implements Initializable {
 
     public void handleNavigateOrderDistribution(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/OrderDistribution.fxml"));
-        Navigation.inflateScene(root, "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
-        Navigation.pushScene("MealItems");
+        Navigation.inflateScene(root,"MealItems",  "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMap(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Map.fxml"));
-        Navigation.inflateScene(root, "Map", (Stage) home.getScene().getWindow(), invalidFields);
-        Navigation.pushScene("MealItems");
+        Navigation.inflateScene(root,"MealItems",  "Map", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateDrone(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
-        Navigation.inflateScene(root, "Drone", (Stage) home.getScene().getWindow(), invalidFields);
-        Navigation.pushScene("MealItems");
+        Navigation.inflateScene(root,"MealItems",  "Drone", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
-        String lastScene = Navigation.popScene();
+        String lastScene = Navigation.peekScene(); // TODO: this needs to be put back on the stack if user hits cancel,
         if (lastScene == null)
             return;
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
-        Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+        Navigation.navigateBack(root, lastScene, (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleImportSettings(ActionEvent actionEvent) {
