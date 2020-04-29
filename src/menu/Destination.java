@@ -1,6 +1,8 @@
 package menu;
 
 
+import cli.Coordinate;
+
 /**
  * Stores the name, location and distance from food source for a destination in a map
  */
@@ -63,6 +65,10 @@ public class Destination {
 
     public double getDist() {
         return dist;
+    }
+
+    public Coordinate getCoordinates() {
+        return new Coordinate(x, y);
     }
 
     public void setDestName(String destName) {

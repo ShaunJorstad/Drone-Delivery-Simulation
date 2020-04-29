@@ -150,8 +150,10 @@ public class FoodItems implements Initializable {
         Navigation.navigateBack(root, lastScene, (Stage) home.getScene().getWindow(), invalidFields);
     }
 
-    public void handleImportSettings(ActionEvent actionEvent) {
+    public void handleImportSettings(ActionEvent actionEvent) throws IOException {
         Settings.importSettings((Stage) home.getScene().getWindow());
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
+        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
     }
 
     public void handleExportSettings(ActionEvent actionEvent) {
