@@ -317,12 +317,12 @@ public class Settings {
      */
     public static void removeMapPoint(Coordinate coordinate) throws IllegalArgumentException {
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getCoordinates().equals(coordinate)) {
+            if (map.get(i).getCoordinates().distanceBetween(coordinate) < 3) {
                 map.remove(i);
                 return;
             }
         }
-        throw new IllegalArgumentException("That name does not exist on the map");
+        throw new IllegalArgumentException("That location does not exist on the map");
     }
 
     /**
@@ -339,6 +339,11 @@ public class Settings {
 
     public static double convertGUItoFEET(double GUI, double scale) {
         return GUI*scale;
+    }
+
+    public static Coordinate convertFEETtoGUI(Coordinate coordinate, double scale) {
+        Coordinate converted = new Coordinate((int)(coordinate.getX()/scale), (int)(coordinate.getY()/scale));
+        return converted;
     }
 
     public static Coordinate convertGUItoFEET(Coordinate coordinate, double scale) {

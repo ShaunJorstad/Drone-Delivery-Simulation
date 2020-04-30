@@ -68,4 +68,15 @@ public class Coordinate {
         }
     }
 
+    public void add(Coordinate other) {
+        this.x += other.x;
+        this.y += other.y;
+        return;
+    }
+
+    public Coordinate subtract(Coordinate other) {
+        Coordinate newCoordinate = new Coordinate(this.x-other.x, this.y - other.y);
+        return newCoordinate;
+    }
+
 }
