@@ -15,10 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -29,6 +26,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import simulation.Settings;
 
+import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -90,6 +88,7 @@ public class Drone implements Initializable {
         SimController.setCurrentButton(runSimButton);
         invalidFields = new ArrayList();
 
+        constructTooltips();
         bindTextFields();
         inflateSettings();
         loadIcons();
@@ -112,6 +111,19 @@ public class Drone implements Initializable {
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
+    public void constructTooltips() {
+        weightInput.setTooltip(new Tooltip("Maximum carrying weight of the drone. \n(positive floating point value)"));
+        flightSpeedInput.setTooltip(new Tooltip("Flight speed of the drone. \n(positive floating point value)"));
+        maxFlightTimeInput.setTooltip(new Tooltip("Maximum flight time of the drone. \n(positive floating point value)"));
+        turnAroundTimeInput.setTooltip(new Tooltip("Time required to swap batteries on drone before it can deliver another order. \n(positive floating point value)"));
+        deliveryTimeInput.setTooltip(new Tooltip("Time required from arriving at location to deliver food to customer. \n(positive floating point value)"));
+        fleetSizeInput.setTooltip(new Tooltip("Number of drones delivering orders. \n(positive integer required, above 0)"));
+
+        runSimButton.setTooltip(new Tooltip("Runs the simulation if settings are valid"));
+        importSettingsButton.setTooltip(new Tooltip("Imports settings from a local file"));
+        exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
     public void inflateSettings() {
