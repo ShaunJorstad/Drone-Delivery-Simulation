@@ -29,6 +29,7 @@ import menu.FoodItem;
 import menu.Meal;
 import simulation.Settings;
 
+import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -81,6 +82,7 @@ public class MealItems implements Initializable {
         invalidFields = new ArrayList();
         gridIndex = 1;
         loadIcons();
+        constructTooltips();
         inflateMeals();
         checkSimulationStatus();
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
@@ -103,6 +105,13 @@ public class MealItems implements Initializable {
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
+    public void constructTooltips() {
+        addMeal.setTooltip(new Tooltip("Creates a new meal item. Default distribution will be 0%"));
+        runSimButton.setTooltip(new Tooltip("Runs the simulation if settings are valid"));
+        importSettingsButton.setTooltip(new Tooltip("Imports settings from a local file"));
+        exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
     public void checkSimulationStatus() {
@@ -271,6 +280,7 @@ public class MealItems implements Initializable {
         mealTitle.getStyleClass().add("mealTitle");
 
         TextField mealName = new TextField(meal.getName());
+        mealName.setTooltip(new Tooltip("Name of this meal. CAN be the same as other meals"));
         mealName.getStyleClass().add("mealName");
         bindMealName(mealName, meal);
 
@@ -288,12 +298,14 @@ public class MealItems implements Initializable {
         distributionTitle.getStyleClass().add("distributionTitle");
 
         TextField distribution = new TextField(Float.toString(meal.getDistribution()));
+        distribution.setTooltip(new Tooltip("percentage that this meal will be ordered. floating point number required between 0 and 1 inclusive\nAll distributions MUST add up to 1"));
         distribution.getStyleClass().add("distribution");
         bindMealDistribution(distribution, meal);
         GridPane.setMargin(distribution, new Insets(0, 0, 0, -7));
 
 
         Button addItemBtn = new Button();
+        addItemBtn.setTooltip(new Tooltip("Adds a food item to this meal. This button will dissappear if all foods have been selected"));
         addItemBtn.setText("Add Item");
         addItemBtn.getStyleClass().add("smallGrayButton");
         addItemBtn.setOnAction(actionEvent -> {
@@ -313,6 +325,7 @@ public class MealItems implements Initializable {
         }
 
         Button deleteMealBtn = new Button();
+        deleteMealBtn.setTooltip(new Tooltip("Removes meal from settings. This will likely require redistribution the meals before running the simulation"));
         deleteMealBtn.setText("Remove Meal");
         deleteMealBtn.getStyleClass().add("smallDeleteButton");
         deleteMealBtn.setOnAction(actionEvent -> {
@@ -367,6 +380,7 @@ public class MealItems implements Initializable {
         plus.setFitWidth(15);
         plus.setPreserveRatio(true);
         Button increase = new Button("", plus);
+        increase.setTooltip(new Tooltip("increase item by 1"));
         increase.getStyleClass().add("removeButton");
         increase.setOnAction(actionEvent -> {
             meal.incrementFoodItem(food);
@@ -382,6 +396,7 @@ public class MealItems implements Initializable {
         minus.setFitHeight(15);
         minus.setPreserveRatio(true);
         Button decrease = new Button("", minus);
+        decrease.setTooltip(new Tooltip("decrease item by 1"));
         decrease.getStyleClass().add("removeButton");
         decrease.setOnAction(actionEvent -> {
             meal.decrementFoodItem(food, 1);
@@ -398,6 +413,7 @@ public class MealItems implements Initializable {
         icon.setFitWidth(15);
         icon.setPreserveRatio(true);
         Button removeMeal = new Button("", icon);
+        removeMeal.setTooltip(new Tooltip("Removes food from this meal"));
         removeMeal.getStyleClass().add("removeButton");
 
         removeMeal.setOnAction(actionEvent -> {

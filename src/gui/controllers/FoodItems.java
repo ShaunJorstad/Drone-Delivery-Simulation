@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import menu.FoodItem;
 import simulation.Settings;
 
+import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -78,6 +79,7 @@ public class FoodItems implements Initializable {
 
         invalidFields = new ArrayList();
         gridIndex = 1;
+        constructTooltips();
         loadIcons();
         inflateFoodItems();
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
@@ -103,6 +105,14 @@ public class FoodItems implements Initializable {
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
+    public void constructTooltips() {
+        addFood.setTooltip(new Tooltip("Adds a new food item to be ordered"));
+
+        runSimButton.setTooltip(new Tooltip("Runs the simulation if settings are valid"));
+        importSettingsButton.setTooltip(new Tooltip("Imports settings from a local file"));
+        exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
@@ -239,10 +249,12 @@ public class FoodItems implements Initializable {
             TextField weightInput = new TextField(Float.toString(item.getWeight()));
 
             nameInput.getStyleClass().add("foodName");
+            nameInput.setTooltip(new Tooltip("Name of the food item. This CAN be the same as other foods"));
             bindName(nameInput, item);
 
             weightInput.getStyleClass().add("foodWeight");
             bindWeight(weightInput, item);
+            weightInput.setTooltip(new Tooltip("Weight of the food\n(positive foating point number required)"));
 
             // margins
             Insets one = new Insets(15, 0, 0, 0);
@@ -257,6 +269,7 @@ public class FoodItems implements Initializable {
             icon.setPreserveRatio(true);
             Button removeFood = new Button("", icon);
             removeFood.getStyleClass().add("removeButton");
+            removeFood.setTooltip(new Tooltip("removes food from settings. This may break your meal items"));
             removeFood.setOnAction(actionEvent -> {
                 // remove fields
                 contentGrid.getChildren().remove(nameInput);
@@ -289,10 +302,12 @@ public class FoodItems implements Initializable {
         TextField weightInput = new TextField("0");
 
         nameInput.getStyleClass().add("foodName");
+        nameInput.setTooltip(new Tooltip("Name of the food item. This CAN be the same as other foods"));
         bindName(nameInput, newFood);
 
         weightInput.getStyleClass().add("foodWeight");
         bindWeight(weightInput, newFood);
+        weightInput.setTooltip(new Tooltip("Weight of the food\n(positive foating point number required)"));
 
         // margins
         Insets one = new Insets(15, 0, 0, 0);
@@ -318,6 +333,7 @@ public class FoodItems implements Initializable {
             Settings.removeFoodItem(newFood);
             Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
         });
+        removeFood.setTooltip(new Tooltip("removes food from settings. This may break your meal items"));
 
         contentGrid.add(nameInput, 0, gridIndex);
         contentGrid.add(weightInput, 1, gridIndex);

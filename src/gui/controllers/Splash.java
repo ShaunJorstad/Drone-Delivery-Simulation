@@ -18,6 +18,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -75,6 +76,8 @@ public class Splash implements Initializable {
         backImage.setPreserveRatio(true);
 
         home.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
+
+        nextButton.setTooltip(new Tooltip("Navigates to the settings pages. Simulation can be run from there"));
 
         injectCursorStates();
     }

@@ -18,10 +18,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -81,6 +78,7 @@ public class OrderDistribution implements Initializable {
         GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
         gridIndex = 1;
         invalidFields = new ArrayList();
+        constructTooltips();
 
         SimController.setCurrentButton(runSimButton);
 
@@ -106,6 +104,12 @@ public class OrderDistribution implements Initializable {
 
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+    }
+
+    public void constructTooltips() {
+        runSimButton.setTooltip(new Tooltip("Runs the simulation if settings are valid"));
+        importSettingsButton.setTooltip(new Tooltip("Imports settings from a local file"));
+        exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
     public void checkSimulationStatus() {
@@ -271,6 +275,7 @@ public class OrderDistribution implements Initializable {
         orderField.getStyleClass().add("orderField");
         int distIndex = gridIndex -1;
         bindOrders(orderField, distIndex);
+        orderField.setTooltip(new Tooltip("Roughly the number of orders that will be ordered in this hour. \n(Integer required)"));
 
         GridPane.setMargin(hourTitle, new Insets(15, 0, 0, 0));
         GridPane.setMargin(orderField, new Insets(15, 0, 0, 40));
