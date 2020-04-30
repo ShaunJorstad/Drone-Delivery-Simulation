@@ -50,31 +50,26 @@
                     <Text styleClass="settingTitle" text="Flight Speed (mph)" fx:id="flightSpeedTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="1"/>
-                    <Text styleClass="settingTitle" text="Carrying Capacity (oz)" fx:id="carryingCapacityTitle" fill="808080"
-                          GridPane.columnIndex="0"
-                          GridPane.rowIndex="2"/>
                     <Text styleClass="settingTitle" text="Max Flight Time (min)" fx:id="maxFlightTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
-                          GridPane.rowIndex="3"/>
+                          GridPane.rowIndex="2"/>
                     <Text styleClass="settingTitle" text="Turn Around Time (min)" fx:id="turnAroundTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
-                          GridPane.rowIndex="4"/>
+                          GridPane.rowIndex="3"/>
                     <Text styleClass="settingTitle" text="Delivery Time (min)" fx:id="deliveryTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
-                          GridPane.rowIndex="5"/>
+                          GridPane.rowIndex="4"/>
 
                     <TextField styleClass="settingsInput" text="" fx:id="weightInput" GridPane.columnIndex="1"
                                GridPane.rowIndex="0"/>
                     <TextField styleClass="settingsInput" text="" fx:id="flightSpeedInput" GridPane.columnIndex="1"
                                GridPane.rowIndex="1"/>
-                    <TextField styleClass="settingsInput" text="" fx:id="carryingCapacityInput" GridPane.columnIndex="1"
-                               GridPane.rowIndex="2"/>
                     <TextField styleClass="settingsInput" text="" fx:id="maxFlightTimeInput" GridPane.columnIndex="1"
-                               GridPane.rowIndex="3"/>
+                               GridPane.rowIndex="2"/>
                     <TextField styleClass="settingsInput" text="" fx:id="turnAroundTimeInput" GridPane.columnIndex="1"
-                               GridPane.rowIndex="4"/>
+                               GridPane.rowIndex="3"/>
                     <TextField styleClass="settingsInput" text="" fx:id="deliveryTimeInput" GridPane.columnIndex="1"
-                               GridPane.rowIndex="5"/>
+                               GridPane.rowIndex="4"/>
                 </GridPane>
             </VBox>
         </ScrollPane>
