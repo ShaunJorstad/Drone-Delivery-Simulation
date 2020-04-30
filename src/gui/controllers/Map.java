@@ -96,6 +96,8 @@ public class Map implements Initializable {
     Coordinate homeCoordinate;
     TextField distanceTextField;
     TextField textField;
+    
+    String currentMap;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,7 +125,8 @@ public class Map implements Initializable {
         
         injectCursorStates();
         
-        File map = new File("assets/mapImage.png");
+        currentMap = "default.png";
+        File map = new File("assets/mapImages/" + currentMap);
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
         
@@ -255,8 +258,32 @@ public class Map implements Initializable {
     public void handleExportMap(ActionEvent actionEvent) {
     }
     
-    public void handleNewMap(ActionEvent actionEvent) throws Exception {
-    	String fileName = "mapImage.png";
+    public void handleNewMap(ActionEvent actionEvent) {
+    	
+        textField = new TextField();
+        textField.setPromptText("Map Name: ");
+        textField.setOnAction( EventHandler -> {
+        	try {
+            	continueNewMap(textField.getText());
+        	} catch(Exception e) {
+        		e.printStackTrace();
+        	} finally {
+        		((Stage)(textField.getScene().getWindow())).close();
+        	}
+        });
+        
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) home.getScene().getWindow());
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(textField);
+        Scene dialogScene = new Scene(dialogVbox, 100, 50);
+        dialog.setScene(dialogScene);
+        dialog.show();
+
+    }
+    
+    public void continueNewMap(String name) throws Exception {
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Map Image File");
     	fileChooser.getExtensionFilters().addAll(
@@ -264,12 +291,7 @@ public class Map implements Initializable {
     	File selectedFile = fileChooser.showOpenDialog((Stage)home.getScene().getWindow());
 
 	    File newMap = new File("assets/mapImages/"+selectedFile.getName());
-	    System.out.println(newMap.getAbsolutePath());
-	    if (newMap.createNewFile()) {
-	        System.out.println("File created: " + newMap.getName());
-	      } else {
-	        System.out.println("File already exists.");
-	      }
+	    newMap.createNewFile();
     	if (selectedFile != null) {
     	    Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
 

@@ -90,7 +90,6 @@
                         onAction="#handleRunSimulation" textFill="ffffff"/>
             </VBox>
         </VBox>
-
     </right>
     <bottom>
     </bottom>
