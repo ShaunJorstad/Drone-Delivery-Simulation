@@ -81,7 +81,6 @@ public class Map implements Initializable {
 
     ArrayList invalidFields;
 
-    Coordinate homeCoordinate;
     TextField distanceTextField;
     TextField textField;
 
@@ -140,7 +139,7 @@ public class Map implements Initializable {
         mapPoints = new ArrayList<>();
         isFirst = true;
         textboxIsUP = false;
-        homeCoordinate = new Coordinate(0, 0);
+
     }
 
     public void loadIcons() {
@@ -319,19 +318,20 @@ public class Map implements Initializable {
                 Circle circle = new Circle(4);
 
                 distanceTextField = new TextField();
-
                 if (isFirst) { //Home base
                     circle.setFill(Color.WHITESMOKE);
                     coordinate.setFirst(true);
                     isFirst = false;
-                    homeCoordinate = coordinate;
+                    Settings.setHomeGUILoc(coordinate);
                     distanceTextField.setVisible(false);
                 } else {
                     circle.setFill(Color.RED);
                     if (Settings.getScale() < 0) {
                         distanceTextField.setPromptText("Distance in ft");
                     } else {
-                        distanceTextField.setText("" +Settings.convertGUItoFEET(coordinate.distanceBetween(homeCoordinate), Settings.getScale()));
+                        distanceTextField.setText("" +
+                                Settings.convertGUItoFEET(coordinate.distanceBetween(Settings.getHomeGUILoc()),
+                                Settings.getScale()));
                     }
                 }
 
@@ -384,7 +384,8 @@ public class Map implements Initializable {
             double distInFeet;
             try {
                 distInFeet = Double.parseDouble(temp);
-                Settings.setScale(Settings.calculateScale(distInFeet, mapPoints.get(mapPoints.size()-1).distanceBetween(homeCoordinate)));
+                Settings.setScale(Settings.calculateScale(distInFeet,
+                        mapPoints.get(mapPoints.size()-1).distanceBetween(Settings.getHomeGUILoc())));
                 System.out.println("scale: " + Settings.getScale());
             } catch (Exception exception) {
                 Settings.setScale(-1);
@@ -403,6 +404,10 @@ public class Map implements Initializable {
             }
 
         }
+    }
+
+    public void initializeDynamicPoints() {
+
     }
 
 }

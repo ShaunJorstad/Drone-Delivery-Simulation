@@ -28,6 +28,7 @@ public class Settings {
     private static int droneCapacity = 192;
     private static int DroneFleetSize;
     private static double scale;
+    private static Coordinate homeGUILoc;
 
     private Settings() {
         map = new ArrayList<>();
@@ -63,6 +64,12 @@ public class Settings {
     public static ArrayList<Destination> getMap() { return map; }
 
     public static double getScale() { return scale; }
+
+    public static Coordinate getHomeGUILoc() { return homeGUILoc;}
+
+    public static void setHomeGUILoc(Coordinate newGUILoc) {
+        homeGUILoc = newGUILoc;
+    }
 
     public static void setScale(double newScale) {
         scale = newScale;
@@ -480,7 +487,9 @@ public class Settings {
                 drone.getDeliveryTime()+"\t"+
                 DroneFleetSize+"\n";
 
-        info += "<s>\t" + scale+ "\n";
+        info += "<s>\t" + scale+ "\t" +
+                homeGUILoc.getX() + "\t" +
+                homeGUILoc.getY() + "\n";
 
 
 
@@ -670,6 +679,9 @@ public class Settings {
                     drone = new Drone(weight,speed,MaxDeliveryTime, TurnaroundTime, DeliveryTime);
                 } else if (tag.equals("<s>")) {
                     scale = line.nextDouble();
+                    homeGUILoc = new Coordinate();
+                    homeGUILoc.setX(line.nextInt());
+                    homeGUILoc.setY(line.nextInt());
                 }
 
 
