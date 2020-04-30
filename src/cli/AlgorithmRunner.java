@@ -8,6 +8,7 @@ import simulation.Results;
 import simulation.Settings;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class AlgorithmRunner {
     TSP tsp;
@@ -20,12 +21,12 @@ public class AlgorithmRunner {
 
     public void runAlgorithms(ArrayList<PlacedOrder> allOrders) {
         ArrayList<Drone> fleet = new ArrayList<>();
-        int fleetSize = 2;
+        //System.out.println("Drone fleet size: " + Settings.getDroneFleetSize());
+        int fleetSize = Settings.getDroneFleetSize();
         Drone drone = Settings.getDrone();
         for (int i = 0; i < fleetSize; i++) {
             fleet.add(new Drone(drone));
         }
-
         //System.out.println("Total number of orders: " + allOrders.size());
         Results results = new Results(); //Save the results
         TSPResult tspResult;
@@ -33,7 +34,7 @@ public class AlgorithmRunner {
 
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders, Settings.calcMaxDeliveries());
-        Fifo f = new Fifo(allOrders);
+        Fifo f = new Fifo(allOrders, Settings.calcMaxDeliveries());
 
         int loadMealTime = 0; //In case, the loadMealTime gets adjusted
         double elapsedTime = drone.getTurnaroundTime(); //how far into the simulation are we
