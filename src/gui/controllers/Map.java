@@ -81,7 +81,6 @@ public class Map implements Initializable {
 
     ArrayList invalidFields;
 
-    double scale;
     Coordinate homeCoordinate;
     TextField distanceTextField;
     TextField textField;
@@ -141,7 +140,6 @@ public class Map implements Initializable {
         mapPoints = new ArrayList<>();
         isFirst = true;
         textboxIsUP = false;
-        scale = -1;
         homeCoordinate = new Coordinate(0, 0);
     }
 
@@ -330,10 +328,10 @@ public class Map implements Initializable {
                     distanceTextField.setVisible(false);
                 } else {
                     circle.setFill(Color.RED);
-                    if (scale < 0) {
+                    if (Settings.getScale() < 0) {
                         distanceTextField.setPromptText("Distance in ft");
                     } else {
-                        distanceTextField.setText("" +Settings.convertGUItoFEET(coordinate.distanceBetween(homeCoordinate), scale));
+                        distanceTextField.setText("" +Settings.convertGUItoFEET(coordinate.distanceBetween(homeCoordinate), Settings.getScale()));
                     }
                 }
 
@@ -351,7 +349,6 @@ public class Map implements Initializable {
                 pointPane.getChildren().add(nameVBox);
                 mapPoints.add(coordinate);
                 textboxIsUP = true;
-                System.out.println(coordinate);
 
             } else { //Remove a point
                 for (int i = 0; i < mapPoints.size(); i++) { //Find the closest
@@ -387,9 +384,10 @@ public class Map implements Initializable {
             double distInFeet;
             try {
                 distInFeet = Double.parseDouble(temp);
-                scale = Settings.calculateScale(distInFeet, mapPoints.get(mapPoints.size()-1).distanceBetween(homeCoordinate));
+                Settings.setScale(Settings.calculateScale(distInFeet, mapPoints.get(mapPoints.size()-1).distanceBetween(homeCoordinate)));
+                System.out.println("scale: " + Settings.getScale());
             } catch (Exception exception) {
-                scale = -1;
+                Settings.setScale(-1);
             }
 
             String name = textField.getText();

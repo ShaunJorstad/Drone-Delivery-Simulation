@@ -27,6 +27,7 @@ public class Settings {
 
     private static int droneCapacity = 192;
     private static int DroneFleetSize;
+    private static double scale;
 
     private Settings() {
         map = new ArrayList<>();
@@ -60,6 +61,12 @@ public class Settings {
     }
 
     public static ArrayList<Destination> getMap() { return map; }
+
+    public static double getScale() { return scale; }
+
+    public static void setScale(double newScale) {
+        scale = newScale;
+    }
 
     public static void setDroneFleetSize(int numDrones){
         DroneFleetSize = numDrones;
@@ -473,6 +480,8 @@ public class Settings {
                 drone.getDeliveryTime()+"\t"+
                 DroneFleetSize+"\n";
 
+        info += "<s>\t" + scale+ "\n";
+
 
 
         return info;
@@ -659,6 +668,8 @@ public class Settings {
 
                     }
                     drone = new Drone(weight,speed,MaxDeliveryTime, TurnaroundTime, DeliveryTime);
+                } else if (tag.equals("<s>")) {
+                    scale = line.nextDouble();
                 }
 
 
