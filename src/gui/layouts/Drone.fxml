@@ -59,6 +59,9 @@
                     <Text styleClass="settingTitle" text="Delivery Time (min)" fx:id="deliveryTimeTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="4"/>
+                    <Text styleClass="settingTitle" text="Fleet Size (int)" fx:id="fleetSizeTitle" fill="808080"
+                          GridPane.columnIndex="0"
+                          GridPane.rowIndex="5"/>
 
                     <TextField styleClass="settingsInput" text="" fx:id="weightInput" GridPane.columnIndex="1"
                                GridPane.rowIndex="0"/>
@@ -70,6 +73,8 @@
                                GridPane.rowIndex="3"/>
                     <TextField styleClass="settingsInput" text="" fx:id="deliveryTimeInput" GridPane.columnIndex="1"
                                GridPane.rowIndex="4"/>
+                    <TextField styleClass="settingsInput" text="" fx:id="fleetSizeInput" GridPane.columnIndex="1"
+                               GridPane.rowIndex="5"/>
                 </GridPane>
             </VBox>
         </ScrollPane>

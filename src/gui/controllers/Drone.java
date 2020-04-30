@@ -60,6 +60,7 @@ public class Drone implements Initializable {
     public TextField carryingCapacityInput;
     public TextField flightSpeedInput;
     public TextField weightInput;
+    public TextField fleetSizeInput;
     SimulationThread statusThread;
 
     public VBox navBarContainer;
@@ -119,14 +120,14 @@ public class Drone implements Initializable {
         double maxFlightTime = Settings.getDrone().getMaxFlightTime();
         double turnaroundTime = Settings.getDrone().getTurnaroundTime();
         double deliveryTime = Settings.getDrone().getDeliveryTime();
-
-        System.out.println(Double.toString(weight));
+        int fleetSize = Settings.getDroneFleetSize();
 
         weightInput.setText(Double.toString(weight));
         flightSpeedInput.setText(Double.toString(speed));
         maxFlightTimeInput.setText(Double.toString(maxFlightTime));
         turnAroundTimeInput.setText(Double.toString(turnaroundTime));
         deliveryTimeInput.setText(Double.toString(deliveryTime));
+        fleetSizeInput.setText(Integer.toString(fleetSize));
     }
 
     public void bindTextFields() {
@@ -241,6 +242,29 @@ public class Drone implements Initializable {
                 Navigation.updateRunBtn(runSimButton, "Invalid drone delivery time");
                 if (!invalidFields.contains("delivery time")) {
                     invalidFields.add("delivery time");
+                }
+            }
+        });
+
+        fleetSizeInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int val = Integer.parseInt(newValue);
+                if (val < 0) {
+                    throw new Exception("cannot be negative");
+                }
+                Settings.setDroneFleetSize(val);
+                fleetSizeInput.setStyle("-fx-border-width: 0 0 0 0;");
+                invalidFields.remove("fleet size");
+                if (invalidFields.isEmpty()) {
+                    Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+                } else {
+                    Navigation.updateRunBtn(runSimButton, "Invalid " + invalidFields.get(0));
+                }
+            } catch (Exception e) {
+                fleetSizeInput.setStyle("-fx-border-color: red;" + "-fx-border-width: 2px 2px 2px 2px");
+                Navigation.updateRunBtn(runSimButton, "Invalid fleet size");
+                if (!invalidFields.contains("fleet size")) {
+                    invalidFields.add("fleet size");
                 }
             }
         });
