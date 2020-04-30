@@ -169,13 +169,13 @@ public class Navigation {
         dialog.show();
     }
 
-    public static void showSimulationPopup(Parent root, Stage stage) {
+    public static void displayWarningPopup( Stage stage, String message) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initStyle(StageStyle.UNDECORATED);
         dialog.initOwner(stage);
         VBox root_cntr = new VBox(20);
-        Text alert_txt = new Text("You must run a simulation before you can view the results page.\nA simulation can be run from the settings pages.");
+        Text alert_txt = new Text(message);
         alert_txt.setTextAlignment(TextAlignment.CENTER);
         root_cntr.getChildren().add(alert_txt);
         root_cntr.setAlignment(Pos.CENTER);
@@ -206,7 +206,7 @@ public class Navigation {
      */
     public static void inflateScene(Parent root,String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
         if(nextScene.equals("Results") && SimController.resultsLock) {
-            showSimulationPopup(root, stage);
+            displayWarningPopup( stage, "You must run a simulation before you can view the results page.\nA simulation can be run from the settings pages.");
         } else if  (!invalidFields.isEmpty()) {
             confirmNavigation(root, currentScene, nextScene, stage, invalidFields);
         } else {

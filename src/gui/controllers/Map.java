@@ -79,6 +79,8 @@ public class Map implements Initializable {
     public VBox runBtnVbox;
     public Pane pointPane;
 
+    ArrayList invalidFields;
+
     double scale;
     Coordinate homeCoordinate;
     TextField distanceTextField;
@@ -88,6 +90,8 @@ public class Map implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
         map.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+
+        invalidFields = new ArrayList();
         
         
         File backFile;
@@ -151,8 +155,8 @@ public class Map implements Initializable {
         Image backArrowImage = new Image(backFile.toURI().toString());
         backImage.setImage(backArrowImage);
 
-        //uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
-        //downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
+        uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
+        downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
     public void injectCursorStates() {
@@ -170,68 +174,51 @@ public class Map implements Initializable {
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
-        Navigation.inflateScene(root, "Splash", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        Navigation.inflateScene(root, "Map", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        Navigation.inflateScene(root,"Map", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
-        if (SimController.resultsLock) {
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner((Stage) home.getScene().getWindow());
-            VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().add(new Text("A simulation has to be run\n and finish executing before\n you can navigate to the results page"));
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
-            dialog.setScene(dialogScene);
-            dialog.show();
-        } else {
-            Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-            Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
-            Navigation.pushScene("Map");
-        }
+        Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
+        Navigation.inflateScene(root,"Map", "Results", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        Navigation.inflateScene(root, "Map", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMealItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/MealItems.fxml"));
-        Navigation.inflateScene(root, "MealItems", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        Navigation.inflateScene(root,"Map", "MealItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateOrderDistribution(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/OrderDistribution.fxml"));
-        Navigation.inflateScene(root, "OrderDistribution", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        Navigation.inflateScene(root, "Map", "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMap(ActionEvent actionEvent) throws IOException {
 
     }
 
+
     public void handleNavigateDrone(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
-        Navigation.inflateScene(root, "Drone", (Stage) home.getScene().getWindow());
-        Navigation.pushScene("Map");
+        Navigation.inflateScene(root, "Map", "Drone", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
-        String lastScene = Navigation.popScene();
+        String lastScene = Navigation.peekScene(); // TODO: this needs to be put back on the stack if user hits cancel,
         if (lastScene == null)
             return;
         String path = "/gui/layouts/" + lastScene + ".fxml";
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
-        Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
+        Navigation.navigateBack(root, lastScene, (Stage) home.getScene().getWindow(), invalidFields);
     }
     
     public void handleImportMap(ActionEvent actionEvent) {
@@ -408,7 +395,7 @@ public class Map implements Initializable {
             String name = textField.getText();
             Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
             try {
-                Settings.addMapPoint(name, currentDest.getX(), currentDest.getY());
+                Settings.addMapPoint(name, currentDest.getX(), currentDest.getY(), (Stage) home.getScene().getWindow());
 
                 pointPane.getChildren().remove(pointPane.getChildren().size()-1);
                 textboxIsUP = false;

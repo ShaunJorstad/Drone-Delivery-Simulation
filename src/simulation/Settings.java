@@ -1,6 +1,8 @@
 package simulation;
 
 import cli.Coordinate;
+import gui.Navigation;
+import javafx.scene.Parent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -266,10 +268,12 @@ public class Settings {
      * @param x
      * @param y
      */
-    public static void addMapPoint(String name, int x, int y) throws IllegalArgumentException {
+    public static void addMapPoint(String name, int x, int y, Stage stage) throws IllegalArgumentException {
     	for (int i = 0; i < map.size(); i++) {
-    		if (map.get(i).getDestName().equals(name))
-    			throw new IllegalArgumentException("That name already exists on the map");
+    		if (map.get(i).getDestName().equals(name)) {
+                Navigation.displayWarningPopup( stage, "That name already exists on the map");
+                throw new IllegalArgumentException("invalid name");
+            }
     	}
     	Destination newDest = new Destination(name,x,y);
     	map.add(newDest);
