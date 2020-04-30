@@ -86,12 +86,14 @@ public class Drone implements Initializable {
         settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
         drone.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
+        SimController.setCurrentButton(runSimButton);
         invalidFields = new ArrayList();
 
         bindTextFields();
         inflateSettings();
         loadIcons();
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+
     }
 
     public void loadIcons() {

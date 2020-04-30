@@ -24,7 +24,7 @@ public class Settings {
     private static Settings instance = new Settings();
 
     private static int droneCapacity = 192;
-    private int DroneFleetSize;
+    private static int DroneFleetSize;
 
     private Settings() {
         map = new ArrayList<>();
@@ -59,11 +59,11 @@ public class Settings {
 
     public static ArrayList<Destination> getMap() { return map; }
 
-    public void setDroneFleetSize(int numDrones){
+    public static void setDroneFleetSize(int numDrones){
         DroneFleetSize = numDrones;
     }
 
-    public int getDroneFleetSize(){
+    public static int getDroneFleetSize(){
         return DroneFleetSize;
     }
 
@@ -86,11 +86,13 @@ public class Settings {
         return "";
     }
 
+    /**
+     * Calculates the maximum number of deliveries that a drone can service on one flight
+     * @return
+     */
     public static int calcMaxDeliveries(){
-        double time = drone.getMaxFlightTime() - 30;
-        double maxTime = longestMapDistance()/drone.getSpeed();
-
-        return (int)(time/maxTime);
+        double maxTmePerDelivery = longestMapDistance()/(drone.getSpeed() * 5280 / 60) + .5;
+        return (int)(drone.getMaxFlightTime()*.95/maxTmePerDelivery);
 
     }
 
@@ -394,6 +396,10 @@ public class Settings {
         return false;
     }
 
+    /**
+     * Finds the longest distance between two points on the map
+     * @return longest distance in feet
+     */
     private static double longestMapDistance(){
 
         double longestDistance=0;
@@ -404,7 +410,8 @@ public class Settings {
             for(int end = start + 1; end < map.size(); end++){
 
                 //gets distance between 2 points
-                currentDistance = Math.sqrt((map.get(start).getX()-map.get(end).getX())+(map.get(start).getY()-map.get(end).getY()));
+                currentDistance = Math.sqrt((map.get(start).getX()-map.get(end).getX()) *(map.get(start).getX()-map.get(end).getX())
+                        +(map.get(start).getY()-map.get(end).getY()) * (map.get(start).getY()-map.get(end).getY()));
 
                 //updates langest Distance
                 if(currentDistance > longestDistance){
@@ -459,7 +466,9 @@ public class Settings {
                 drone.getSpeed()+"\t"+
                 drone.getMaxFlightTime()+"\t"+
                 drone.getTurnaroundTime()+"\t"+
-                drone.getDeliveryTime()+"\n";
+                drone.getDeliveryTime()+"\t"+
+                DroneFleetSize+"\n";
+
 
 
         return info;
@@ -564,7 +573,13 @@ public class Settings {
             while (s.hasNextLine()) {
                 Scanner line = new Scanner(s.nextLine()); //Scanner for the given line
                 line.useDelimiter("\t");
-                String tag = line.next();
+                String tag;
+                if (line.hasNext()) {
+                    tag = line.next();
+                } else {
+                    break;
+                }
+
 
                 if (tag.equals("<d>")) {
                     String name;
@@ -630,16 +645,16 @@ public class Settings {
                     double MaxDeliveryTime = 0;
                     double TurnaroundTime = 0;
                     double DeliveryTime = 0;
-                    while(line.hasNext()){
+                    while(line.hasNextDouble()){
                         weight = line.nextDouble();
                         speed = line.nextDouble();
                         MaxDeliveryTime = line.nextDouble();
                         TurnaroundTime = line.nextDouble();
                         DeliveryTime = line.nextDouble();
+                        DroneFleetSize = line.nextInt();
 
                     }
                     drone = new Drone(weight,speed,MaxDeliveryTime, TurnaroundTime, DeliveryTime);
-
                 }
 
 
@@ -649,6 +664,7 @@ public class Settings {
             return true;
         } catch (Exception e) {
             System.out.println((e.getMessage()));
+            System.out.println("Failed in parse Settings");
             return false;
         }
     }

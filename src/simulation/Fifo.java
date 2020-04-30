@@ -13,12 +13,14 @@ public class Fifo {
 	private Queue<PlacedOrder> orders;
 	private double maxWeight;
 	private double timePassed;
+	private int maxNumFlights;
 	
-	public Fifo(ArrayList<PlacedOrder> orders) {
+	public Fifo(ArrayList<PlacedOrder> orders, int maxNumFlights) {
 		this.orders = new LinkedList<PlacedOrder>(orders);
 		Drone drone = Settings.getDrone();
 		maxWeight = drone.getWeight(); //12 pounds, with 16 oz per pound
 		timePassed = 0;
+		this.maxNumFlights = maxNumFlights;
 	}
 	
 	/**
@@ -32,7 +34,7 @@ public class Fifo {
 		Boolean isFull = false;
 		double currentWeight = 0;
 		
-		while (!orders.isEmpty() && !isFull) {
+		while (!orders.isEmpty() && !isFull && drone.size() < maxNumFlights) {
 			if (currentWeight + orders.peek().getWeight() <= maxWeight) {
 				if (orders.peek().getOrderedTime() < (int)elapsedTime) {
 					currentWeight += orders.peek().getWeight();
