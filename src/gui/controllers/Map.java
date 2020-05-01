@@ -295,6 +295,7 @@ public class Map implements Initializable {
             mapImage.setImage(mapImageFile);
             
             Settings.removeAllMapPoints();
+            pointPane.getChildren().clear();
             updateMapPoints();
     	}
     	
@@ -466,7 +467,6 @@ public class Map implements Initializable {
     
     
     private void updateMapPoints() {
-    	mapPoints.clear();
     	contentGrid.getChildren().clear();
     	inflateMapPoints();
     }
