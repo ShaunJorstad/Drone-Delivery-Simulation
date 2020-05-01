@@ -122,7 +122,7 @@ public class Map implements Initializable {
         loadIcons();
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
 
-        Insets runInsets = new Insets(0,0,120,0);
+        Insets runInsets = new Insets(100,0,0,0);
         VBox.setMargin(runSimButton, runInsets);
         
         injectCursorStates();
