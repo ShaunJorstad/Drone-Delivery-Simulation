@@ -317,7 +317,7 @@ public class Settings {
      */
     public static void removeMapPoint(Coordinate coordinate) throws IllegalArgumentException {
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getCoordinates().distanceBetween(coordinate) < 3) {
+            if (map.get(i).getCoordinates().distanceBetween(coordinate) < 10) {
                 map.remove(i);
                 return;
             }
