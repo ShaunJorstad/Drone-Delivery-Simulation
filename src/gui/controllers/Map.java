@@ -37,6 +37,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -122,13 +123,12 @@ public class Map implements Initializable {
         loadIcons();
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
 
-        Insets runInsets = new Insets(0,0,120,0);
+        Insets runInsets = new Insets(100,0,0,0);
         VBox.setMargin(runSimButton, runInsets);
         
         injectCursorStates();
         
-        currentMap = "default.png";
-        File map = new File("assets/mapImages/" + currentMap);
+        File map = new File("assets/mapImages/" + Settings.getMapImage());
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
         
@@ -245,7 +245,7 @@ public class Map implements Initializable {
     public void handleNewMap(ActionEvent actionEvent) {
     	
         textField = new TextField();
-        textField.setPromptText("Map Name: ");
+        //textField.setPromptText("Map Name: ");
         textField.setOnAction( EventHandler -> {
         	try {
             	continueNewMap(textField.getText());
@@ -256,12 +256,19 @@ public class Map implements Initializable {
         	}
         });
         
-        final Stage dialog = new Stage();
+        Text text = new Text("Name your new map:");
+        //text.setStyle(value);
+        Insets textInsets = new Insets(10,10,10,10);
+        Insets otherInsets = new Insets(10,20,10,20);
+        
+        final Stage dialog = new Stage(StageStyle.UNDECORATED);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner((Stage) home.getScene().getWindow());
         VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(textField);
-        Scene dialogScene = new Scene(dialogVbox, 100, 50);
+        VBox.setMargin(text, textInsets);
+        VBox.setMargin(textField, otherInsets);
+        dialogVbox.getChildren().addAll(text, textField);
+        Scene dialogScene = new Scene(dialogVbox, 150, 100);
         dialog.setScene(dialogScene);
         dialog.show();
 
@@ -278,10 +285,21 @@ public class Map implements Initializable {
 	    newMap.createNewFile();
     	if (selectedFile != null) {
     	    Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
+    	    Settings.setMapImage(selectedFile.getName());
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
+            mapImage.setPreserveRatio(false);
+            mapImage.setFitWidth(500);
+            mapImage.setFitHeight(350);
             mapImage.setImage(mapImageFile);
+            
+            Settings.removeAllMapPoints();
+            int max = pointPane.getChildren().size()-1;
+            for (int i = 0; i < max; i++)
+            	pointPane.getChildren().remove(1);
+            updateMapPoints();
+            isFirst = true;
     	}
     	
     }
@@ -429,12 +447,12 @@ public class Map implements Initializable {
                         }
                         try {
                             //Convert the GUI point to the destination point in feet
-                            removed = Settings.getHomeGUILoc().subtract(removed);
+                            removed = removed.subtract(Settings.getHomeGUILoc());
                             removed = Settings.convertGUItoFEET(removed, Settings.getScale());
 
-                            System.out.println("Removed point: " + removed);
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
+                            updateMapPoints();
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -448,6 +466,12 @@ public class Map implements Initializable {
 
         }
 
+    }
+    
+    
+    private void updateMapPoints() {
+    	contentGrid.getChildren().clear();
+    	inflateMapPoints();
     }
 
     /**
@@ -468,7 +492,6 @@ public class Map implements Initializable {
                 distInFeet = Double.parseDouble(temp);
                 Settings.setScale(Settings.calculateScale(distInFeet,
                         mapPoints.get(mapPoints.size()-1).distanceBetween(Settings.getHomeGUILoc())));
-                System.out.println("scale: " + Settings.getScale());
             } catch (Exception exception) {
                 Settings.setScale(-1);
             }
@@ -480,13 +503,13 @@ public class Map implements Initializable {
             Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
 
             //Convert into the destination coordinates
-            currentDest = Settings.getHomeGUILoc().subtract(currentDest);
+            currentDest = currentDest.subtract(Settings.getHomeGUILoc());
             currentDest = Settings.convertGUItoFEET(currentDest, Settings.getScale());
 
             try {
-                System.out.println("Added point: " + currentDest);
                 //Add the map to the saved settings
                 Settings.addMapPoint(name, currentDest.getX(), currentDest.getY(), (Stage) home.getScene().getWindow());
+                updateMapPoints();
 
                 //Clear the text fields
                 pointPane.getChildren().remove(pointPane.getChildren().size()-1);

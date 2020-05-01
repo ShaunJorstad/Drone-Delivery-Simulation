@@ -31,12 +31,14 @@ public class Settings {
     private static double scale;
     private static Coordinate homeGUILoc;
     private static String mapFileName;
+    private static String mapImage;
 
     private Settings() {
         map = new ArrayList<>();
         foods = new HashSet<>();
         meals = new ArrayList<>();
         orderDistribution = new ArrayList<>();
+        mapImage = "default.png";
 
         // imports the default settings
         parseSettings(new File(defaultSettingsPath));
@@ -319,6 +321,10 @@ public class Settings {
     	}
     	throw new IllegalArgumentException("That name does not exist on the map");
     }
+    
+    public static void removeAllMapPoints() {
+    	map.clear();
+    }
 
     /**
      * removes map point
@@ -327,7 +333,7 @@ public class Settings {
      */
     public static void removeMapPoint(Coordinate coordinate) throws IllegalArgumentException {
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getCoordinates().distanceBetween(coordinate) < 3) {
+            if (map.get(i).getCoordinates().distanceBetween(coordinate) < 10) {
                 map.remove(i);
                 return;
             }
@@ -427,6 +433,14 @@ public class Settings {
     private boolean verifyMap() {
 
         return false;
+    }
+    
+    public static String getMapImage() {
+    	return mapImage;
+    }
+    
+    public static void setMapImage(String image) {
+    	mapImage = image;
     }
 
     /**
