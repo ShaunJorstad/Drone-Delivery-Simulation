@@ -122,7 +122,7 @@ public class Map implements Initializable {
         loadIcons();
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
 
-        Insets runInsets = new Insets(0,0,120,0);
+        Insets runInsets = new Insets(100,0,0,0);
         VBox.setMargin(runSimButton, runInsets);
         
         injectCursorStates();
@@ -429,10 +429,9 @@ public class Map implements Initializable {
                         }
                         try {
                             //Convert the GUI point to the destination point in feet
-                            removed = Settings.getHomeGUILoc().subtract(removed);
+                            removed = removed.subtract(Settings.getHomeGUILoc());
                             removed = Settings.convertGUItoFEET(removed, Settings.getScale());
 
-                            System.out.println("Removed point: " + removed);
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
                         } catch (Exception e) {
@@ -468,7 +467,6 @@ public class Map implements Initializable {
                 distInFeet = Double.parseDouble(temp);
                 Settings.setScale(Settings.calculateScale(distInFeet,
                         mapPoints.get(mapPoints.size()-1).distanceBetween(Settings.getHomeGUILoc())));
-                System.out.println("scale: " + Settings.getScale());
             } catch (Exception exception) {
                 Settings.setScale(-1);
             }
@@ -480,11 +478,10 @@ public class Map implements Initializable {
             Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
 
             //Convert into the destination coordinates
-            currentDest = Settings.getHomeGUILoc().subtract(currentDest);
+            currentDest = currentDest.subtract(Settings.getHomeGUILoc());
             currentDest = Settings.convertGUItoFEET(currentDest, Settings.getScale());
 
             try {
-                System.out.println("Added point: " + currentDest);
                 //Add the map to the saved settings
                 Settings.addMapPoint(name, currentDest.getX(), currentDest.getY(), (Stage) home.getScene().getWindow());
 
