@@ -128,8 +128,7 @@ public class Map implements Initializable {
         
         injectCursorStates();
         
-        currentMap = "default.png";
-        File map = new File("assets/mapImages/" + currentMap);
+        File map = new File("assets/mapImages/" + Settings.getMapImage());
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
         
@@ -286,6 +285,7 @@ public class Map implements Initializable {
 	    newMap.createNewFile();
     	if (selectedFile != null) {
     	    Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
+    	    Settings.setMapImage(selectedFile.getName());
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
@@ -295,8 +295,11 @@ public class Map implements Initializable {
             mapImage.setImage(mapImageFile);
             
             Settings.removeAllMapPoints();
-            pointPane.getChildren().clear();
+            int max = pointPane.getChildren().size()-1;
+            for (int i = 0; i < max; i++)
+            	pointPane.getChildren().remove(1);
             updateMapPoints();
+            isFirst = true;
     	}
     	
     }

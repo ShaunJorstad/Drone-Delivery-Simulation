@@ -29,12 +29,14 @@ public class Settings {
     private static int DroneFleetSize;
     private static double scale;
     private static Coordinate homeGUILoc;
+    private static String mapImage;
 
     private Settings() {
         map = new ArrayList<>();
         foods = new HashSet<>();
         meals = new ArrayList<>();
         orderDistribution = new ArrayList<>();
+        mapImage = "default.png";
 
         // imports the default settings
         parseSettings(new File(defaultSettingsPath));
@@ -421,6 +423,14 @@ public class Settings {
     private boolean verifyMap() {
 
         return false;
+    }
+    
+    public static String getMapImage() {
+    	return mapImage;
+    }
+    
+    public static void setMapImage(String image) {
+    	mapImage = image;
     }
 
     /**
