@@ -81,8 +81,6 @@ public class Map implements Initializable {
 
     ArrayList invalidFields;
 
-    double scale;
-    Coordinate homeCoordinate;
     TextField distanceTextField;
     TextField textField;
 
@@ -141,8 +139,7 @@ public class Map implements Initializable {
         mapPoints = new ArrayList<>();
         isFirst = true;
         textboxIsUP = false;
-        scale = -1;
-        homeCoordinate = new Coordinate(0, 0);
+        initializeDynamicPoints();
     }
 
     public void loadIcons() {
@@ -321,50 +318,66 @@ public class Map implements Initializable {
                 Circle circle = new Circle(4);
 
                 distanceTextField = new TextField();
-
                 if (isFirst) { //Home base
                     circle.setFill(Color.WHITESMOKE);
                     coordinate.setFirst(true);
                     isFirst = false;
-                    homeCoordinate = coordinate;
+                    Settings.setHomeGUILoc(coordinate);
                     distanceTextField.setVisible(false);
                 } else {
                     circle.setFill(Color.RED);
-                    if (scale < 0) {
+                    if (Settings.getScale() < 0) { //Get the distance from the user
                         distanceTextField.setPromptText("Distance in ft");
                     } else {
-                        distanceTextField.setText("" +Settings.convertGUItoFEET(coordinate.distanceBetween(homeCoordinate), scale));
+                        //Display the distance
+                        distanceTextField.setText("" +
+                                Settings.convertGUItoFEET(coordinate.distanceBetween(Settings.getHomeGUILoc()),
+                                Settings.getScale()));
                     }
                 }
 
 
                 VBox nameVBox = new VBox();
+
+                //Name text field
                 textField = new TextField();
                 textField.setPromptText("Name: ");
+
+                //Put the circle and the vbox where the user clicked
                 circle.setCenterX(coordinate.getX());
                 circle.setCenterY(coordinate.getY());
-
                 nameVBox.setLayoutX(coordinate.getX());
                 nameVBox.setLayoutY(coordinate.getY());
+
                 nameVBox.getChildren().addAll(textField, distanceTextField);
                 pointPane.getChildren().add(circle);
                 pointPane.getChildren().add(nameVBox);
+
+                //Add the GUI coordinate to list that stores all the map points
                 mapPoints.add(coordinate);
+
                 textboxIsUP = true;
-                System.out.println(coordinate);
 
             } else { //Remove a point
-                for (int i = 0; i < mapPoints.size(); i++) { //Find the closest
+                for (int i = 0; i < mapPoints.size(); i++) { //Find the closest point
                     if (coordinate.distanceBetween(mapPoints.get(i)) <= 5) {
                         Coordinate removed = mapPoints.remove(i);
                         if (removed.isFirst()) { //Home base was removed
                             isFirst = true;
                         }
                         try {
+                            //Convert the GUI point to the destination point in feet
+                            removed = Settings.getHomeGUILoc().subtract(removed);
+                            removed = Settings.convertGUItoFEET(removed, Settings.getScale());
+
+                            System.out.println("Removed point: " + removed);
+                            //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
+
+                        //Remove the point from the displayed map
                         pointPane.getChildren().remove(i+1);
                         return;
                     }
@@ -375,6 +388,10 @@ public class Map implements Initializable {
 
     }
 
+    /**
+     * User confirms the details about the destination map
+     * @param keyEvent
+     */
     public void processText(KeyEvent keyEvent) {
 
         if (keyEvent.getCode().equals(KeyCode.getKeyCode("Enter"))) {
@@ -387,16 +404,29 @@ public class Map implements Initializable {
             double distInFeet;
             try {
                 distInFeet = Double.parseDouble(temp);
-                scale = Settings.calculateScale(distInFeet, mapPoints.get(mapPoints.size()-1).distanceBetween(homeCoordinate));
+                Settings.setScale(Settings.calculateScale(distInFeet,
+                        mapPoints.get(mapPoints.size()-1).distanceBetween(Settings.getHomeGUILoc())));
+                System.out.println("scale: " + Settings.getScale());
             } catch (Exception exception) {
-                scale = -1;
+                Settings.setScale(-1);
             }
 
+            //Get the name of the destination
             String name = textField.getText();
+
+            //Get the GUI coordinates of the new point
             Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
+
+            //Convert into the destination coordinates
+            currentDest = Settings.getHomeGUILoc().subtract(currentDest);
+            currentDest = Settings.convertGUItoFEET(currentDest, Settings.getScale());
+
             try {
+                System.out.println("Added point: " + currentDest);
+                //Add the map to the saved settings
                 Settings.addMapPoint(name, currentDest.getX(), currentDest.getY(), (Stage) home.getScene().getWindow());
 
+                //Clear the text fields
                 pointPane.getChildren().remove(pointPane.getChildren().size()-1);
                 textboxIsUP = false;
             } catch (Exception e) {
@@ -404,6 +434,38 @@ public class Map implements Initializable {
 
             }
 
+        }
+    }
+
+    /**
+     * When the user enters the map settings page, add all of the dynamic points to the map
+     */
+    public void initializeDynamicPoints() {
+        ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
+
+        for (int d = map.size()-1; d >= 0; d--) { //For each destination, add the point
+            Circle circle = new Circle(4);
+
+            Coordinate destCords = map.get(d).getCoordinates(); //Destination location measured in feet
+            if (destCords.getX() == 0 && destCords.getY() == 0) { //If it is the home location
+                circle.setFill(Color.WHITESMOKE);
+                destCords.setFirst(true);
+                isFirst = false;
+            } else {
+                circle.setFill(Color.RED);
+            }
+
+            //Convert the destination in feet to the GUI location
+            Coordinate GUICoordinate = Settings.convertFEETtoGUI(destCords, Settings.getScale());
+            GUICoordinate.add(Settings.getHomeGUILoc());
+
+            //Center the circle on the GUI coordinates
+            circle.setCenterX(GUICoordinate.getX());
+            circle.setCenterY(GUICoordinate.getY());
+
+            //Add the points to the map and to the list of points
+            pointPane.getChildren().add(circle);
+            mapPoints.add(GUICoordinate);
         }
     }
 

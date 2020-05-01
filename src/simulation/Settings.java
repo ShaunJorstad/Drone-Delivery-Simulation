@@ -27,6 +27,8 @@ public class Settings {
 
     private static int droneCapacity = 192;
     private static int DroneFleetSize;
+    private static double scale;
+    private static Coordinate homeGUILoc;
 
     private Settings() {
         map = new ArrayList<>();
@@ -60,6 +62,18 @@ public class Settings {
     }
 
     public static ArrayList<Destination> getMap() { return map; }
+
+    public static double getScale() { return scale; }
+
+    public static Coordinate getHomeGUILoc() { return homeGUILoc;}
+
+    public static void setHomeGUILoc(Coordinate newGUILoc) {
+        homeGUILoc = newGUILoc;
+    }
+
+    public static void setScale(double newScale) {
+        scale = newScale;
+    }
 
     public static void setDroneFleetSize(int numDrones){
         DroneFleetSize = numDrones;
@@ -303,12 +317,12 @@ public class Settings {
      */
     public static void removeMapPoint(Coordinate coordinate) throws IllegalArgumentException {
         for (int i = 0; i < map.size(); i++) {
-            if (map.get(i).getCoordinates().equals(coordinate)) {
+            if (map.get(i).getCoordinates().distanceBetween(coordinate) < 3) {
                 map.remove(i);
                 return;
             }
         }
-        throw new IllegalArgumentException("That name does not exist on the map");
+        throw new IllegalArgumentException("That location does not exist on the map");
     }
 
     /**
@@ -325,6 +339,11 @@ public class Settings {
 
     public static double convertGUItoFEET(double GUI, double scale) {
         return GUI*scale;
+    }
+
+    public static Coordinate convertFEETtoGUI(Coordinate coordinate, double scale) {
+        Coordinate converted = new Coordinate((int)(coordinate.getX()/scale), (int)(coordinate.getY()/scale));
+        return converted;
     }
 
     public static Coordinate convertGUItoFEET(Coordinate coordinate, double scale) {
@@ -472,6 +491,10 @@ public class Settings {
                 drone.getTurnaroundTime()+"\t"+
                 drone.getDeliveryTime()+"\t"+
                 DroneFleetSize+"\n";
+
+        info += "<s>\t" + scale+ "\t" +
+                homeGUILoc.getX() + "\t" +
+                homeGUILoc.getY() + "\n";
 
 
 
@@ -659,6 +682,11 @@ public class Settings {
 
                     }
                     drone = new Drone(weight,speed,MaxDeliveryTime, TurnaroundTime, DeliveryTime);
+                } else if (tag.equals("<s>")) {
+                    scale = line.nextDouble();
+                    homeGUILoc = new Coordinate();
+                    homeGUILoc.setX(line.nextInt());
+                    homeGUILoc.setY(line.nextInt());
                 }
 
 
