@@ -85,6 +85,14 @@ public class Settings {
         return DroneFleetSize;
     }
 
+    public static String getMapFileName() {
+        return mapFileName;
+    }
+
+    public static void setMapFileName(String mapFileName) {
+        Settings.mapFileName = mapFileName;
+    }
+
     // Food Items----------------------------------------------------------------
 
     public static boolean isValidFoodWeight(double weight) {
@@ -461,12 +469,12 @@ public class Settings {
         return info;
     }
 
-    public static boolean parseMap(File settingsFile){
+    public static boolean parseMap(File mapFile){
 
         map.clear();
-
+        //System.out.print
         try {
-            Scanner s = new Scanner(settingsFile);
+            Scanner s = new Scanner(mapFile);
 
             while (s.hasNextLine()) {
                 Scanner line = new Scanner(s.nextLine()); //Scanner for the given line
@@ -493,13 +501,17 @@ public class Settings {
 
                     //Create a new destination
                     map.add(new Destination(name, x, y, dist));
+
                 } else if (tag.equals("<s>")) {
                     scale = line.nextDouble();
                     homeGUILoc = new Coordinate();
                     homeGUILoc.setX(line.nextInt());
                     homeGUILoc.setY(line.nextInt());
                 }
+                line.close();
             }
+            s.close();
+            return true;
 
         } catch (Exception e) {
             System.out.println((e.getMessage()));
@@ -509,7 +521,7 @@ public class Settings {
 
 
 
-        return true;
+
     }
     /**
      * TODO: write method
@@ -518,6 +530,7 @@ public class Settings {
      * @return string representation of object
      */
     public static String unparseSettings() {
+
 
         String info = "";
         for(FoodItem f:foods){
@@ -649,6 +662,8 @@ public class Settings {
 //        }
 
 
+        parseMap(new File (defaultMapPath));
+
         orderDistribution.clear();
         foods.clear();
         meals.clear();
@@ -775,6 +790,37 @@ public class Settings {
                 FileWriter fw = new FileWriter(file, false);
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println(unparseSettings());
+
+                fw.close();
+                pw.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean importMapSettings(Stage stage) {
+        fileChooser.setTitle("Import MapSettings");
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            // TODO: call method to parse the file and import into settings
+            return parseMap(file);
+        }
+        return false;
+    }
+
+    public static boolean exportMapSettings(Stage stage) {
+        fileChooser.setTitle("Export Map Settings");
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            //TODO: pipe this string into the file
+            try {
+                FileWriter fw = new FileWriter(file, false);
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println(unparseMap());
 
                 fw.close();
                 pw.close();
