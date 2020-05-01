@@ -37,6 +37,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -245,7 +246,7 @@ public class Map implements Initializable {
     public void handleNewMap(ActionEvent actionEvent) {
     	
         textField = new TextField();
-        textField.setPromptText("Map Name: ");
+        //textField.setPromptText("Map Name: ");
         textField.setOnAction( EventHandler -> {
         	try {
             	continueNewMap(textField.getText());
@@ -256,12 +257,19 @@ public class Map implements Initializable {
         	}
         });
         
-        final Stage dialog = new Stage();
+        Text text = new Text("Name your new map:");
+        //text.setStyle(value);
+        Insets textInsets = new Insets(10,10,10,10);
+        Insets otherInsets = new Insets(10,20,10,20);
+        
+        final Stage dialog = new Stage(StageStyle.UNDECORATED);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner((Stage) home.getScene().getWindow());
         VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(textField);
-        Scene dialogScene = new Scene(dialogVbox, 100, 50);
+        VBox.setMargin(text, textInsets);
+        VBox.setMargin(textField, otherInsets);
+        dialogVbox.getChildren().addAll(text, textField);
+        Scene dialogScene = new Scene(dialogVbox, 150, 100);
         dialog.setScene(dialogScene);
         dialog.show();
 
@@ -281,6 +289,8 @@ public class Map implements Initializable {
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
+            mapImage.setFitWidth(500);
+            mapImage.setFitHeight(350);
             mapImage.setImage(mapImageFile);
     	}
     	
@@ -434,6 +444,7 @@ public class Map implements Initializable {
 
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
+                            
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -447,6 +458,21 @@ public class Map implements Initializable {
 
         }
 
+    }
+    
+    private void removeMapPoint(String dest) {
+    	Settings.removeMapPoint(dest);
+    	updateMapPoints();
+    }
+    
+    private void addMapPoint(String dest) {
+    	Settings.removeMapPoint(dest);
+    	updateMapPoints();
+    }
+    
+    private void updateMapPoints() {
+    	mapPoints.clear();
+    	inflateMapPoints();
     }
 
     /**
