@@ -33,19 +33,30 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import simulation.Settings;
 import menu.Destination;
+
+import static java.nio.file.StandardCopyOption.*;
 
 public class Map implements Initializable {
     SimulationThread statusThread;
@@ -71,6 +82,7 @@ public class Map implements Initializable {
     public Button runSimButton;
     //public Button importMapButton;
     //public Button exportMapButton;
+    public Button newMapButton;
     public ImageView uploadImage;
     public ImageView downloadImage;
     public VBox settingButtons;
@@ -78,11 +90,14 @@ public class Map implements Initializable {
     public GridPane contentGrid;
     public VBox runBtnVbox;
     public Pane pointPane;
+    
 
     ArrayList invalidFields;
 
     TextField distanceTextField;
     TextField textField;
+    
+    String currentMap;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,7 +127,8 @@ public class Map implements Initializable {
         
         injectCursorStates();
         
-        File map = new File("assets/mapImage.png");
+        currentMap = "default.png";
+        File map = new File("assets/mapImages/" + currentMap);
         Image mapImageFile = new Image(map.toURI().toString());
         mapImage.setImage(mapImageFile);
         
@@ -220,8 +236,54 @@ public class Map implements Initializable {
     
     public void handleImportMap(ActionEvent actionEvent) {
     }
+    
+    
 
     public void handleExportMap(ActionEvent actionEvent) {
+    }
+    
+    public void handleNewMap(ActionEvent actionEvent) {
+    	
+        textField = new TextField();
+        textField.setPromptText("Map Name: ");
+        textField.setOnAction( EventHandler -> {
+        	try {
+            	continueNewMap(textField.getText());
+        	} catch(Exception e) {
+        		e.printStackTrace();
+        	} finally {
+        		((Stage)(textField.getScene().getWindow())).close();
+        	}
+        });
+        
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) home.getScene().getWindow());
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(textField);
+        Scene dialogScene = new Scene(dialogVbox, 100, 50);
+        dialog.setScene(dialogScene);
+        dialog.show();
+
+    }
+    
+    public void continueNewMap(String name) throws Exception {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Map Image File");
+    	fileChooser.getExtensionFilters().addAll(
+    	         new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+    	File selectedFile = fileChooser.showOpenDialog((Stage)home.getScene().getWindow());
+
+	    File newMap = new File("assets/mapImages/"+selectedFile.getName());
+	    newMap.createNewFile();
+    	if (selectedFile != null) {
+    	    Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
+
+    	    newMap = new File("assets/mapImages/"+selectedFile.getName());
+            Image mapImageFile = new Image(newMap.toURI().toString());
+            mapImage.setImage(mapImageFile);
+    	}
+    	
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
