@@ -309,6 +309,10 @@ public class Settings {
     	}
     	throw new IllegalArgumentException("That name does not exist on the map");
     }
+    
+    public static void removeAllMapPoints() {
+    	map.clear();
+    }
 
     /**
      * removes map point

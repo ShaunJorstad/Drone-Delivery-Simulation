@@ -289,9 +289,13 @@ public class Map implements Initializable {
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
+            mapImage.setPreserveRatio(false);
             mapImage.setFitWidth(500);
             mapImage.setFitHeight(350);
             mapImage.setImage(mapImageFile);
+            
+            Settings.removeAllMapPoints();
+            updateMapPoints();
     	}
     	
     }
@@ -444,7 +448,7 @@ public class Map implements Initializable {
 
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
-                            
+                            updateMapPoints();
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -460,18 +464,10 @@ public class Map implements Initializable {
 
     }
     
-    private void removeMapPoint(String dest) {
-    	Settings.removeMapPoint(dest);
-    	updateMapPoints();
-    }
-    
-    private void addMapPoint(String dest) {
-    	Settings.removeMapPoint(dest);
-    	updateMapPoints();
-    }
     
     private void updateMapPoints() {
     	mapPoints.clear();
+    	contentGrid.getChildren().clear();
     	inflateMapPoints();
     }
 
@@ -510,6 +506,7 @@ public class Map implements Initializable {
             try {
                 //Add the map to the saved settings
                 Settings.addMapPoint(name, currentDest.getX(), currentDest.getY(), (Stage) home.getScene().getWindow());
+                updateMapPoints();
 
                 //Clear the text fields
                 pointPane.getChildren().remove(pointPane.getChildren().size()-1);
