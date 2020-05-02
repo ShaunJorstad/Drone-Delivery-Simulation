@@ -1,4 +1,4 @@
-<m> default.png
+<m>	default.png
 <s>	7.74	361	184
 <d>	SAC	0	0	0.0
 <d>	HAL	201	92	221.05429197371402
