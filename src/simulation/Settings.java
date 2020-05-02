@@ -485,9 +485,7 @@ public class Settings {
 
     public static boolean parseMap(File mapFile){
 
-        System.out.println("Hi");
         map.clear();
-        //System.out.print
         try {
             Scanner s = new Scanner(mapFile);
 
@@ -497,7 +495,6 @@ public class Settings {
                 String tag;
                 if (line.hasNext()) {
                     tag = line.next();
-                    System.out.println(tag);
                 } else {
                     break;
                 }
@@ -505,7 +502,6 @@ public class Settings {
                 if(tag.equals("<m>")){
 
                     mapFileName = line.next();
-                    System.out.println(mapFileName);
                 } else if (tag.equals("<d>")) {
                     String name;
                     int x, y;
@@ -529,7 +525,6 @@ public class Settings {
                 line.close();
             }
             s.close();
-            System.out.println(mapFileName);
             return true;
 
         } catch (Exception e) {
