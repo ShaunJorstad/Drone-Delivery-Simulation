@@ -431,7 +431,7 @@ public class Map implements Initializable {
                             //Convert the GUI point to the destination point in feet
                             removed = removed.subtract(Settings.getHomeGUILoc());
                             removed = Settings.convertGUItoFEET(removed, Settings.getScale());
-
+                            System.out.println("Point to be removed: " + removed);
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
                         } catch (Exception e) {
@@ -467,6 +467,7 @@ public class Map implements Initializable {
                 distInFeet = Double.parseDouble(temp);
                 Settings.setScale(Settings.calculateScale(distInFeet,
                         mapPoints.get(mapPoints.size()-1).distanceBetween(Settings.getHomeGUILoc())));
+                System.out.println("scale: " + Settings.getScale());
             } catch (Exception exception) {
                 Settings.setScale(-1);
             }
