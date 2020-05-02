@@ -348,12 +348,12 @@ public class Settings {
     }
 
     public static Coordinate convertFEETtoGUI(Coordinate coordinate, double scale) {
-        Coordinate converted = new Coordinate((int)(coordinate.getX()/scale), (int)(coordinate.getY()/scale));
+        Coordinate converted = new Coordinate((coordinate.getX()/scale), (coordinate.getY()/scale));
         return converted;
     }
 
     public static Coordinate convertGUItoFEET(Coordinate coordinate, double scale) {
-        Coordinate converted = new Coordinate((int)(coordinate.getX()*scale), (int)(coordinate.getY()*scale));
+        Coordinate converted = new Coordinate(coordinate.getX()*scale, coordinate.getY()*scale);
         return converted;
 
     }

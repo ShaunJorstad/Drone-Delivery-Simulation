@@ -71,6 +71,11 @@ public class Destination {
         return new Coordinate(x, y);
     }
 
+    public void setCoordinates(Coordinate other) {
+        x = (int)other.getX();
+        y = (int)other.getY();
+    }
+
     public void setDestName(String destName) {
         this.destName = destName;
     }

@@ -1,8 +1,8 @@
 package cli;
 
 public class Coordinate {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private boolean isFirst;
 
     public Coordinate() {
@@ -11,7 +11,7 @@ public class Coordinate {
         isFirst = false;
     }
 
-    public Coordinate(int x, int y) {
+    public Coordinate(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -20,6 +20,12 @@ public class Coordinate {
         this.x = x;
         this.y = y;
         this.isFirst = isFirst;
+    }
+
+    public Coordinate(Coordinate other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.isFirst = other.isFirst;
     }
 
 
@@ -35,11 +41,11 @@ public class Coordinate {
         isFirst = first;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -59,14 +65,14 @@ public class Coordinate {
                 ", isFirst=" + isFirst +
                 '}';
     }
-
+/*
     public boolean equals(Coordinate other) {
         if (x == other.getX() && y == other.getY()) {
             return true;
         } else {
             return false;
         }
-    }
+    }*/
 
     public void add(Coordinate other) {
         this.x += other.x;
