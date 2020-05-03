@@ -94,11 +94,10 @@ public class Map implements Initializable {
     
 
     ArrayList invalidFields;
-
-    TextField distanceTextField;
-    TextField textField;
-    Coordinate oldHome;
-    Double oldScale;
+    TextField distanceTextField; //Text field for the distance from home
+    TextField textField; //Text field for the name of the destination
+    Coordinate oldHome; //The old GUI home coordinate
+    Double oldScale; //The old scale
     
     String currentMap;
 
