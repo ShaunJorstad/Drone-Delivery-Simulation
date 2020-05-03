@@ -14,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,11 +21,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import simulation.Settings;
 
-import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -59,6 +56,7 @@ public class Drone implements Initializable {
     public TextField flightSpeedInput;
     public TextField weightInput;
     public TextField fleetSizeInput;
+    public Text fleetSizeTitle;
     SimulationThread statusThread;
 
     public VBox navBarContainer;
@@ -96,6 +94,9 @@ public class Drone implements Initializable {
 
     }
 
+    /**
+     * Loads the icons for the back button, and import export buttons
+     */
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -113,6 +114,9 @@ public class Drone implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    /**
+     * creates the tooltips for all of the textfields and buttons
+     */
     public void constructTooltips() {
         weightInput.setTooltip(new Tooltip("Maximum carrying weight of the drone. \n(positive floating point value)"));
         flightSpeedInput.setTooltip(new Tooltip("Flight speed of the drone. \n(positive floating point value)"));
@@ -126,6 +130,9 @@ public class Drone implements Initializable {
         exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
+    /**
+     * gets the current settings and updates the textFields to reflect these
+     */
     public void inflateSettings() {
         double weight = Settings.getDrone().getWeight();
         double speed = Settings.getDrone().getSpeed();
@@ -142,6 +149,9 @@ public class Drone implements Initializable {
         fleetSizeInput.setText(Integer.toString(fleetSize));
     }
 
+    /**
+     * adds listeners to each textField to update settings in real time, or highlight the field if the input is invalid
+     */
     public void bindTextFields() {
         weightInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {

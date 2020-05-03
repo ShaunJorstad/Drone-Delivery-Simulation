@@ -5,8 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.LineChart?>
 <BorderPane prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.Drone">
     <top>
@@ -50,10 +48,12 @@
                     <Text styleClass="settingTitle" text="Flight Speed (mph)" fx:id="flightSpeedTitle" fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="1"/>
-                    <Text styleClass="settingTitle" text="Max Flight Time (min)" fx:id="maxFlightTimeTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Max Flight Time (min)" fx:id="maxFlightTimeTitle"
+                          fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="2"/>
-                    <Text styleClass="settingTitle" text="Turn Around Time (min)" fx:id="turnAroundTimeTitle" fill="808080"
+                    <Text styleClass="settingTitle" text="Turn Around Time (min)" fx:id="turnAroundTimeTitle"
+                          fill="808080"
                           GridPane.columnIndex="0"
                           GridPane.rowIndex="3"/>
                     <Text styleClass="settingTitle" text="Delivery Time (min)" fx:id="deliveryTimeTitle" fill="808080"

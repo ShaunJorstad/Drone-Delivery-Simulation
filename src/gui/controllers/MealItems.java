@@ -7,15 +7,14 @@
 
 package gui.controllers;
 
-import cli.SimulationThread;
 import cli.SimController;
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,13 +22,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import menu.FoodItem;
 import menu.Meal;
 import simulation.Settings;
 
-import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -41,8 +38,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MealItems implements Initializable {
-    SimulationThread statusThread;
-
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -84,10 +79,12 @@ public class MealItems implements Initializable {
         loadIcons();
         constructTooltips();
         inflateMeals();
-        checkSimulationStatus();
-        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 
+    /**
+     * loads icons for buttons
+     */
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -107,6 +104,9 @@ public class MealItems implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    /**
+     * creats tooltips for buttons
+     */
     public void constructTooltips() {
         addMeal.setTooltip(new Tooltip("Creates a new meal item. Default distribution will be 0%"));
         runSimButton.setTooltip(new Tooltip("Runs the simulation if settings are valid"));
@@ -114,36 +114,19 @@ public class MealItems implements Initializable {
         exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
-    public void checkSimulationStatus() {
-//        int status = SimController.getSimStatus();
-//        if (status == -1 ) { // no simulation has been run
-//            String settingsValidity = Settings.verifySettings();
-//            if (!settingsValidity.equals("")) {
-//                updateRunBtn(settingsValidity, false);
-//            }
-//        } else if (status >= 0 && status < 50) { // simulation in progress
-//            runSimButton.setStyle("-fx-background-color: #1F232F");
-//            runSimButton.setDisable(true);
-//            statusThread.run();
-//        }
-//        else if (status == 50) {
-//            runSimButton.setText("Run another Sim");
-//        }
-    }
-
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
-        Navigation.inflateScene(root,"MealItems", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "MealItems", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root,"MealItems", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "MealItems", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root,"MealItems",  "Results", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "MealItems", "Results", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
@@ -156,17 +139,17 @@ public class MealItems implements Initializable {
 
     public void handleNavigateOrderDistribution(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/OrderDistribution.fxml"));
-        Navigation.inflateScene(root,"MealItems",  "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "MealItems", "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMap(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Map.fxml"));
-        Navigation.inflateScene(root,"MealItems",  "Map", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "MealItems", "Map", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateDrone(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
-        Navigation.inflateScene(root,"MealItems",  "Drone", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "MealItems", "Drone", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
@@ -224,12 +207,22 @@ public class MealItems implements Initializable {
         }
     }
 
+    /**
+     * databinds the text field with the meal object as the meal name
+     * @param field
+     * @param meal
+     */
     public void bindMealName(TextField field, Meal meal) {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             meal.setName(newValue);
         });
     }
 
+    /**
+     * databinds the textfield with the meal object as the meal distribution
+     * @param field
+     * @param meal
+     */
     public void bindMealDistribution(TextField field, Meal meal) {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -255,6 +248,9 @@ public class MealItems implements Initializable {
         });
     }
 
+    /**
+     * inflates the current settings meals into the gui
+     */
     public void inflateMeals() {
         Set<Meal> meals = new HashSet<>();
         meals.addAll(Settings.getMeals());
@@ -267,6 +263,10 @@ public class MealItems implements Initializable {
         addMeal(new Meal("Meal Name", gridIndex - 1));
     }
 
+    /**
+     * creates a new meal in the gui and adds it to the backend
+     * @param meal
+     */
     public void addMeal(Meal meal) {
         GridPane mealGrid = new GridPane();
         VBox.setMargin(mealGrid, new Insets(50, 0, 15, 0));
@@ -312,8 +312,7 @@ public class MealItems implements Initializable {
             FoodItem newFoodItem = meal.getOutstandingFoodItems().get(0);
             meal.incrementFoodItem(newFoodItem, 0);
             addFood(mealGrid, newFoodItem, meal, weight, addItemBtn, 0);
-            // TODO: update settings
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
             if (meal.getOutstandingFoodItems().isEmpty()) {
                 addItemBtn.setDisable(true);
                 addItemBtn.setVisible(false);
@@ -333,7 +332,7 @@ public class MealItems implements Initializable {
             mealsVBox.getChildren().remove(controlGrid);
             Settings.removeMeal(meal);
             invalidFields.remove(meal);
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
         });
 
         controlGrid.add(distributionTitle, 0, 0);
@@ -352,13 +351,19 @@ public class MealItems implements Initializable {
 
         if (!Settings.getMeals().contains(meal)) {
             Settings.addMeal(meal);
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings() );
         }
-        else {
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
-        }
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 
+    /**
+     * adds food to the meal, updates gui and settings
+     * @param grid
+     * @param food
+     * @param meal
+     * @param weight
+     * @param addItemBtn
+     * @param num
+     */
     public void addFood(GridPane grid, FoodItem food, Meal meal, Text weight, Button addItemBtn, int num) {
         MenuButton foodName = new MenuButton();
         foodName.setText(food.getName());
@@ -386,7 +391,7 @@ public class MealItems implements Initializable {
             meal.incrementFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
             number.setText(String.valueOf((Integer.parseInt(number.getText()) + 1)));
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
         });
 
         File decreasePath = new File("assets/icons/minus.png");
@@ -402,7 +407,7 @@ public class MealItems implements Initializable {
             meal.decrementFoodItem(food, 1);
             weight.setText(String.valueOf(meal.getWeight()));
             number.setText(String.valueOf(meal.getNumberOfFood(food)));
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
         });
 
 
@@ -427,7 +432,7 @@ public class MealItems implements Initializable {
             meal.removeFoodItem(food);
             weight.setText(String.valueOf(meal.getWeight()));
             // TODO: update run button
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
 
             // enable addItemButton
             addItemBtn.setDisable(false);
@@ -446,9 +451,17 @@ public class MealItems implements Initializable {
         GridPane.setMargin(increase, new Insets(8, 0, 0, 0));
 
         gridIndex++;
-        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 
+    /**
+     * updates the dropdown with the available food items for that meal
+     * @param dropdown
+     * @param meal
+     * @param food
+     * @param weight
+     * @param addItemBtn
+     */
     public void updateMenuItems(MenuButton dropdown, Meal meal, FoodItem food, Text weight, Button addItemBtn) {
         dropdown.getItems().clear();
         for (FoodItem item : meal.getOutstandingFoodItems()) {

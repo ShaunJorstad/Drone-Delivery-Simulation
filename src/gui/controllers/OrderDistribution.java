@@ -7,8 +7,8 @@
 
 package gui.controllers;
 
-import cli.SimulationThread;
 import cli.SimController;
+import cli.SimulationThread;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +23,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import simulation.Settings;
 
@@ -40,8 +37,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class OrderDistribution implements Initializable {
-    SimulationThread statusThread;
-
     public VBox navBarContainer;
     public HBox navBar;
     public Button home;
@@ -85,10 +80,12 @@ public class OrderDistribution implements Initializable {
         loadIcons();
         injectCursorStates();
         inflateOrderDistribution();
-        checkSimulationStatus();
-        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 
+    /**
+     * loads the icons for buttons
+     */
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -106,29 +103,18 @@ public class OrderDistribution implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    /**
+     * creates node tooltips
+     */
     public void constructTooltips() {
         runSimButton.setTooltip(new Tooltip("Runs the simulation if settings are valid"));
         importSettingsButton.setTooltip(new Tooltip("Imports settings from a local file"));
         exportSettingsButton.setTooltip(new Tooltip("Exports current settings to a local file"));
     }
 
-    public void checkSimulationStatus() {
-//        int status = SimController.getSimStatus();
-//        if (status == -1 ) { // no simulation has been run
-//            String settingsValidity = Settings.verifySettings();
-//            if (!settingsValidity.equals("")) {
-//                updateRunBtn(settingsValidity, false);
-//            }
-//        } else if (status >= 0 && status < 50) { // simulation in progress
-//            runSimButton.setStyle("-fx-background-color: #1F232F");
-//            runSimButton.setDisable(true);
-//            statusThread.run();
-//        }
-//        else if (status == 50) {
-//            runSimButton.setText("Run another Sim");
-//        }
-    }
-
+    /**
+     * adds cursor states to all of the nodes on the scene
+     */
     public void injectCursorStates() {
         List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone, importSettingsButton, exportSettingsButton);
         for (Button item : items) {
@@ -143,27 +129,27 @@ public class OrderDistribution implements Initializable {
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
-        Navigation.inflateScene(root,"OrderDistribution", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root,"OrderDistribution", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root,"OrderDistribution", "Results", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "Results", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "OrderDistribution","FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMealItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/MealItems.fxml"));
-        Navigation.inflateScene(root,"OrderDistribution", "MealItems", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "MealItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateOrderDistribution(ActionEvent actionEvent) throws IOException {
@@ -171,12 +157,12 @@ public class OrderDistribution implements Initializable {
 
     public void handleNavigateMap(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Map.fxml"));
-        Navigation.inflateScene(root,"OrderDistribution", "Map", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "Map", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateDrone(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
-        Navigation.inflateScene(root,"OrderDistribution", "Drone", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "OrderDistribution", "Drone", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
@@ -235,12 +221,21 @@ public class OrderDistribution implements Initializable {
         Settings.exportSettings((Stage) home.getScene().getWindow());
     }
 
+    /**
+     * inflates the settings into the gui
+     */
     public void inflateOrderDistribution() {
         for (Integer numOrders : Settings.getOrderDistribution()) {
             addHour(numOrders);
         }
     }
 
+    /**
+     * binds the textfields with the settings
+     *
+     * @param field
+     * @param index
+     */
     public void bindOrders(TextField field, int index) {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -266,6 +261,11 @@ public class OrderDistribution implements Initializable {
         });
     }
 
+    /**
+     * adds texfields for another hour of the simulation
+     *
+     * @param numOrders
+     */
     public void addHour(Integer numOrders) {
         Text hourTitle = new Text(Integer.toString(gridIndex));
         hourTitle.getStyleClass().add("hourTitle");
@@ -273,7 +273,7 @@ public class OrderDistribution implements Initializable {
         TextField orderField = new TextField();
         orderField.setText(Integer.toString(numOrders));
         orderField.getStyleClass().add("orderField");
-        int distIndex = gridIndex -1;
+        int distIndex = gridIndex - 1;
         bindOrders(orderField, distIndex);
         orderField.setTooltip(new Tooltip("Roughly the number of orders that will be ordered in this hour. \n(Integer required)"));
 

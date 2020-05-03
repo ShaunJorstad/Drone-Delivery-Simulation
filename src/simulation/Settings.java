@@ -2,7 +2,6 @@ package simulation;
 
 import cli.Coordinate;
 import gui.Navigation;
-import javafx.scene.Parent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -10,7 +9,10 @@ import menu.Drone;
 import menu.FoodItem;
 import menu.Meal;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class Settings {
@@ -20,7 +22,6 @@ public class Settings {
     private static Set<FoodItem> foods;
     private static List<Meal> meals;
     private static Drone drone;
-    private File settingsFile;
     private static final String defaultSettingsPath = "src/simulation/DefaultSettings.txt";
     private static final String defaultMapPath = "src/simulation/map.txt";
     static final FileChooser fileChooser = new FileChooser();
@@ -38,7 +39,7 @@ public class Settings {
         meals = new ArrayList<>();
         orderDistribution = new ArrayList<>();
 
-        parseMap(new File (defaultMapPath));
+        parseMap(new File(defaultMapPath));
 
         // imports the default settings
         parseSettings(new File(defaultSettingsPath));
@@ -61,15 +62,21 @@ public class Settings {
         return orderDistribution;
     }
 
-    public static Drone getDrone(){
+    public static Drone getDrone() {
         return drone;
     }
 
-    public static ArrayList<Destination> getMap() { return map; }
+    public static ArrayList<Destination> getMap() {
+        return map;
+    }
 
-    public static double getScale() { return scale; }
+    public static double getScale() {
+        return scale;
+    }
 
-    public static Coordinate getHomeGUILoc() { return homeGUILoc;}
+    public static Coordinate getHomeGUILoc() {
+        return homeGUILoc;
+    }
 
     public static void setHomeGUILoc(Coordinate newGUILoc) {
         homeGUILoc = newGUILoc;
@@ -79,11 +86,11 @@ public class Settings {
         scale = newScale;
     }
 
-    public static void setDroneFleetSize(int numDrones){
+    public static void setDroneFleetSize(int numDrones) {
         DroneFleetSize = numDrones;
     }
 
-    public static int getDroneFleetSize(){
+    public static int getDroneFleetSize() {
         return DroneFleetSize;
     }
 
@@ -116,11 +123,12 @@ public class Settings {
 
     /**
      * Calculates the maximum number of deliveries that a drone can service on one flight
+     *
      * @return
      */
-    public static int calcMaxDeliveries(){
-        double maxTmePerDelivery = longestMapDistance()/(drone.getSpeed() * 5280 / 60) + .5;
-        return (int)(drone.getMaxFlightTime()*.95/maxTmePerDelivery);
+    public static int calcMaxDeliveries() {
+        double maxTmePerDelivery = longestMapDistance() / (drone.getSpeed() * 5280 / 60) + .5;
+        return (int) (drone.getMaxFlightTime() * .95 / maxTmePerDelivery);
 
     }
 
@@ -180,10 +188,10 @@ public class Settings {
             return false;
         }
         for (FoodItem item : foods) {
-             if (item.getWeight() > droneCapacity) {
-                 System.out.println("over weight");
-                 return false;
-             }
+            if (item.getWeight() > droneCapacity) {
+                System.out.println("over weight");
+                return false;
+            }
         }
         return true;
     }
@@ -249,7 +257,7 @@ public class Settings {
             }
             totalDist += meal.getDistribution();
         }
-        if (Math.floor(totalDist * 100)/100 != 1) {
+        if (Math.floor(totalDist * 100) / 100 != 1) {
             return false;
         }
         return true;
@@ -269,7 +277,7 @@ public class Settings {
      * @param distribution number of meals to be generated in that hour
      * @return true if valid settings
      */
-    public static  boolean editDistribution(int index, int distribution) {
+    public static boolean editDistribution(int index, int distribution) {
         if (index >= orderDistribution.size()) {
             return false;
         }
@@ -297,14 +305,14 @@ public class Settings {
      * @param y
      */
     public static void addMapPoint(String name, int x, int y, Stage stage) throws IllegalArgumentException {
-    	for (int i = 0; i < map.size(); i++) {
-    		if (map.get(i).getDestName().equals(name)) {
-                Navigation.displayWarningPopup( stage, "That name already exists on the map");
+        for (int i = 0; i < map.size(); i++) {
+            if (map.get(i).getDestName().equals(name)) {
+                Navigation.displayWarningPopup(stage, "That name already exists on the map");
                 throw new IllegalArgumentException("invalid name");
             }
-    	}
-    	Destination newDest = new Destination(name,x,y);
-    	map.add(newDest);
+        }
+        Destination newDest = new Destination(name, x, y);
+        map.add(newDest);
     }
 
     /**
@@ -313,17 +321,17 @@ public class Settings {
      * @param name
      */
     public static void removeMapPoint(String name) throws IllegalArgumentException {
-    	for (int i = 0; i < map.size(); i++) {
-    		if (map.get(i).getDestName().equals(name)) {
-    			map.remove(i);
-    			return;
-    		}
-    	}
-    	throw new IllegalArgumentException("That name does not exist on the map");
+        for (int i = 0; i < map.size(); i++) {
+            if (map.get(i).getDestName().equals(name)) {
+                map.remove(i);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("That name does not exist on the map");
     }
-    
+
     public static void removeAllMapPoints() {
-    	map.clear();
+        map.clear();
     }
 
     /**
@@ -344,44 +352,42 @@ public class Settings {
     /**
      * edits map point
      *
-     *@param dest
+     * @param dest
      * @param x
      * @param y
      */
     public static void editMapPoint(Destination dest, int x, int y) {
-    	dest.setX(x);
-    	dest.setY(y);
+        dest.setX(x);
+        dest.setY(y);
     }
 
     public static double convertGUItoFEET(double GUI, double scale) {
-        return GUI*scale;
+        return GUI * scale;
     }
 
     public static Coordinate convertFEETtoGUI(Coordinate coordinate, double scale) {
-        Coordinate converted = new Coordinate((coordinate.getX()/scale), (coordinate.getY()/scale));
+        Coordinate converted = new Coordinate((coordinate.getX() / scale), (coordinate.getY() / scale));
         return converted;
     }
 
     public static Coordinate convertGUItoFEET(Coordinate coordinate, double scale) {
-        Coordinate converted = new Coordinate(coordinate.getX()*scale, coordinate.getY()*scale);
+        Coordinate converted = new Coordinate(coordinate.getX() * scale, coordinate.getY() * scale);
         return converted;
 
     }
 
 
-
     public static double calculateScale(double userInput, double GUIDist) {
-        return userInput/GUIDist;
+        return userInput / GUIDist;
     }
-    
+
     /**
-     * 
      * @param dest1
      * @param dest2
      * @return distance between them
      */
     public double calcDist(Destination dest1, Destination dest2) {
-    	return Math.sqrt(Math.pow(dest2.getY()-dest1.getY(),2) + Math.pow(dest2.getX()-dest1.getX(), 2));
+        return Math.sqrt(Math.pow(dest2.getY() - dest1.getY(), 2) + Math.pow(dest2.getX() - dest1.getX(), 2));
     }
 
     /**
@@ -434,34 +440,35 @@ public class Settings {
 
         return false;
     }
-    
+
     public static String getMapImage() {
-    	return mapFileName;
+        return mapFileName;
     }
-    
+
     public static void setMapImage(String image) {
-    	mapFileName = image;
+        mapFileName = image;
     }
 
     /**
      * Finds the longest distance between two points on the map
+     *
      * @return longest distance in feet
      */
-    private static double longestMapDistance(){
+    private static double longestMapDistance() {
 
-        double longestDistance=0;
-        double currentDistance=0;
+        double longestDistance = 0;
+        double currentDistance = 0;
 
         //compares all locations to each other
-        for(int start = 0; start < map.size() - 1; start++){
-            for(int end = start + 1; end < map.size(); end++){
+        for (int start = 0; start < map.size() - 1; start++) {
+            for (int end = start + 1; end < map.size(); end++) {
 
                 //gets distance between 2 points
-                currentDistance = Math.sqrt((map.get(start).getX()-map.get(end).getX()) *(map.get(start).getX()-map.get(end).getX())
-                        +(map.get(start).getY()-map.get(end).getY()) * (map.get(start).getY()-map.get(end).getY()));
+                currentDistance = Math.sqrt((map.get(start).getX() - map.get(end).getX()) * (map.get(start).getX() - map.get(end).getX())
+                        + (map.get(start).getY() - map.get(end).getY()) * (map.get(start).getY() - map.get(end).getY()));
 
                 //updates langest Distance
-                if(currentDistance > longestDistance){
+                if (currentDistance > longestDistance) {
                     longestDistance = currentDistance;
                 }
             }
@@ -471,19 +478,19 @@ public class Settings {
 
     // IO -----------------------------------------------------------------------
 
-    public static String unparseMap(){
+    public static String unparseMap() {
         String info = "";
 
-        info += "<m>\t"+mapFileName+"\n";
-        info+= "<s>\t"+ scale+"\t"+ (int)homeGUILoc.getX()+"\t"+ (int)homeGUILoc.getY()+"\n";
-        for(Destination d: map){
-            info+="<d>\t"+d.getDestName()+"\t"+d.getX()+"\t"+
-                    d.getY()+"\t"+ d.getDist()+"\n";
+        info += "<m>\t" + mapFileName + "\n";
+        info += "<s>\t" + scale + "\t" + (int) homeGUILoc.getX() + "\t" + (int) homeGUILoc.getY() + "\n";
+        for (Destination d : map) {
+            info += "<d>\t" + d.getDestName() + "\t" + d.getX() + "\t" +
+                    d.getY() + "\t" + d.getDist() + "\n";
         }
         return info;
     }
 
-    public static boolean parseMap(File mapFile){
+    public static boolean parseMap(File mapFile) {
 
         map.clear();
         try {
@@ -499,7 +506,7 @@ public class Settings {
                     break;
                 }
 
-                if(tag.equals("<m>")){
+                if (tag.equals("<m>")) {
 
                     mapFileName = line.next();
                 } else if (tag.equals("<d>")) {
@@ -534,9 +541,8 @@ public class Settings {
         }
 
 
-
-
     }
+
     /**
      * TODO: write method
      * parses settings and returns string representation of the object to be printed to a file
@@ -547,42 +553,41 @@ public class Settings {
 
 
         String info = "";
-        for(FoodItem f:foods){
-            info+="<f>\t"+f.getName()+"\t"+f.getWeight()+"\n";
+        for (FoodItem f : foods) {
+            info += "<f>\t" + f.getName() + "\t" + f.getWeight() + "\n";
         }
         ArrayList<FoodItem> used = new ArrayList<>();
-        for(Meal m:meals){
-            info+="<m>\t"+m.getName()+"\t"+m.getId()+"\t"+m.getDistribution();
+        for (Meal m : meals) {
+            info += "<m>\t" + m.getName() + "\t" + m.getId() + "\t" + m.getDistribution();
             used.clear();
-            for(int i=0;i<m.getFoodItems().size();i++){
-                for(FoodItem f: foods) {
+            for (int i = 0; i < m.getFoodItems().size(); i++) {
+                for (FoodItem f : foods) {
                     if (m.getFoodItems().containsKey(f) && !used.contains(f)) {
-                        info +="\t"+ f.getName() + "\t" + m.getFoodItems().get(f);
+                        info += "\t" + f.getName() + "\t" + m.getFoodItems().get(f);
                         used.add(f);
                         break;
                     }
                 }
-                if(i==m.getFoodItems().size()-1)
-                    info+="\n";
+                if (i == m.getFoodItems().size() - 1)
+                    info += "\n";
             }
         }
 
-        for(Integer n: orderDistribution){
-            info+="<o>\t"+n+"\n";
+        for (Integer n : orderDistribution) {
+            info += "<o>\t" + n + "\n";
         }
 
-        info+="<dr>\t"+
-                drone.getWeight()+"\t"+
-                drone.getSpeed()+"\t"+
-                drone.getMaxFlightTime()+"\t"+
-                drone.getTurnaroundTime()+"\t"+
-                drone.getDeliveryTime()+"\t"+
-                DroneFleetSize+"\n";
+        info += "<dr>\t" +
+                drone.getWeight() + "\t" +
+                drone.getSpeed() + "\t" +
+                drone.getMaxFlightTime() + "\t" +
+                drone.getTurnaroundTime() + "\t" +
+                drone.getDeliveryTime() + "\t" +
+                DroneFleetSize + "\n";
 
-        info += "<s>\t" + scale+ "\t" +
+        info += "<s>\t" + scale + "\t" +
                 homeGUILoc.getX() + "\t" +
                 homeGUILoc.getY() + "\n";
-
 
 
         return info;
@@ -649,9 +654,9 @@ public class Settings {
                         }
                         line.next();
                     }
-                }else if(tag.equals("<dr>")){
+                } else if (tag.equals("<dr>")) {
 
-                }else {
+                } else {
                     validFile = false;
                     break;
                 }
@@ -676,7 +681,6 @@ public class Settings {
 //        }
 
 
-
         orderDistribution.clear();
         foods.clear();
         meals.clear();
@@ -697,7 +701,7 @@ public class Settings {
                 }
 
 
-                 if (tag.equals("<f>")) {
+                if (tag.equals("<f>")) {
                     //System.out.print("called");
                     String name;
                     float weight;
@@ -739,16 +743,16 @@ public class Settings {
                         }
                     }
                     meals.add(combo);
-                } else if(tag.equals("<o>")){
-                    while(line.hasNextInt())
+                } else if (tag.equals("<o>")) {
+                    while (line.hasNextInt())
                         orderDistribution.add(line.nextInt());
-                } else if(tag.equals("<dr>")){
+                } else if (tag.equals("<dr>")) {
                     double weight = 0;
                     double speed = 0;
                     double MaxDeliveryTime = 0;
                     double TurnaroundTime = 0;
                     double DeliveryTime = 0;
-                    while(line.hasNextDouble()){
+                    while (line.hasNextDouble()) {
                         weight = line.nextDouble();
                         speed = line.nextDouble();
                         MaxDeliveryTime = line.nextDouble();
@@ -757,7 +761,7 @@ public class Settings {
                         DroneFleetSize = line.nextInt();
 
                     }
-                    drone = new Drone(weight,speed,MaxDeliveryTime, TurnaroundTime, DeliveryTime);
+                    drone = new Drone(weight, speed, MaxDeliveryTime, TurnaroundTime, DeliveryTime);
                 }
 
 

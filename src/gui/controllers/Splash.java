@@ -7,8 +7,6 @@
 
 package gui.controllers;
 
-import cli.SimulationThread;
-import cli.SimController;
 import gui.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,17 +14,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,8 +30,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Splash implements Initializable {
-    SimulationThread statusThread;
-
     @FXML
     public ImageView SplashImage;
     public VBox vBox;
@@ -61,6 +53,9 @@ public class Splash implements Initializable {
         loadIcons();
     }
 
+    /**
+     * loads the icons for buttons
+     */
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -82,6 +77,9 @@ public class Splash implements Initializable {
         injectCursorStates();
     }
 
+    /**
+     * creates the cursor states for nodes on the scene
+     */
     public void injectCursorStates() {
         List<Button> items = Arrays.asList(home, settings, results, back, nextButton);
         for (Button item : items) {
@@ -123,17 +121,5 @@ public class Splash implements Initializable {
         Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
         Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
-    }
-
-    public void updateRunBtn(String errMessage, boolean valid) {
-        if (valid) {
-            nextButton.setStyle("-fx-background-color: #0078D7");
-            nextButton.setText("Run");
-            nextButton.setDisable(false);
-        } else {
-            nextButton.setStyle("-fx-background-color: #EC2F08");
-            nextButton.setText(errMessage);
-            nextButton.setDisable(true);
-        }
     }
 }
