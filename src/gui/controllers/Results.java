@@ -23,11 +23,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -185,5 +187,10 @@ public class Results implements Initializable {
 
         gridBox.getChildren().add(chart);
         VBox.setMargin(chart, new Insets(20, 30, 200, 0));
+
+        chart.setOnMouseClicked((mouseEvent -> {
+            WritableImage image = chart.snapshot(null, null);
+            Settings.exportGraphImage( (Stage) home.getScene().getWindow(), image);
+        }));
     }
 }
