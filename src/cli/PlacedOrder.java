@@ -61,29 +61,47 @@ public class PlacedOrder {
         }
     }
 
+    /**
+     * Return the destination that the order is being delivered to
+     * @return
+     */
     public Destination getDest() {
         return dest;
     }
 
+    /**
+     * Returns the meal that was ordered
+     * @return
+     */
     public Meal getMeal() {
         return meal;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
+    /**
+     * Get the time that the order was placed
+     * @return
+     */
     public int getOrderedTime() {
         return orderedTime;
     }
 
+    /**
+     * The number of times that the order has been skipped over (Used in the Knapsack algorithm)
+     * @return
+     */
     public int getTimesSkipped() {return timesSkipped;}
 
+    /**
+     * Increases the time that the order has been skipped over by one (Used in the Knapsack algorithm)
+     */
     public void incrementTimeSkipped() {
         this.timesSkipped++;
     }
 
-
+    /**
+     * Get the weight of the meal
+     * @return
+     */
     public float getWeight() {
         return meal.getWeight();
     }

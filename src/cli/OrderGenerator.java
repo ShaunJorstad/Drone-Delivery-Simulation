@@ -22,10 +22,13 @@ import java.util.Scanner;
 public class OrderGenerator {
     File nameFile; //File that contains a list of names
     ArrayList<String> names; //Stores the list of names
-    int MINUTES_IN_SIM;
+    int MINUTES_IN_SIM; //The number of minutes in the simulation
     SimController simController;
     File ordersFile; //xml file that saves the orders
 
+    /**
+     * Default constructor
+     */
     public OrderGenerator() {
         names = new ArrayList<>(); //List of names
         MINUTES_IN_SIM = 240; //The number of minutes in the simulation
@@ -45,6 +48,9 @@ public class OrderGenerator {
         }
     }
 
+    /**
+     * Generate the orders for one 4 hour run of the simulation
+     */
     public void generateOrders() {
         Random random = new Random(); //new random generator
 
