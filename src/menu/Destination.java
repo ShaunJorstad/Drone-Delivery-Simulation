@@ -43,6 +43,10 @@ public class Destination {
         distToTravelTo = -1;
     }
 
+    /**
+     * Copy constructor
+     * @param other
+     */
     public Destination(Destination other) {
         this.destName = other.getDestName();
         this.x = other.getX();
@@ -51,60 +55,103 @@ public class Destination {
         distToTravelTo = other.getDistToTravelTo();
     }
 
+    /**
+     * Get the name of the destination
+     * @return
+     */
     public String getDestName() {
         return destName;
     }
 
+    /**
+     * Get the x location for the destination
+     * @return
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Get the y location for the destination
+     * @return
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Get the distance from home for the destination
+     * @return
+     */
     public double getDist() {
         return dist;
     }
 
+    /**
+     * Get the coordinates of the destination
+     * @return
+     */
     public Coordinate getCoordinates() {
         return new Coordinate(x, y);
     }
 
+    /**
+     * Set the coordinates of the destination (Auto-calculates the new distance)
+     * @param other
+     */
     public void setCoordinates(Coordinate other) {
         x = (int)other.getX();
         y = (int)other.getY();
+        setDist();
     }
 
-    public void setDestName(String destName) {
-        this.destName = destName;
-    }
 
-    //Auto-calculates the new distance
+    /**
+     * Sets the x value of the destination (Auto-calculates the new distance)
+     * @param x
+     */
     public void setX(int x) {
         this.x = x;
         setDist();
     }
 
-    //Auto-calculates the new distance
+    /**
+     * Sets the y value of the destination (Auto-calculates the new distance)
+     * @param y
+     */
     public void setY(int y) {
         this.y = y;
         setDist();
     }
 
-    //finds the new distance
+    /**
+     * Sets the distance from home for the destination
+     */
     private void setDist() {
         dist = Math.sqrt(x*x + y*y);
     }
 
+    /**
+     * Find the distance between two destinations
+     * @param d
+     * @return
+     */
     public double distanceBetween(Destination d) {
         return Math.sqrt((x-d.getX())*(x-d.getX()) + (y-d.getY())*(y-d.getY()));
     }
 
+    /**
+     * Set the distance it takes to travel to the next destination
+     * @param dist
+     */
     public void setDistToTravelTo(double dist) {
         distToTravelTo = dist;
     }
 
+    /**
+     * Get the distance it takes to travel to the next destination
+     * @return
+     */
     public double getDistToTravelTo() {
         return distToTravelTo;
     }
@@ -115,6 +162,11 @@ public class Destination {
         return destName + "\t" + x + "\t" + y + "\t" + dist;
     }
 
+    /**
+     * Finds if two destiantion are equal by comparing names
+     * @param destination
+     * @return
+     */
     public boolean equals(Destination destination) {
         return this.destName == destination.getDestName();
     }
