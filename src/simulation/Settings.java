@@ -31,14 +31,14 @@ public class Settings {
     private static double scale;
     private static Coordinate homeGUILoc;
     private static String mapFileName;
-    private static String mapImage;
 
     private Settings() {
         map = new ArrayList<>();
         foods = new HashSet<>();
         meals = new ArrayList<>();
         orderDistribution = new ArrayList<>();
-        mapImage = "default.png";
+
+        parseMap(new File (defaultMapPath));
 
         // imports the default settings
         parseSettings(new File(defaultSettingsPath));
@@ -436,11 +436,11 @@ public class Settings {
     }
     
     public static String getMapImage() {
-    	return mapImage;
+    	return mapFileName;
     }
     
     public static void setMapImage(String image) {
-    	mapImage = image;
+    	mapFileName = image;
     }
 
     /**
@@ -475,7 +475,7 @@ public class Settings {
         String info = "";
 
         info += "<m>\t"+mapFileName+"\n";
-        info+= "<s>\t"+ scale+"\t"+ homeGUILoc.getX()+"\t"+homeGUILoc.getY()+"\n";
+        info+= "<s>\t"+ scale+"\t"+ (int)homeGUILoc.getX()+"\t"+ (int)homeGUILoc.getY()+"\n";
         for(Destination d: map){
             info+="<d>\t"+d.getDestName()+"\t"+d.getX()+"\t"+
                     d.getY()+"\t"+ d.getDist()+"\n";
@@ -486,7 +486,6 @@ public class Settings {
     public static boolean parseMap(File mapFile){
 
         map.clear();
-        //System.out.print
         try {
             Scanner s = new Scanner(mapFile);
 
@@ -501,6 +500,7 @@ public class Settings {
                 }
 
                 if(tag.equals("<m>")){
+
                     mapFileName = line.next();
                 } else if (tag.equals("<d>")) {
                     String name;
@@ -676,7 +676,6 @@ public class Settings {
 //        }
 
 
-        parseMap(new File (defaultMapPath));
 
         orderDistribution.clear();
         foods.clear();
@@ -817,7 +816,7 @@ public class Settings {
     }
 
     public static boolean importMapSettings(Stage stage) {
-        fileChooser.setTitle("Import MapSettings");
+        fileChooser.setTitle("Import Map Settings");
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             // TODO: call method to parse the file and import into settings

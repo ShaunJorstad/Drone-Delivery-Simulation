@@ -237,11 +237,23 @@ public class Map implements Initializable {
     }
     
     public void handleImportMap(ActionEvent actionEvent) {
+    	Settings.importMapSettings((Stage) home.getScene().getWindow());
+
+        int max = pointPane.getChildren().size()-1;
+        for (int i = 0; i < max; i++)
+        	pointPane.getChildren().remove(1);
+        updateMapPoints();
+
+        File map = new File("assets/mapImages/" + Settings.getMapImage());
+        Image mapImageFile = new Image(map.toURI().toString());
+        mapImage.setImage(mapImageFile);
+        initializeDynamicPoints();
     }
     
     
 
     public void handleExportMap(ActionEvent actionEvent) {
+        Settings.exportMapSettings((Stage) home.getScene().getWindow());
     }
     
     public void handleNewMap(ActionEvent actionEvent) {
@@ -291,7 +303,6 @@ public class Map implements Initializable {
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
-            mapImage.setPreserveRatio(false);
             mapImage.setFitWidth(500);
             mapImage.setFitHeight(350);
             mapImage.setImage(mapImageFile);
