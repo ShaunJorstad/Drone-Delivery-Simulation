@@ -20,12 +20,13 @@ public class PlacedOrder {
 
     /**
      * Constructor
+     *
      * @param timePlaced The time in minutes since the start of the simulation that the order was placed
-     * @param dest The destination of the delivery
-     * @param name name of the client
-     * @param meal The meal that was ordered
+     * @param dest       The destination of the delivery
+     * @param name       name of the client
+     * @param meal       The meal that was ordered
      */
-    PlacedOrder(int timePlaced , Destination dest, String name, Meal meal) {
+    PlacedOrder(int timePlaced, Destination dest, String name, Meal meal) {
         orderedTime = timePlaced;
         clientName = name;
         this.meal = meal;
@@ -35,6 +36,7 @@ public class PlacedOrder {
 
     /**
      * Add the order to the Orders.xml file
+     *
      * @param file The file which the orders is being stored in
      */
     public void addToXML(File file) {
@@ -77,12 +79,13 @@ public class PlacedOrder {
         return orderedTime;
     }
 
-    public int getTimesSkipped() {return timesSkipped;}
+    public int getTimesSkipped() {
+        return timesSkipped;
+    }
 
     public void incrementTimeSkipped() {
         this.timesSkipped++;
     }
-
 
     public float getWeight() {
         return meal.getWeight();

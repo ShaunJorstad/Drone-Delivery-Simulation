@@ -119,19 +119,27 @@ public class SimController {
         return finalResults.getAggregatedWorstTime(aggregatedResults);
     }
 
-
-    public boolean hasResults() {
-        return simRan;
-    }
-
+    /**
+     * exports the results
+     * @param stage results stage
+     * @return true if successful
+     */
     public static boolean exportResults(Stage stage) {
         return finalResults.exportResults(stage);
     }
 
+    /**
+     * stores a reference to the run button on the current scene
+     * @param button Button
+     */
     public static void setCurrentButton(Button button) {
         btn = button;
     }
 
+    /**
+     * returns the reference to the run button on the current scene
+     * @return Button object
+     */
     public static Button getCurrentButton() {
         return btn;
     }
