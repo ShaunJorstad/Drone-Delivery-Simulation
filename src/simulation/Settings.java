@@ -28,9 +28,9 @@ public class Settings {
     private static Settings instance = new Settings();
 
     private static int droneCapacity = 192;
-    private static int DroneFleetSize;
-    private static double scale;
-    private static Coordinate homeGUILoc;
+    private static int DroneFleetSize; //Size of the drone fleet
+    private static double scale; //Scale for the map feet/GUI
+    private static Coordinate homeGUILoc; //The GUI coordinates of the home location
     private static String mapFileName;
 
     private Settings() {
@@ -70,18 +70,30 @@ public class Settings {
         return map;
     }
 
-    public static double getScale() {
-        return scale;
-    }
+    /**
+     * Get the scale feet/GUI
+     * @return
+     */
+    public static double getScale() { return scale; }
 
-    public static Coordinate getHomeGUILoc() {
-        return homeGUILoc;
-    }
+    /**
+     * Get the GUI coordinates of the home location
+     * @return
+     */
+    public static Coordinate getHomeGUILoc() { return homeGUILoc;}
 
+    /**
+     * Set the GUI coordinates of the home location
+     * @param newGUILoc
+     */
     public static void setHomeGUILoc(Coordinate newGUILoc) {
         homeGUILoc = newGUILoc;
     }
 
+    /**
+     * Set the scale feet/GUI
+     * @param newScale
+     */
     public static void setScale(double newScale) {
         scale = newScale;
     }
@@ -335,8 +347,7 @@ public class Settings {
     }
 
     /**
-     * removes map point
-     *
+     * Removes map point
      * @param coordinate
      */
     public static void removeMapPoint(Coordinate coordinate) throws IllegalArgumentException {
@@ -361,22 +372,45 @@ public class Settings {
         dest.setY(y);
     }
 
+    /**
+     * Convert a distance in GUI to a distance in feet
+     * @param GUI
+     * @param scale
+     * @return
+     */
     public static double convertGUItoFEET(double GUI, double scale) {
         return GUI * scale;
     }
 
+    /**
+     * Convert the Coordinate from feet scale to GUI scale
+     * @param coordinate
+     * @param scale
+     * @return
+     */
     public static Coordinate convertFEETtoGUI(Coordinate coordinate, double scale) {
         Coordinate converted = new Coordinate((coordinate.getX() / scale), (coordinate.getY() / scale));
         return converted;
     }
 
+    /**
+     * Convert the Coordinate from GUI scale to feet scale
+     * @param coordinate
+     * @param scale
+     * @return
+     */
     public static Coordinate convertGUItoFEET(Coordinate coordinate, double scale) {
         Coordinate converted = new Coordinate(coordinate.getX() * scale, coordinate.getY() * scale);
         return converted;
 
     }
 
-
+    /**
+     * Calculate the GUI scale
+     * @param userInput The distance in feet
+     * @param GUIDist the GUI distance
+     * @return ft/GUI
+     */
     public static double calculateScale(double userInput, double GUIDist) {
         return userInput / GUIDist;
     }

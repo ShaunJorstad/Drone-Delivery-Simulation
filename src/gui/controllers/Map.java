@@ -91,11 +91,10 @@ public class Map implements Initializable {
 
 
     ArrayList invalidFields;
-
-    TextField distanceTextField;
-    TextField textField;
-    Coordinate oldHome;
-    Double oldScale;
+    TextField distanceTextField; //Text field for the distance from home
+    TextField textField; //Text field for the name of the destination
+    Coordinate oldHome; //The old GUI home coordinate
+    Double oldScale; //The old scale
 
     String currentMap;
 
@@ -228,6 +227,7 @@ public class Map implements Initializable {
         int max = pointPane.getChildren().size() - 1;
         for (int i = 0; i < max; i++)
             pointPane.getChildren().remove(1);
+        mapPoints.clear();
         updateMapPoints();
 
         File map = new File("assets/mapImages/" + Settings.getMapImage());
@@ -274,6 +274,7 @@ public class Map implements Initializable {
 
     /**
      * second method, continuation of creating a new map
+     *
      * @param name
      * @throws Exception
      */
@@ -300,6 +301,7 @@ public class Map implements Initializable {
             int max = pointPane.getChildren().size() - 1;
             for (int i = 0; i < max; i++)
                 pointPane.getChildren().remove(1);
+            mapPoints.clear();
             updateMapPoints();
             isFirst = true;
             Settings.setScale(-1);
@@ -393,7 +395,7 @@ public class Map implements Initializable {
         if (textboxIsUP) {
             return;
         }
-        //Location of the mouse clock
+        //Location of the mouse click
         Coordinate coordinate = new Coordinate((int) mouseEvent.getX(), (int) mouseEvent.getY());
 
         //Make sure the click is in the correct part of the pane
@@ -408,8 +410,7 @@ public class Map implements Initializable {
                     isFirst = false;
                     Settings.setHomeGUILoc(coordinate);
                     distanceTextField.setVisible(false);
-
-                    changeDestCoordinates(0);
+                    changeDestCoordinates(0); //Home base changed
 
                 } else {
                     circle.setFill(Color.RED);
@@ -457,6 +458,7 @@ public class Map implements Initializable {
                             //Convert the GUI point to the destination point in feet
                             removed = removed.subtract(Settings.getHomeGUILoc());
                             removed = Settings.convertGUItoFEET(removed, Settings.getScale());
+
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
                             updateMapPoints();
@@ -501,11 +503,14 @@ public class Map implements Initializable {
                 distInFeet = Double.parseDouble(temp);
                 Settings.setScale(Settings.calculateScale(distInFeet,
                         mapPoints.get(mapPoints.size() - 1).distanceBetween(Settings.getHomeGUILoc())));
-                if (Math.abs(oldScale - Settings.getScale()) > .02) {
+                if (Math.abs(oldScale - Settings.getScale()) > .02) { //The scale must have changed
                     changeDestCoordinates(1);
                 }
             } catch (Exception exception) {
-                //Settings.setScale(-1);
+                if (distanceTextField.isVisible() == true) {
+                    return; //Don't let the user ignore the text box for distance
+                }
+
             }
 
             //Get the name of the destination
@@ -541,7 +546,6 @@ public class Map implements Initializable {
         ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
         Coordinate home = new Coordinate(0, 0);
 
-
         for (int d = map.size() - 1; d >= 0; d--) { //For each destination, add the point
             Circle circle = new Circle(4);
 
@@ -569,27 +573,29 @@ public class Map implements Initializable {
         }
     }
 
+    /**
+     * Change the destination coordinates if the user changed home base or the scale
+     *
+     * @param change 0 for home base, 1 for scale
+     */
     public void changeDestCoordinates(int change) {
         ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
-        //Coordinate home = new Coordinate(0, 0);
-
 
         for (int d = map.size() - 1; d >= 0; d--) { //For each destination, add the point
 
             Destination destination = map.get(d); //Destination location measured in feet
-            Coordinate destCords = new Coordinate();
+            Coordinate destCords = new Coordinate(); //Coordinates for the destination
 
-            //Convert the destination in feet to the GUI location
-            if (change == 0) {
+
+            if (change == 0) { //Home based moved
                 Coordinate GUICoordinate = Settings.convertFEETtoGUI(destination.getCoordinates(), Settings.getScale());
                 GUICoordinate.add(oldHome);
                 GUICoordinate = GUICoordinate.subtract(Settings.getHomeGUILoc());
                 destCords = Settings.convertGUItoFEET(GUICoordinate, Settings.getScale());
-            } else if (change == 1) {
+            } else if (change == 1) { //Scale changed
                 Coordinate GUICoordinate = Settings.convertFEETtoGUI(destination.getCoordinates(), oldScale);
                 destCords = Settings.convertGUItoFEET(GUICoordinate, Settings.getScale());
             }
-
 
             destination.setCoordinates(destCords);
             map.set(d, destination);

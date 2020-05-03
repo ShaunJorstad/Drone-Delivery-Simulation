@@ -10,18 +10,19 @@ import java.util.ArrayList;
 
 public class SimController {
 
-    private static OrderGenerator orderGenerator;
-    private static TSP tsp;
-    private static AlgorithmRunner algorithmRunner;
-    private static FinalResults finalResults;
+    private static OrderGenerator orderGenerator; //Generates the orders
+    private static TSP tsp; //Runs the TSP algorithm
+    private static AlgorithmRunner algorithmRunner; //Runs the simulation
+    private static FinalResults finalResults; //Gets the final results of the simulation
     private static Settings settings; //stores the settings
 
     private static ArrayList<Results> aggregatedResultsFIFO; //The results from all 50 simulations
     private static ArrayList<Results> aggregatedResultsKnapsack;
+
     int NUMBER_OF_SIMULATIONS = 50; //The number of simulations
     public static boolean simInProgress = false; //If the simulation is in progress
     public static boolean simRan; //If a simulation has ran
-    public static boolean resultsLock = true;
+    public static boolean resultsLock = true; //If the results page is locked
     static final FileChooser fileChooser = new FileChooser(); //Used for choosing a file
     private static SimulationThread simThread; //The thread that runs the simulation
     private static Button btn; //Button associated with running the simulation
@@ -35,8 +36,10 @@ public class SimController {
         //Results for the two algorithms
         aggregatedResultsFIFO = new ArrayList<>();
         aggregatedResultsKnapsack = new ArrayList<>();
+
         simRan = false; //The simulation hasn't been run yet
         settings = settings.getInstance(); //Get the settings class
+
         orderGenerator = new OrderGenerator();
         tsp = new TSP();
         algorithmRunner = new AlgorithmRunner(this);
@@ -69,6 +72,9 @@ public class SimController {
         resultsLock = false;
     }
 
+    /**
+     * Clear the results on the results page
+     */
     public static void clearResults() {
         if (!resultsLock) {
             aggregatedResultsKnapsack.clear();
@@ -76,27 +82,50 @@ public class SimController {
         }
     }
 
+    /**
+     * Add the result from a single 4 hour run of FIFO to the aggregated results
+     * @param results
+     */
     public static void addAggregatedResultsFIFO(Results results) {
         SimController.aggregatedResultsFIFO.add(results);
     }
 
+    /**
+     * Add the results from a single 4 hour run of Knapsack to the aggregated results
+     * @param results
+     */
     public static void addAggregatedResultsKnapsack(Results results) {
         SimController.aggregatedResultsKnapsack.add(results);
     }
 
+    /**
+     * Get the aggregated results for FIFO
+     * @return
+     */
     public static ArrayList<Results> getAggregatedResultsFIFO() {
         return aggregatedResultsFIFO;
     }
 
+    /**
+     * Get the aggregated results for Knapsack
+     * @return
+     */
     public static ArrayList<Results> getAggregatedResultsKnapsack() {
         return aggregatedResultsKnapsack;
     }
 
+    /**
+     * Get a reference to the TSP algorithm
+     * @return
+     */
     public static TSP getTSP() {
         return tsp;
     }
 
-
+    /**
+     * Get the number of simulation to be run
+     * @return
+     */
     public int getNUMBER_OF_SIMULATIONS() {
         return NUMBER_OF_SIMULATIONS;
     }
@@ -120,25 +149,25 @@ public class SimController {
     }
 
     /**
-     * exports the results
-     * @param stage results stage
-     * @return true if successful
+     * Export the simulation results
+     * @param stage
+     * @return
      */
     public static boolean exportResults(Stage stage) {
         return finalResults.exportResults(stage);
     }
 
     /**
-     * stores a reference to the run button on the current scene
-     * @param button Button
+     * Set the run button
+     * @param button
      */
     public static void setCurrentButton(Button button) {
         btn = button;
     }
 
     /**
-     * returns the reference to the run button on the current scene
-     * @return Button object
+     * Return the run button
+     * @return
      */
     public static Button getCurrentButton() {
         return btn;
