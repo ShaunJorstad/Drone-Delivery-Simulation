@@ -852,11 +852,11 @@ public class Settings {
     public static boolean exportGraphImage(Stage stage, WritableImage image) {
         fileChooser.setTitle("Export Graph as PNG");
         File file = fileChooser.showSaveDialog(stage);
-        File withPng = new File(file.getAbsolutePath() + ".png");
-        if (withPng != null) {
+        File fileWithPngExtension = new File(file.getAbsolutePath() + ".png");
+        if (fileWithPngExtension != null) {
             //TODO: pipe this string into the file
             try {
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", withPng);
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileWithPngExtension);
             } catch (IOException exception) {
                 exception.printStackTrace();
                 return false;
