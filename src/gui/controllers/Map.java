@@ -304,8 +304,8 @@ public class Map implements Initializable {
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
-            mapImage.setFitWidth(500);
-            mapImage.setFitHeight(350);
+            mapImage.setFitWidth(500.0);
+            mapImage.setFitHeight(319.0);
             mapImage.setImage(mapImageFile);
             
             Settings.removeAllMapPoints();
@@ -490,6 +490,9 @@ public class Map implements Initializable {
     
     private void updateMapPoints() {
     	contentGrid.getChildren().clear();
+        contentGrid.add(new Text("destination"), 0, 0);
+        contentGrid.add(new Text("x coord"), 1, 0);
+        contentGrid.add(new Text("y coord"), 2, 0);
     	inflateMapPoints();
     }
 
