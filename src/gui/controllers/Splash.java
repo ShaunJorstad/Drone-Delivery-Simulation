@@ -31,6 +31,7 @@ import simulation.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -98,16 +99,13 @@ public class Splash implements Initializable {
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
-        Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root,"FoodItems", "FoodItems", (Stage) home.getScene().getWindow(), new ArrayList());
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
-        Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root, "Results", (Stage) home.getScene().getWindow());
-
+        Navigation.inflateScene(root,"FoodItems", "Results", (Stage) home.getScene().getWindow(), new ArrayList());
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
@@ -120,9 +118,8 @@ public class Splash implements Initializable {
     }
 
     public void handleNextButton(ActionEvent actionEvent) throws IOException {
-        Navigation.pushScene("Splash");
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root, "FoodItems", (Stage) home.getScene().getWindow());
+        Navigation.inflateScene(root,"Splash", "FoodItems", (Stage) home.getScene().getWindow(), new ArrayList());
     }
 
     public void updateRunBtn(String errMessage, boolean valid) {

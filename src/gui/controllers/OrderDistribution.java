@@ -72,8 +72,8 @@ public class OrderDistribution implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
-        orderDistribution.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 5px 0;");
+        settings.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
+        orderDistribution.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
         GridPane.setMargin(ordersTitle, new Insets(0, 0, 0, 40));
         gridIndex = 1;
