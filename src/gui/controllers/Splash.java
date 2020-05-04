@@ -100,7 +100,7 @@ public class Splash implements Initializable {
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root,"FoodItems", "FoodItems", (Stage) home.getScene().getWindow(), new ArrayList());
+        Navigation.inflateScene(root,"Splash", "FoodItems", (Stage) home.getScene().getWindow(), new ArrayList());
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
