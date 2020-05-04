@@ -242,6 +242,7 @@ public class Map implements Initializable {
         int max = pointPane.getChildren().size()-1;
         for (int i = 0; i < max; i++)
         	pointPane.getChildren().remove(1);
+        mapPoints.clear();
         updateMapPoints();
 
         File map = new File("assets/mapImages/" + Settings.getMapImage());
@@ -303,14 +304,15 @@ public class Map implements Initializable {
 
     	    newMap = new File("assets/mapImages/"+selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
-            mapImage.setFitWidth(500);
-            mapImage.setFitHeight(350);
+            mapImage.setFitWidth(500.0);
+            mapImage.setFitHeight(319.0);
             mapImage.setImage(mapImageFile);
             
             Settings.removeAllMapPoints();
             int max = pointPane.getChildren().size()-1;
             for (int i = 0; i < max; i++)
             	pointPane.getChildren().remove(1);
+            mapPoints.clear();
             updateMapPoints();
             isFirst = true;
             Settings.setScale(-1);
@@ -488,6 +490,9 @@ public class Map implements Initializable {
     
     private void updateMapPoints() {
     	contentGrid.getChildren().clear();
+        contentGrid.add(new Text("destination"), 0, 0);
+        contentGrid.add(new Text("x coord"), 1, 0);
+        contentGrid.add(new Text("y coord"), 2, 0);
     	inflateMapPoints();
     }
 
@@ -514,7 +519,10 @@ public class Map implements Initializable {
                     changeDestCoordinates(1);
                 }
             } catch (Exception exception) {
-                //Settings.setScale(-1);
+                if (distanceTextField.isVisible() == true) {
+                    return;
+                }
+
             }
 
             //Get the name of the destination
@@ -550,6 +558,7 @@ public class Map implements Initializable {
         ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
         Coordinate home = new Coordinate(0, 0);
 
+        System.out.println("scale: " + Settings.getScale() + " Coordinate: " + Settings.getHomeGUILoc());
 
         for (int d = map.size()-1; d >= 0; d--) { //For each destination, add the point
             Circle circle = new Circle(4);
