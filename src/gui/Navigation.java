@@ -211,12 +211,12 @@ public class Navigation {
             confirmNavigation(root, currentScene, nextScene, stage, invalidFields);
         } else {
             Scene splashScene = new Scene(root, 800, 600);
+            Navigation.pushScene(currentScene);
             splashScene.getStylesheets().add("gui/CSS/" + nextScene + ".css");
             splashScene.getStylesheets().add("gui/CSS/Settings.css");
             splashScene.getStylesheets().add("gui/CSS/Navigation.css");
             splashScene.setCursor(Cursor.HAND);
             stage.setScene(splashScene);
-            Navigation.pushScene(currentScene);
         }
     }
 
