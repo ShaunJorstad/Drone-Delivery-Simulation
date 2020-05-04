@@ -29,7 +29,6 @@ public class Settings {
     static final FileChooser fileChooser = new FileChooser();
     private static Settings instance = new Settings();
 
-    private static int droneCapacity = 192;
     private static int DroneFleetSize;
     private static double scale;
     private static Coordinate homeGUILoc;
@@ -101,7 +100,7 @@ public class Settings {
     // Food Items----------------------------------------------------------------
 
     public static boolean isValidFoodWeight(double weight) {
-        return weight <= droneCapacity && weight >= 0;
+        return weight <= drone.getWeight() && weight >= 0;
     }
 
     public static String verifySettings() {
@@ -183,7 +182,7 @@ public class Settings {
             return false;
         }
         for (FoodItem item : foods) {
-             if (item.getWeight() > droneCapacity) {
+             if (item.getWeight() > drone.getWeight()) {
                  System.out.println("over weight");
                  return false;
              }
@@ -244,7 +243,7 @@ public class Settings {
             return false;
         }
         for (Meal meal : meals) {
-            if (meal.getWeight() > droneCapacity) {
+            if (meal.getWeight() > drone.getWeight()) {
                 return false;
             }
             if (meal.getFoodItems().isEmpty()) {
