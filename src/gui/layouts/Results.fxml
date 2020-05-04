@@ -43,11 +43,14 @@
         </VBox>
     </center>
     <right>
-        <VBox id="controls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
+        <VBox id="resultControls" fx:id="settingButtons" spacing="200" alignment="BASELINE_RIGHT">
             <VBox spacing="10" alignment="BASELINE_RIGHT">
                 <Button id="exportButton" styleClass="settingsControls" fx:id="exportButton"
                         text="Export Results" textFill="ffffff"
                         onAction="#handleExport"/>
+                <Button id="exportGraph" styleClass="settingsControls" fx:id="exportGraphButton"
+                        text="Export Graph" textFill="ffffff"
+                        onAction="#handleExportGraph"/>
             </VBox>
         </VBox>
     </right>

@@ -21,6 +21,10 @@
     -fx-padding: 65 80 0 0;
 }
 
+#resultControls {
+    -fx-padding: 20 80 0 0;
+}
+
 #runSimButton {
     -fx-padding: 7 9 7 9;
     -fx-background-color: #0078D7;

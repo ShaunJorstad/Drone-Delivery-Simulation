@@ -2,7 +2,9 @@ package simulation;
 
 import cli.Coordinate;
 import gui.Navigation;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Parent;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -10,6 +12,7 @@ import menu.Drone;
 import menu.FoodItem;
 import menu.Meal;
 
+import javax.imageio.ImageIO;
 import java.io.*;
 import java.util.*;
 
@@ -846,5 +849,20 @@ public class Settings {
         return false;
     }
 
-
+    public static boolean exportGraphImage(Stage stage, WritableImage image) {
+        fileChooser.setTitle("Export Graph as PNG");
+        File file = fileChooser.showSaveDialog(stage);
+        File fileWithPngExtension = new File(file.getAbsolutePath() + ".png");
+        if (fileWithPngExtension != null) {
+            //TODO: pipe this string into the file
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileWithPngExtension);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }
