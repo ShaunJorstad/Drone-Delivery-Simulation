@@ -42,6 +42,7 @@ import java.util.ResourceBundle;
 public class Results implements Initializable {
     public GridPane resultsGrid;
     public VBox gridBox;
+    public Button exportGraphButton;
     SimulationThread statusThread;
 
     public Button exportButton;
@@ -53,6 +54,7 @@ public class Results implements Initializable {
     public HBox navBar;
     public Button back;
     public ImageView backImage;
+    public LineChart currentChart;
 
     boolean initial = true;
 
@@ -161,6 +163,7 @@ public class Results implements Initializable {
         xAxis.setLabel("Simulation #");
         yAxis.setLabel("Average runtime (m)");
         LineChart<Number, Number> chart = new LineChart<Number, Number>(xAxis, yAxis);
+        currentChart = chart;
         chart.setTitle("Average Delivery Time");
         XYChart.Series<Number, Number> fifo = new XYChart.Series<>();
         fifo.setName("Fifo Average");
@@ -187,10 +190,10 @@ public class Results implements Initializable {
 
         gridBox.getChildren().add(chart);
         VBox.setMargin(chart, new Insets(20, 30, 200, 0));
+    }
 
-        chart.setOnMouseClicked((mouseEvent -> {
-            WritableImage image = chart.snapshot(null, null);
-            Settings.exportGraphImage( (Stage) home.getScene().getWindow(), image);
-        }));
+    public void handleExportGraph(ActionEvent actionEvent) {
+        WritableImage image = currentChart.snapshot(null, null);
+        Settings.exportGraphImage( (Stage) home.getScene().getWindow(), image);
     }
 }

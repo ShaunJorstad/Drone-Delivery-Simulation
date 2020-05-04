@@ -48,6 +48,9 @@
                 <Button id="exportButton" styleClass="settingsControls" fx:id="exportButton"
                         text="Export Results" textFill="ffffff"
                         onAction="#handleExport"/>
+                <Button id="exportGraph" styleClass="settingsControls" fx:id="exportGraphButton"
+                        text="Export Graph" textFill="ffffff"
+                        onAction="#handleExportGraph"/>
             </VBox>
         </VBox>
     </right>
