@@ -242,6 +242,7 @@ public class Map implements Initializable {
         int max = pointPane.getChildren().size()-1;
         for (int i = 0; i < max; i++)
         	pointPane.getChildren().remove(1);
+        mapPoints.clear();
         updateMapPoints();
 
         File map = new File("assets/mapImages/" + Settings.getMapImage());
@@ -311,6 +312,7 @@ public class Map implements Initializable {
             int max = pointPane.getChildren().size()-1;
             for (int i = 0; i < max; i++)
             	pointPane.getChildren().remove(1);
+            mapPoints.clear();
             updateMapPoints();
             isFirst = true;
             Settings.setScale(-1);
@@ -517,7 +519,10 @@ public class Map implements Initializable {
                     changeDestCoordinates(1);
                 }
             } catch (Exception exception) {
-                //Settings.setScale(-1);
+                if (distanceTextField.isVisible() == true) {
+                    return;
+                }
+
             }
 
             //Get the name of the destination
@@ -553,6 +558,7 @@ public class Map implements Initializable {
         ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
         Coordinate home = new Coordinate(0, 0);
 
+        System.out.println("scale: " + Settings.getScale() + " Coordinate: " + Settings.getHomeGUILoc());
 
         for (int d = map.size()-1; d >= 0; d--) { //For each destination, add the point
             Circle circle = new Circle(4);
