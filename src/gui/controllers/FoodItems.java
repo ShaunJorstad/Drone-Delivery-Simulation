@@ -153,7 +153,7 @@ public class FoodItems implements Initializable {
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
-        String lastScene = Navigation.peekScene(); // TODO: this needs to be put back on the stack if user hits cancel,
+        String lastScene = Navigation.peekScene();
         if (lastScene == null)
             return;
         String path = "/gui/layouts/" + lastScene + ".fxml";

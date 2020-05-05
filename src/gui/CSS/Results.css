@@ -4,6 +4,12 @@
     -fx-font-size: 9pt;
 }
 
+#exportGraph {
+    -fx-padding: 9 9 9 9;
+    -fx-background-color: #0078D7;
+    -fx-font-size: 9pt;
+}
+
 #vBox {
     -fx-padding: 30 0 20 58;
 }

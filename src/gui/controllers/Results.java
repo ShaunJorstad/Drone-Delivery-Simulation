@@ -23,11 +23,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import simulation.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +42,7 @@ import java.util.ResourceBundle;
 public class Results implements Initializable {
     public GridPane resultsGrid;
     public VBox gridBox;
+    public Button exportGraphButton;
     SimulationThread statusThread;
 
     public Button exportButton;
@@ -51,6 +54,7 @@ public class Results implements Initializable {
     public HBox navBar;
     public Button back;
     public ImageView backImage;
+    public LineChart currentChart;
 
     boolean initial = true;
 
@@ -165,6 +169,7 @@ public class Results implements Initializable {
         xAxis.setLabel("Simulation #");
         yAxis.setLabel("Average runtime (m)");
         LineChart<Number, Number> chart = new LineChart<Number, Number>(xAxis, yAxis);
+        currentChart = chart;
         chart.setTitle("Average Delivery Time");
         XYChart.Series<Number, Number> fifo = new XYChart.Series<>();
         fifo.setName("Fifo Average");
@@ -191,5 +196,10 @@ public class Results implements Initializable {
 
         gridBox.getChildren().add(chart);
         VBox.setMargin(chart, new Insets(20, 30, 200, 0));
+    }
+
+    public void handleExportGraph(ActionEvent actionEvent) {
+        WritableImage image = currentChart.snapshot(null, null);
+        Settings.exportGraphImage( (Stage) home.getScene().getWindow(), image);
     }
 }

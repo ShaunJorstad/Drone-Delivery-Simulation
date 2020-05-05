@@ -117,7 +117,7 @@ public class Settings {
     // Food Items----------------------------------------------------------------
 
     public static boolean isValidFoodWeight(double weight) {
-        return weight <= droneCapacity && weight >= 0;
+        return weight <= drone.getWeight() && weight >= 0;
     }
 
     public static String verifySettings() {
@@ -200,10 +200,10 @@ public class Settings {
             return false;
         }
         for (FoodItem item : foods) {
-            if (item.getWeight() > droneCapacity) {
-                System.out.println("over weight");
-                return false;
-            }
+             if (item.getWeight() > drone.getWeight()) {
+                 System.out.println("over weight");
+                 return false;
+             }
         }
         return true;
     }
@@ -261,7 +261,7 @@ public class Settings {
             return false;
         }
         for (Meal meal : meals) {
-            if (meal.getWeight() > droneCapacity) {
+            if (meal.getWeight() > drone.getWeight()) {
                 return false;
             }
             if (meal.getFoodItems().isEmpty()) {
@@ -884,5 +884,20 @@ public class Settings {
         return false;
     }
 
-
+    public static boolean exportGraphImage(Stage stage, WritableImage image) {
+        fileChooser.setTitle("Export Graph as PNG");
+        File file = fileChooser.showSaveDialog(stage);
+        File fileWithPngExtension = new File(file.getAbsolutePath() + ".png");
+        if (fileWithPngExtension != null) {
+            //TODO: pipe this string into the file
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", fileWithPngExtension);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }
