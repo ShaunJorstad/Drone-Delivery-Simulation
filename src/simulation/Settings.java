@@ -2,6 +2,8 @@ package simulation;
 
 import cli.Coordinate;
 import gui.Navigation;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import menu.Destination;
@@ -9,6 +11,7 @@ import menu.Drone;
 import menu.FoodItem;
 import menu.Meal;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
