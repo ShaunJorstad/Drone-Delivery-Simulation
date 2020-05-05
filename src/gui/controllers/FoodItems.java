@@ -14,9 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,18 +22,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import menu.FoodItem;
 import simulation.Settings;
 
-import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -85,6 +80,9 @@ public class FoodItems implements Initializable {
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
     }
 
+    /**
+     * loads the icons for the backbutton and import/export buttons
+     */
     public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
@@ -107,6 +105,9 @@ public class FoodItems implements Initializable {
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    /**
+     * creates the tooltips for the buttons
+     */
     public void constructTooltips() {
         addFood.setTooltip(new Tooltip("Adds a new food item to be ordered"));
 
@@ -117,7 +118,7 @@ public class FoodItems implements Initializable {
 
     public void handleNavigateHome(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Splash.fxml"));
-        Navigation.inflateScene(root,"FoodItems", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "FoodItems", "Splash", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
@@ -125,7 +126,7 @@ public class FoodItems implements Initializable {
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root,"FoodItems", "Results", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "FoodItems", "Results", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
@@ -138,17 +139,17 @@ public class FoodItems implements Initializable {
 
     public void handleNavigateOrderDistribution(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/OrderDistribution.fxml"));
-        Navigation.inflateScene(root,"FoodItems", "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "FoodItems", "OrderDistribution", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateMap(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Map.fxml"));
-        Navigation.inflateScene(root,"FoodItems", "Map", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "FoodItems", "Map", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateDrone(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Drone.fxml"));
-        Navigation.inflateScene(root,"FoodItems", "Drone", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "FoodItems", "Drone", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateBack(ActionEvent actionEvent) throws IOException {
@@ -208,6 +209,13 @@ public class FoodItems implements Initializable {
 
     }
 
+    /**
+     * Binds the provided textField with the provided foodItem in Settings.
+     * Any update to 'field' that is valid, will automatically update 'foodItem'
+     *
+     * @param field
+     * @param foodItem
+     */
     public void bindName(TextField field, FoodItem foodItem) {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             foodItem.setName(newValue);
@@ -215,6 +223,13 @@ public class FoodItems implements Initializable {
         });
     }
 
+    /**
+     * Binds the provided weight text field to the provided food item
+     * any updates to 'field' that are a valid weight are automatically updated to 'fooditem'
+     *
+     * @param field
+     * @param foodItem
+     */
     public void bindWeight(TextField field, FoodItem foodItem) {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -242,6 +257,9 @@ public class FoodItems implements Initializable {
         });
     }
 
+    /**
+     * inflates the foodItems in Settings onto the gui
+     */
     public void inflateFoodItems() {
 //        load food items from settings object
         for (FoodItem item : Settings.getFoods()) {
@@ -270,16 +288,7 @@ public class FoodItems implements Initializable {
             Button removeFood = new Button("", icon);
             removeFood.getStyleClass().add("removeButton");
             removeFood.setTooltip(new Tooltip("removes food from settings. This may break your meal items"));
-            removeFood.setOnAction(actionEvent -> {
-                // remove fields
-                contentGrid.getChildren().remove(nameInput);
-                contentGrid.getChildren().remove(weightInput);
-                contentGrid.getChildren().remove(removeFood);
-
-                invalidFields.remove(item);
-                Settings.removeFoodItem(item);
-                Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
-            });
+            removeFood(item, nameInput, weightInput, removeFood);
 
 //        add button
             contentGrid.add(nameInput, 0, gridIndex);
@@ -294,6 +303,11 @@ public class FoodItems implements Initializable {
 
     }
 
+    /**
+     * adds a new foodItem to the gui and settings
+     *
+     * @param actionEvent
+     */
     public void handleAddFoodItem(ActionEvent actionEvent) {
 //        insert new fields into table and change run button to red
         FoodItem newFood = new FoodItem("food name", 0);
@@ -323,16 +337,7 @@ public class FoodItems implements Initializable {
         Button removeFood = new Button("", icon);
         removeFood.getStyleClass().add("removeButton");
 
-        removeFood.setOnAction(actionEvent1 -> {
-            // remove fields
-            contentGrid.getChildren().remove(nameInput);
-            contentGrid.getChildren().remove(weightInput);
-            contentGrid.getChildren().remove(removeFood);
-
-            invalidFields.remove(newFood);
-            Settings.removeFoodItem(newFood);
-            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
-        });
+        removeFood(newFood, nameInput, weightInput, removeFood);
         removeFood.setTooltip(new Tooltip("removes food from settings. This may break your meal items"));
 
         contentGrid.add(nameInput, 0, gridIndex);
@@ -347,5 +352,25 @@ public class FoodItems implements Initializable {
         //insert item into settings
         Settings.addFoodItem(newFood);
         Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
+    }
+
+    /**
+     * removes the fooditem from the gui and settings, followed up updating the run button
+     * @param newFood
+     * @param nameInput
+     * @param weightInput
+     * @param removeFood
+     */
+    private void removeFood(FoodItem newFood, TextField nameInput, TextField weightInput, Button removeFood) {
+        removeFood.setOnAction(actionEvent1 -> {
+            // remove fields
+            contentGrid.getChildren().remove(nameInput);
+            contentGrid.getChildren().remove(weightInput);
+            contentGrid.getChildren().remove(removeFood);
+
+            invalidFields.remove(newFood);
+            Settings.removeFoodItem(newFood);
+            Navigation.updateRunBtn(runSimButton, Settings.verifySettings(), invalidFields);
+        });
     }
 }

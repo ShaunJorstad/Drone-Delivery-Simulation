@@ -6,31 +6,42 @@ import simulation.Knapsack;
 import simulation.Fifo;
 import simulation.Results;
 import simulation.Settings;
-
 import java.util.ArrayList;
-import java.util.Set;
 
+
+/**
+ * Runs the simulation
+ */
 public class AlgorithmRunner {
-    TSP tsp;
-    SimController simController;
+    TSP tsp; //The TSP algorithm
+    SimController simController; //Reference to the simController
 
+    /**
+     * Constructor
+     * @param simController
+     */
     public AlgorithmRunner(SimController simController) {
         this.simController = simController;
         this.tsp = simController.getTSP();
     }
 
+    /**
+     * Runs one 4 hour run of the simulation
+     * @param allOrders The orders list to be processed for the 4 hour simulation
+     */
     public void runAlgorithms(ArrayList<PlacedOrder> allOrders) {
-        ArrayList<Drone> fleet = new ArrayList<>();
-        //System.out.println("Drone fleet size: " + Settings.getDroneFleetSize());
-        int fleetSize = Settings.getDroneFleetSize();
-        Drone drone = Settings.getDrone();
-        for (int i = 0; i < fleetSize; i++) {
+        ArrayList<Drone> fleet = new ArrayList<>(); //Fleet of drone to be used
+        int fleetSize = Settings.getDroneFleetSize(); //Size of the drone fleet
+
+        Drone drone = Settings.getDrone(); //Get the characteristics of a drone
+
+        for (int i = 0; i < fleetSize; i++) { //Create an appropriately sized fleet
             fleet.add(new Drone(drone));
         }
-        //System.out.println("Total number of orders: " + allOrders.size());
+
         Results results = new Results(); //Save the results
-        TSPResult tspResult;
-        ArrayList<Destination> deliveryOrder;
+        TSPResult tspResult; //The result of the TSP algorithm
+        ArrayList<Destination> deliveryOrder; //The order in which the deliveries were made
 
         //Initialize the knapsack and FIFO algorithms
         Knapsack n = new Knapsack(allOrders, Settings.calcMaxDeliveries());
@@ -40,16 +51,16 @@ public class AlgorithmRunner {
         double elapsedTime = drone.getTurnaroundTime(); //how far into the simulation are we
         boolean ordersStillToProcess = true; //If there are orders still to process
         double droneSpeed = drone.getSpeed() * 5280 / 60; //Flight speed of the drone in ft/minute
-        int droneDeliveryNumber = 1; //Keeps track of what delivery it is
-        PlacedOrder currentOrder;
+        PlacedOrder currentOrder; //Current order being processed
 
         try {
 
             //Knapsack
             while (ordersStillToProcess) {
-                drone = FindAvailableDrone(fleet);
-                elapsedTime = drone.getElapsedTime();
+                drone = FindAvailableDrone(fleet); //Find an available drone
+                elapsedTime = drone.getElapsedTime(); //Set the elapsed time to where the particular drone is at
                 ArrayList<PlacedOrder> droneRun = n.packDrone(elapsedTime); //Get what is on the current drone
+
                 if (droneRun == null) { //Finished delivering orders
                     ordersStillToProcess = false;
                 } else {
@@ -57,50 +68,44 @@ public class AlgorithmRunner {
 
                     //Find how long the delivery takes
                     tspResult = tsp.runTSP(droneRun);
+
                     deliveryOrder = tspResult.getDeliveryOrder();
 
-
+                    //Increment the time by how long it takes to get to the first destination
                     elapsedTime += deliveryOrder.get(0).getDist()/droneSpeed;
+
                     //Deliver the orders and process the results
                     for (int i = 0; i < deliveryOrder.size(); i++) {
                         currentOrder = findOrderOnDrone(droneRun, deliveryOrder.get(i));
                         elapsedTime += drone.getDeliveryTime();
                         results.processSingleDelivery(elapsedTime, currentOrder);
                         elapsedTime += (deliveryOrder.get(i).getDistToTravelTo() / droneSpeed);
-
                     }
-
-
-
-
-                    //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
 
                     //Turnaround time
                     elapsedTime += drone.getTurnaroundTime();
+
+                    //Store the elapsed time for the drone
                     drone.setElapsedTime(elapsedTime);
                 }
-                droneDeliveryNumber++;
             }
             results.getFinalResults("Knapsack");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
         ResetElapsedTime(fleet);
         SimController.addAggregatedResultsKnapsack(results); //store the results
 
         try {
             //Reset the variables for FIFO
             results = new Results();
-            elapsedTime = drone.getTurnaroundTime();
-            drone = Settings.getDrone();
             ordersStillToProcess = true;
-            droneDeliveryNumber = 1;
-
 
             //FIFO
             while (ordersStillToProcess) {
-                drone = FindAvailableDrone(fleet);
-                elapsedTime = drone.getElapsedTime();
+                drone = FindAvailableDrone(fleet); //Find an available drone
+                elapsedTime = drone.getElapsedTime(); //Get the elapsed time for the particular drone
                 ArrayList<PlacedOrder> droneRun = f.packDrone(elapsedTime); //Get what is on the current drone
 
                 if (droneRun == null) { //No more orders to be delivered
@@ -110,8 +115,10 @@ public class AlgorithmRunner {
 
                     //Find how long the delivery takes
                     tspResult = tsp.runTSP(droneRun);
+
                     deliveryOrder = tspResult.getDeliveryOrder();
 
+                    //Increment the time by how long it takes to get to the first destination
                     elapsedTime += deliveryOrder.get(0).getDist()/droneSpeed;
 
                     //Deliver the orders and process the results
@@ -122,16 +129,12 @@ public class AlgorithmRunner {
                         elapsedTime += (deliveryOrder.get(i).getDistToTravelTo() / droneSpeed);
 
                     }
-                    //System.out.println(elapsedTime);
-
-
-                    //System.out.println("Time that delivery " + droneDeliveryNumber+ " arrived with " + droneRun.size() + " deliveries: " + elapsedTime);
 
                     //Turnaround time
                     elapsedTime += drone.getTurnaroundTime();
+
                     drone.setElapsedTime(elapsedTime);
                 }
-                droneDeliveryNumber++;
 
             }
             results.getFinalResults("FIFO");
@@ -159,6 +162,11 @@ public class AlgorithmRunner {
         return null;
     }
 
+    /**
+     * Finds the drone with the lowest elapsed time
+     * @param fleet The fleet of drones that you are operating with
+     * @return
+     */
     private Drone FindAvailableDrone(ArrayList<Drone> fleet) {
         double minTime = Double.MAX_VALUE;
         Drone drone = fleet.get(0);
@@ -171,6 +179,10 @@ public class AlgorithmRunner {
         return drone;
     }
 
+    /**
+     * Reset the elapsed time for the entire fleet
+     * @param fleet The fleet that you are working with
+     */
     private void ResetElapsedTime(ArrayList<Drone> fleet) {
         for (int i = 0; i < fleet.size(); i++) {
             fleet.get(i).setElapsedTime(0);

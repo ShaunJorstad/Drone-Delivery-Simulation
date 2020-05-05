@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.geometry.Insets?>
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.FoodItems">
     <top>
@@ -61,16 +60,18 @@
                         text="Import Settings   " textFill="ffffff"
                         onAction="#handleImportSettings">
                     <graphic>
-                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="15" fitWidth="15" pickOnBounds="true"
-                                   preserveRatio="true" />
+                        <ImageView styleClass="buttonIcon" fx:id="uploadImage" fitHeight="15" fitWidth="15"
+                                   pickOnBounds="true"
+                                   preserveRatio="true"/>
                     </graphic>
                 </Button>
                 <Button id="exportSettingsButton" styleClass="settingsControls" fx:id="exportSettingsButton"
                         text="Export Settings   " textFill="ffffff"
                         onAction="#handleExportSettings">
                     <graphic>
-                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="15" fitWidth="15" pickOnBounds="true"
-                                   preserveRatio="true" />
+                        <ImageView styleClass="buttonIcon" fx:id="downloadImage" fitHeight="15" fitWidth="15"
+                                   pickOnBounds="true"
+                                   preserveRatio="true"/>
                     </graphic>
                 </Button>
             </VBox>

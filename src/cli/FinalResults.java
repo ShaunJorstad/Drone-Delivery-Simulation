@@ -11,13 +11,25 @@ import java.util.ArrayList;
 
 import static cli.SimController.*;
 
+/**
+ * Gets the final results of a run of the simulation
+ */
 public class FinalResults {
-    SimController simController;
+    SimController simController; //Reference to the simController
 
+    /**
+     * Constructor
+     * @param simController
+     */
     public FinalResults(SimController simController) {
         this.simController = simController;
     }
 
+    /**
+     * Export the results to a file
+     * @param stage
+     * @return
+     */
     public boolean exportResults(Stage stage) {
         fileChooser.setTitle("Export Settings");
         File file = fileChooser.showSaveDialog(stage);
@@ -38,6 +50,12 @@ public class FinalResults {
         return false;
     }
 
+    /**
+     * Export the results to a string
+     * @param resultsFifo
+     * @param resultsKnapsack
+     * @return xml string of the results
+     */
     private String exportResults(ArrayList<Results> resultsFifo, ArrayList<Results> resultsKnapsack) {
         String out = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
                 "<data-set>\n\t" + "<record>\n\t\t" +

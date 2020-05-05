@@ -20,12 +20,13 @@ public class PlacedOrder {
 
     /**
      * Constructor
+     *
      * @param timePlaced The time in minutes since the start of the simulation that the order was placed
-     * @param dest The destination of the delivery
-     * @param name name of the client
-     * @param meal The meal that was ordered
+     * @param dest       The destination of the delivery
+     * @param name       name of the client
+     * @param meal       The meal that was ordered
      */
-    PlacedOrder(int timePlaced , Destination dest, String name, Meal meal) {
+    PlacedOrder(int timePlaced, Destination dest, String name, Meal meal) {
         orderedTime = timePlaced;
         clientName = name;
         this.meal = meal;
@@ -35,6 +36,7 @@ public class PlacedOrder {
 
     /**
      * Add the order to the Orders.xml file
+     *
      * @param file The file which the orders is being stored in
      */
     public void addToXML(File file) {
@@ -61,29 +63,47 @@ public class PlacedOrder {
         }
     }
 
+    /**
+     * Return the destination that the order is being delivered to
+     * @return
+     */
     public Destination getDest() {
         return dest;
     }
 
+    /**
+     * Returns the meal that was ordered
+     * @return
+     */
     public Meal getMeal() {
         return meal;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
+    /**
+     * Get the time that the order was placed
+     * @return
+     */
     public int getOrderedTime() {
         return orderedTime;
     }
 
+    /**
+     * The number of times that the order has been skipped over (Used in the Knapsack algorithm)
+     * @return
+     */
     public int getTimesSkipped() {return timesSkipped;}
 
+    /**
+     * Increases the time that the order has been skipped over by one (Used in the Knapsack algorithm)
+     */
     public void incrementTimeSkipped() {
         this.timesSkipped++;
     }
 
-
+    /**
+     * Get the weight of the meal
+     * @return
+     */
     public float getWeight() {
         return meal.getWeight();
     }

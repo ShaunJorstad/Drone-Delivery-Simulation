@@ -85,6 +85,9 @@ public class Results implements Initializable {
         SimController.simRan = false;
     }
 
+    /**
+     * creates cursor states for all of the nodes on the scene
+     */
     public void injectCursorStates() {
         List<Button> items = Arrays.asList(home, settings, results, back, exportButton);
         for (Button item : items) {
@@ -130,6 +133,9 @@ public class Results implements Initializable {
         Navigation.inflateScene(root, lastScene, (Stage) home.getScene().getWindow());
     }
 
+    /**
+     * displays the settings results on the gui
+     */
     public void displayResults() {
         ArrayList<simulation.Results> fifoData = SimController.getAggregatedResultsFIFO();
         ArrayList<simulation.Results> knapsackData = SimController.getAggregatedResultsKnapsack();

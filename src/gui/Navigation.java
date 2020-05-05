@@ -14,7 +14,6 @@
 package gui;
 
 import cli.SimController;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -22,15 +21,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -75,10 +71,10 @@ public class Navigation {
     }
 
     public static String peekScene() {
-        if (sceneStack.isEmpty() ) {
+        if (sceneStack.isEmpty()) {
             return null;
         }
-        return sceneStack.get(sceneStack.size() -1);
+        return sceneStack.get(sceneStack.size() - 1);
     }
 
     /**
@@ -110,7 +106,7 @@ public class Navigation {
         stage.setScene(splashScene);
     }
 
-    public static void confirmNavigation(Parent root,String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
+    public static void confirmNavigation(Parent root, String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initStyle(StageStyle.UNDECORATED);
@@ -131,7 +127,7 @@ public class Navigation {
         Button continue_btn = new Button("continue");
         continue_btn.setOnMouseClicked((event) -> {
             dialog.close();
-            inflateScene(root,currentScene,nextScene,stage, new ArrayList());
+            inflateScene(root, currentScene, nextScene, stage, new ArrayList());
         });
 
         buttons_cntr.getChildren().addAll(cancel_btn, continue_btn);
@@ -139,7 +135,8 @@ public class Navigation {
         dialog.setScene(dialogScene);
         dialog.show();
     }
-    public static void confirmBackNavigation(Parent root,String currentScene, Stage stage, ArrayList invalidFields) {
+
+    public static void confirmBackNavigation(Parent root, String currentScene, Stage stage, ArrayList invalidFields) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initStyle(StageStyle.UNDECORATED);
@@ -160,7 +157,7 @@ public class Navigation {
         Button continue_btn = new Button("continue");
         continue_btn.setOnMouseClicked((event) -> {
             dialog.close();
-            navigateBack(root,currentScene,stage, new ArrayList());
+            navigateBack(root, currentScene, stage, new ArrayList());
         });
 
         buttons_cntr.getChildren().addAll(cancel_btn, continue_btn);
@@ -169,7 +166,7 @@ public class Navigation {
         dialog.show();
     }
 
-    public static void displayWarningPopup( Stage stage, String message) {
+    public static void displayWarningPopup(Stage stage, String message) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initStyle(StageStyle.UNDECORATED);
@@ -196,18 +193,18 @@ public class Navigation {
 
     /**
      * Inflates a scene (navigating to a new screen)
-     *
+     * <p>
      * if there is invalid input (indicated by the invalidFields arrayList a popup asks the user if they want to confirm navigation and clear all invalid input
      *
-     * @param root      fxml document being inflated
-     * @param nextScene name of the scene being inflated
-     * @param stage     current stage of the application
+     * @param root          fxml document being inflated
+     * @param nextScene     name of the scene being inflated
+     * @param stage         current stage of the application
      * @param invalidFields arraylist of invalid fields the use rhas modified
      */
-    public static void inflateScene(Parent root,String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
-        if(nextScene.equals("Results") && SimController.resultsLock) {
-            displayWarningPopup( stage, "You must run a simulation before you can view the results page.\nA simulation can be run from the settings pages.");
-        } else if  (!invalidFields.isEmpty()) {
+    public static void inflateScene(Parent root, String currentScene, String nextScene, Stage stage, ArrayList invalidFields) {
+        if (nextScene.equals("Results") && SimController.resultsLock) {
+            displayWarningPopup(stage, "You must run a simulation before you can view the results page.\nA simulation can be run from the settings pages.");
+        } else if (!invalidFields.isEmpty()) {
             confirmNavigation(root, currentScene, nextScene, stage, invalidFields);
         } else {
             Scene splashScene = new Scene(root, 800, 600);
@@ -220,8 +217,15 @@ public class Navigation {
         }
     }
 
-    public static void navigateBack(Parent root,String currentScene, Stage stage, ArrayList invalidFields) {
-        if  (!invalidFields.isEmpty()) {
+    /**
+     * navigates to the last scene
+     * @param root current Parent
+     * @param currentScene current Scene
+     * @param stage current Stage
+     * @param invalidFields list of current invalid fields
+     */
+    public static void navigateBack(Parent root, String currentScene, Stage stage, ArrayList invalidFields) {
+        if (!invalidFields.isEmpty()) {
             confirmBackNavigation(root, currentScene, stage, invalidFields);
         } else {
             String lastScene = popScene();
@@ -249,6 +253,12 @@ public class Navigation {
         return instance;
     }
 
+    /**
+     * Updates the run button if settings are valid
+     * Deprecated function thats still in use
+     * @param runButton
+     * @param errorMessage
+     */
     public static void updateRunBtn(Button runButton, String errorMessage) {
         if (errorMessage.equals("")) {
             runButton.setStyle("-fx-background-color: #0078D7");
@@ -261,6 +271,12 @@ public class Navigation {
         }
     }
 
+    /**
+     * Updates the run button if settings are valid and invalid.
+     * @param runButton Button being enabled and disabled
+     * @param errorMessage Error message if settings are invalid
+     * @param invalidFields Current Scene's invalid fields that havn't been applied to the settings
+     */
     public static void updateRunBtn(Button runButton, String errorMessage, ArrayList invalidFields) {
         if (!invalidFields.isEmpty()) {
             runButton.setStyle("-fx-background-color: #EC2F08");

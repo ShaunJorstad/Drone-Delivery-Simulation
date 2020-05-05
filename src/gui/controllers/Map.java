@@ -11,16 +11,19 @@ import cli.Coordinate;
 import cli.SimController;
 import cli.SimulationThread;
 import gui.Navigation;
-import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -28,44 +31,38 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.text.Text;
+import menu.Destination;
+import simulation.Settings;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import simulation.Settings;
-import menu.Destination;
-
-import static java.nio.file.StandardCopyOption.*;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class Map implements Initializable {
-    SimulationThread statusThread;
-    ArrayList<Coordinate>  mapPoints;
+    ArrayList<Coordinate> mapPoints;
     boolean isFirst;
     boolean textboxIsUP;
-	
-	@FXML
+
+    @FXML
     public ImageView mapImage;
     public VBox navBarContainer;
     public HBox navBar;
@@ -81,8 +78,8 @@ public class Map implements Initializable {
     public Button back;
     public ImageView backImage;
     public Button runSimButton;
-    //public Button importMapButton;
-    //public Button exportMapButton;
+    public Button importMapButton;
+    public Button exportMapButton;
     public Button newMapButton;
     public ImageView uploadImage;
     public ImageView downloadImage;
@@ -91,15 +88,14 @@ public class Map implements Initializable {
     public GridPane contentGrid;
     public VBox runBtnVbox;
     public Pane pointPane;
-    
+
 
     ArrayList invalidFields;
+    TextField distanceTextField; //Text field for the distance from home
+    TextField textField; //Text field for the name of the destination
+    Coordinate oldHome; //The old GUI home coordinate
+    Double oldScale; //The old scale
 
-    TextField distanceTextField;
-    TextField textField;
-    Coordinate oldHome;
-    Double oldScale;
-    
     String currentMap;
 
     @Override
@@ -108,8 +104,42 @@ public class Map implements Initializable {
         map.setStyle("-fx-border-color: #0078D7;" + "-fx-border-width: 0 0 3px 0;");
 
         invalidFields = new ArrayList();
-        
-        
+
+        loadIcons();
+        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
+
+        Insets runInsets = new Insets(100, 0, 0, 0);
+        VBox.setMargin(runSimButton, runInsets);
+
+        injectCursorStates();
+
+        // loads map image
+        File map = new File("assets/mapImages/" + Settings.getMapImage());
+        Image mapImageFile = new Image(map.toURI().toString());
+        mapImage.setImage(mapImageFile);
+
+        // adds padding to elements
+        Insets mapInset = new Insets(20, 0, 0, 50);
+        VBox.setMargin(mapImage, mapInset);
+        inflateMapPoints();
+
+        //
+        SimController.setCurrentButton(runSimButton);
+        EventHandler<MouseEvent> mouseEventEventHandler = this::modifyPoints;
+        EventHandler<KeyEvent> keyEventEventHandler = this::processText;
+
+        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
+        pointPane.addEventFilter(KeyEvent.KEY_PRESSED, keyEventEventHandler);
+        mapPoints = new ArrayList<>();
+        isFirst = true;
+        textboxIsUP = false;
+        initializeDynamicPoints();
+    }
+
+    /**
+     * loads the icons for the back button, and import export buttons
+     */
+    public void loadIcons() {
         File backFile;
         if (Navigation.isEmpty()) {
             backFile = new File("assets/icons/backGray.png");
@@ -122,60 +152,15 @@ public class Map implements Initializable {
         backImage.setFitWidth(16);
         backImage.setPreserveRatio(true);
 
-        loadIcons();
-        Navigation.updateRunBtn(runSimButton, Settings.verifySettings());
-
-        Insets runInsets = new Insets(100,0,0,0);
-        VBox.setMargin(runSimButton, runInsets);
-        
-        injectCursorStates();
-        
-        File map = new File("assets/mapImages/" + Settings.getMapImage());
-        Image mapImageFile = new Image(map.toURI().toString());
-        mapImage.setImage(mapImageFile);
-        
-
-        Insets mapInset = new Insets(20,0,0,50);
-        VBox.setMargin(mapImage, mapInset);
-        inflateMapPoints();
-
-        SimController.setCurrentButton(runSimButton);
-        EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                modifyPoints(e);
-            }
-        };
-        EventHandler<KeyEvent> keyEventEventHandler = new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                processText(event);
-            }
-        };
-        pointPane.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventEventHandler);
-        pointPane.addEventFilter(KeyEvent.KEY_PRESSED, keyEventEventHandler);
-        mapPoints = new ArrayList<>();
-        isFirst = true;
-        textboxIsUP = false;
-        initializeDynamicPoints();
-    }
-
-    public void loadIcons() {
-        File backFile;
-        if (Navigation.isEmpty()) {
-            backFile = new File("assets/icons/backGray.png");
-        } else {
-            backFile = new File("assets/icons/backBlack.png");
-        }
-        Image backArrowImage = new Image(backFile.toURI().toString());
-        backImage.setImage(backArrowImage);
-
         uploadImage.setImage(new Image(new File("assets/icons/upload.png").toURI().toString()));
         downloadImage.setImage(new Image(new File("assets/icons/download.png").toURI().toString()));
     }
 
+    /**
+     * adds cursor states to the nodes in the gui.
+     * This works for the first scene and none following.
+     */
     public void injectCursorStates() {
-
         List<Button> items = Arrays.asList(home, settings, results, back, runSimButton, foodItems, mealItems, orderDistribution, map, drone);//, importMapButton, exportMapButton);
         for (Button item : items) {
             item.setOnMouseEntered(mouseEvent -> {
@@ -194,12 +179,12 @@ public class Map implements Initializable {
 
     public void HandleNavigateSettings(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/FoodItems.fxml"));
-        Navigation.inflateScene(root,"Map", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "Map", "FoodItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateResults(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/Results.fxml"));
-        Navigation.inflateScene(root,"Map", "Results", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "Map", "Results", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateFoodItems(ActionEvent actionEvent) throws IOException {
@@ -209,7 +194,7 @@ public class Map implements Initializable {
 
     public void handleNavigateMealItems(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource("/gui/layouts/MealItems.fxml"));
-        Navigation.inflateScene(root,"Map", "MealItems", (Stage) home.getScene().getWindow(), invalidFields);
+        Navigation.inflateScene(root, "Map", "MealItems", (Stage) home.getScene().getWindow(), invalidFields);
     }
 
     public void handleNavigateOrderDistribution(ActionEvent actionEvent) throws IOException {
@@ -235,13 +220,13 @@ public class Map implements Initializable {
         Parent root = FXMLLoader.<Parent>load(getClass().getResource(path));
         Navigation.navigateBack(root, lastScene, (Stage) home.getScene().getWindow(), invalidFields);
     }
-    
-    public void handleImportMap(ActionEvent actionEvent) {
-    	Settings.importMapSettings((Stage) home.getScene().getWindow());
 
-        int max = pointPane.getChildren().size()-1;
+    public void handleImportMap(ActionEvent actionEvent) {
+        Settings.importMapSettings((Stage) home.getScene().getWindow());
+
+        int max = pointPane.getChildren().size() - 1;
         for (int i = 0; i < max; i++)
-        	pointPane.getChildren().remove(1);
+            pointPane.getChildren().remove(1);
         mapPoints.clear();
         updateMapPoints();
 
@@ -250,32 +235,30 @@ public class Map implements Initializable {
         mapImage.setImage(mapImageFile);
         initializeDynamicPoints();
     }
-    
-    
 
     public void handleExportMap(ActionEvent actionEvent) {
         Settings.exportMapSettings((Stage) home.getScene().getWindow());
     }
-    
+
     public void handleNewMap(ActionEvent actionEvent) {
-    	
+
         textField = new TextField();
         //textField.setPromptText("Map Name: ");
-        textField.setOnAction( EventHandler -> {
-        	try {
-            	continueNewMap(textField.getText());
-        	} catch(Exception e) {
-        		e.printStackTrace();
-        	} finally {
-        		((Stage)(textField.getScene().getWindow())).close();
-        	}
+        textField.setOnAction(EventHandler -> {
+            try {
+                continueNewMap(textField.getText());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                ((Stage) (textField.getScene().getWindow())).close();
+            }
         });
-        
+
         Text text = new Text("Name your new map:");
         //text.setStyle(value);
-        Insets textInsets = new Insets(10,10,10,10);
-        Insets otherInsets = new Insets(10,20,10,20);
-        
+        Insets textInsets = new Insets(10, 10, 10, 10);
+        Insets otherInsets = new Insets(10, 20, 10, 20);
+
         final Stage dialog = new Stage(StageStyle.UNDECORATED);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner((Stage) home.getScene().getWindow());
@@ -288,36 +271,42 @@ public class Map implements Initializable {
         dialog.show();
 
     }
-    
+
+    /**
+     * second method, continuation of creating a new map
+     *
+     * @param name
+     * @throws Exception
+     */
     public void continueNewMap(String name) throws Exception {
-    	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Map Image File");
-    	fileChooser.getExtensionFilters().addAll(
-    	         new ExtensionFilter("Image Files", "*.png", "*.jpg"));
-    	File selectedFile = fileChooser.showOpenDialog((Stage)home.getScene().getWindow());
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Map Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+        File selectedFile = fileChooser.showOpenDialog((Stage) home.getScene().getWindow());
 
-	    File newMap = new File("assets/mapImages/"+selectedFile.getName());
-	    newMap.createNewFile();
-    	if (selectedFile != null) {
-    	    Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
-    	    Settings.setMapImage(selectedFile.getName());
+        File newMap = new File("assets/mapImages/" + selectedFile.getName());
+        newMap.createNewFile();
+        if (selectedFile != null) {
+            Files.copy(selectedFile.toPath(), newMap.toPath(), REPLACE_EXISTING);
+            Settings.setMapImage(selectedFile.getName());
 
-    	    newMap = new File("assets/mapImages/"+selectedFile.getName());
+            newMap = new File("assets/mapImages/" + selectedFile.getName());
             Image mapImageFile = new Image(newMap.toURI().toString());
             mapImage.setFitWidth(500.0);
             mapImage.setFitHeight(319.0);
             mapImage.setImage(mapImageFile);
-            
+
             Settings.removeAllMapPoints();
-            int max = pointPane.getChildren().size()-1;
+            int max = pointPane.getChildren().size() - 1;
             for (int i = 0; i < max; i++)
-            	pointPane.getChildren().remove(1);
+                pointPane.getChildren().remove(1);
             mapPoints.clear();
             updateMapPoints();
             isFirst = true;
             Settings.setScale(-1);
-    	}
-    	
+        }
+
     }
 
     public void handleRunSimulation(ActionEvent actionEvent) {
@@ -355,14 +344,14 @@ public class Map implements Initializable {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void inflateMapPoints() {
-    	int gridInd = 1;
-		for (Destination curr : Settings.getMap()) {
-			
-			//Name of destination
-    		Text destName = new Text(curr.getDestName());
-    		destName.getStyleClass().add("foodName");
+        int gridInd = 1;
+        for (Destination curr : Settings.getMap()) {
+
+            //Name of destination
+            Text destName = new Text(curr.getDestName());
+            destName.getStyleClass().add("foodName");
             /*destName.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -370,7 +359,7 @@ public class Map implements Initializable {
                 }
             });*/
             Text xCoord = new Text("" + curr.getX());
-    		xCoord.getStyleClass().add("foodName");
+            xCoord.getStyleClass().add("foodName");
             /*xCoord.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -378,26 +367,27 @@ public class Map implements Initializable {
                 }
             });*/
             Text yCoord = new Text("" + curr.getY());
-    		yCoord.getStyleClass().add("foodName");
+            yCoord.getStyleClass().add("foodName");
             /*yCoord.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 //                    update simcontroller destinations
                 }
             });*/
-            
-            
+
+
             contentGrid.add(destName, 0, gridInd);
             contentGrid.add(xCoord, 1, gridInd);
             contentGrid.add(yCoord, 2, gridInd);
             gridInd++;
-            
-            
-    	}
+
+
+        }
     }
 
     /**
      * Modify points on the map
+     *
      * @param mouseEvent
      */
     public void modifyPoints(MouseEvent mouseEvent) {
@@ -405,8 +395,8 @@ public class Map implements Initializable {
         if (textboxIsUP) {
             return;
         }
-        //Location of the mouse clock
-        Coordinate coordinate = new Coordinate((int)mouseEvent.getX(), (int)mouseEvent.getY());
+        //Location of the mouse click
+        Coordinate coordinate = new Coordinate((int) mouseEvent.getX(), (int) mouseEvent.getY());
 
         //Make sure the click is in the correct part of the pane
         if (mouseEvent.getY() < 348) {
@@ -420,8 +410,7 @@ public class Map implements Initializable {
                     isFirst = false;
                     Settings.setHomeGUILoc(coordinate);
                     distanceTextField.setVisible(false);
-
-                    changeDestCoordinates(0);
+                    changeDestCoordinates(0); //Home base changed
 
                 } else {
                     circle.setFill(Color.RED);
@@ -431,7 +420,7 @@ public class Map implements Initializable {
                         //Display the distance
                         distanceTextField.setText("" +
                                 Settings.convertGUItoFEET(coordinate.distanceBetween(Settings.getHomeGUILoc()),
-                                Settings.getScale()));
+                                        Settings.getScale()));
                     }
                 }
 
@@ -469,6 +458,7 @@ public class Map implements Initializable {
                             //Convert the GUI point to the destination point in feet
                             removed = removed.subtract(Settings.getHomeGUILoc());
                             removed = Settings.convertGUItoFEET(removed, Settings.getScale());
+
                             //Remove the point from the stored destination list
                             Settings.removeMapPoint(removed);
                             updateMapPoints();
@@ -477,7 +467,7 @@ public class Map implements Initializable {
                         }
 
                         //Remove the point from the displayed map
-                        pointPane.getChildren().remove(i+1);
+                        pointPane.getChildren().remove(i + 1);
                         return;
                     }
                 }
@@ -486,8 +476,8 @@ public class Map implements Initializable {
         }
 
     }
-    
-    
+
+
     private void updateMapPoints() {
     	contentGrid.getChildren().clear();
         contentGrid.add(new Text("destination"), 0, 0);
@@ -498,6 +488,7 @@ public class Map implements Initializable {
 
     /**
      * User confirms the details about the destination map
+     *
      * @param keyEvent
      */
     public void processText(KeyEvent keyEvent) {
@@ -514,13 +505,13 @@ public class Map implements Initializable {
             try {
                 distInFeet = Double.parseDouble(temp);
                 Settings.setScale(Settings.calculateScale(distInFeet,
-                        mapPoints.get(mapPoints.size()-1).distanceBetween(Settings.getHomeGUILoc())));
-                if (Math.abs(oldScale-Settings.getScale()) > .02) {
+                        mapPoints.get(mapPoints.size() - 1).distanceBetween(Settings.getHomeGUILoc())));
+                if (Math.abs(oldScale - Settings.getScale()) > .02) { //The scale must have changed
                     changeDestCoordinates(1);
                 }
             } catch (Exception exception) {
                 if (distanceTextField.isVisible() == true) {
-                    return;
+                    return; //Don't let the user ignore the text box for distance
                 }
 
             }
@@ -529,7 +520,7 @@ public class Map implements Initializable {
             String name = textField.getText();
 
             //Get the GUI coordinates of the new point
-            Coordinate currentDest = mapPoints.get(mapPoints.size()-1);
+            Coordinate currentDest = mapPoints.get(mapPoints.size() - 1);
 
             //Convert into the destination coordinates
             currentDest = currentDest.subtract(Settings.getHomeGUILoc());
@@ -537,11 +528,11 @@ public class Map implements Initializable {
 
             try {
                 //Add the map to the saved settings
-                Settings.addMapPoint(name, (int)currentDest.getX(), (int)currentDest.getY(), (Stage) home.getScene().getWindow());
+                Settings.addMapPoint(name, (int) currentDest.getX(), (int) currentDest.getY(), (Stage) home.getScene().getWindow());
                 updateMapPoints();
 
                 //Clear the text fields
-                pointPane.getChildren().remove(pointPane.getChildren().size()-1);
+                pointPane.getChildren().remove(pointPane.getChildren().size() - 1);
                 textboxIsUP = false;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -558,9 +549,7 @@ public class Map implements Initializable {
         ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
         Coordinate home = new Coordinate(0, 0);
 
-        System.out.println("scale: " + Settings.getScale() + " Coordinate: " + Settings.getHomeGUILoc());
-
-        for (int d = map.size()-1; d >= 0; d--) { //For each destination, add the point
+        for (int d = map.size() - 1; d >= 0; d--) { //For each destination, add the point
             Circle circle = new Circle(4);
 
             Coordinate destCords = map.get(d).getCoordinates(); //Destination location measured in feet
@@ -587,27 +576,29 @@ public class Map implements Initializable {
         }
     }
 
+    /**
+     * Change the destination coordinates if the user changed home base or the scale
+     *
+     * @param change 0 for home base, 1 for scale
+     */
     public void changeDestCoordinates(int change) {
         ArrayList<Destination> map = Settings.getMap(); //Destination locations in feet
-        //Coordinate home = new Coordinate(0, 0);
 
-
-        for (int d = map.size()-1; d >= 0; d--) { //For each destination, add the point
+        for (int d = map.size() - 1; d >= 0; d--) { //For each destination, add the point
 
             Destination destination = map.get(d); //Destination location measured in feet
-            Coordinate destCords = new Coordinate();
+            Coordinate destCords = new Coordinate(); //Coordinates for the destination
 
-            //Convert the destination in feet to the GUI location
-            if (change == 0) {
+
+            if (change == 0) { //Home based moved
                 Coordinate GUICoordinate = Settings.convertFEETtoGUI(destination.getCoordinates(), Settings.getScale());
                 GUICoordinate.add(oldHome);
                 GUICoordinate = GUICoordinate.subtract(Settings.getHomeGUILoc());
                 destCords = Settings.convertGUItoFEET(GUICoordinate, Settings.getScale());
-            } else if (change == 1) {
+            } else if (change == 1) { //Scale changed
                 Coordinate GUICoordinate = Settings.convertFEETtoGUI(destination.getCoordinates(), oldScale);
                 destCords = Settings.convertGUItoFEET(GUICoordinate, Settings.getScale());
             }
-
 
             destination.setCoordinates(destCords);
             map.set(d, destination);
