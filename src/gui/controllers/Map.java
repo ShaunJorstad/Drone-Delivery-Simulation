@@ -236,6 +236,28 @@ public class Map implements Initializable {
         mapImage.setImage(mapImageFile);
         initializeDynamicPoints();
     }
+    
+    public void handleInstructions(ActionEvent actionEvent) {
+    	
+    	
+    	Text text = new Text("Click on the map to add a new destination and you will be prompted to name it.\n" +
+    							"To remove a point hold control and click on the point you wish to remove.\n\n" +
+    							"When you press the new map button, you will be prompted to name your map. You " +
+    							"will then be prompted to find the image of the campus map. You can then set the home base" +
+    							" of the drones and add as many destinations as you like, being prompted on the " +
+    							"second point added to input a known distance for scaling.");
+        //text.setStyle(value);
+    	
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) home.getScene().getWindow());
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().addAll(text);
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        text.wrappingWidthProperty().bind(dialogVbox.widthProperty());;
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
 
     public void handleExportMap(ActionEvent actionEvent) {
     	
