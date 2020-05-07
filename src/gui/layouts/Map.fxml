@@ -62,8 +62,9 @@
         </Pane>
     </left>
     <right>
-        <VBox id="controls" fx:id="settingButtons" spacing="100" alignment="BASELINE_RIGHT">
-            <VBox spacing="10" alignment="BASELINE_RIGHT">
+        <VBox id="controls" fx:id="settingButtons" spacing="0" alignment="CENTER_RIGHT">
+            <VBox spacing="10" alignment="CENTER_RIGHT">
+            	
                 <Button id="importSettingsButton" styleClass="settingsControls" fx:id="importMapButton"
                         text="Import Map   " textFill="ffffff"
                         onAction="#handleImportMap">
@@ -83,6 +84,10 @@
                 <Button id="newMapButton" styleClass="settingsControls" fx:id="importMapButton"
                         text="New Map   " textFill="ffffff"
                         onAction="#handleNewMap">
+                </Button>
+                <Button id="instructionsButton" styleClass="settingsControls" fx:id="instructionsButton"
+                        text="Instructions" textFill="ffffff"
+                        onAction="#handleInstructions">
                 </Button>
             </VBox>
             <VBox fx:id="runBtnVbox">
