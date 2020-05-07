@@ -69,7 +69,6 @@ public class SimController {
         ArrayList<PlacedOrder> allOrders = orderGenerator.getXMLOrders(); //All the xml orders placed
         algorithmRunner.runAlgorithms(allOrders);
         simRan = true;
-        resultsLock = false;
     }
 
     /**

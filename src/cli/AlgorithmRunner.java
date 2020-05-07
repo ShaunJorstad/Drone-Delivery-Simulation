@@ -143,6 +143,7 @@ public class AlgorithmRunner {
         }
         ResetElapsedTime(fleet);
         simController.addAggregatedResultsFIFO(results); //Store the results
+        SimController.resultsLock = false;
     }
 
     /**
