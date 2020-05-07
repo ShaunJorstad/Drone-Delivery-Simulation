@@ -81,6 +81,7 @@ public class Map implements Initializable {
     public Button importMapButton;
     public Button exportMapButton;
     public Button newMapButton;
+    public Button instructionsButton;
     public ImageView uploadImage;
     public ImageView downloadImage;
     public VBox settingButtons;
@@ -237,6 +238,7 @@ public class Map implements Initializable {
     }
 
     public void handleExportMap(ActionEvent actionEvent) {
+    	
         Settings.exportMapSettings((Stage) home.getScene().getWindow());
     }
 
