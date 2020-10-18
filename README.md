@@ -1,9 +1,12 @@
-# Dromedary Drones 
-This application allows the user to run an ordering simulation that analyzes packing algorithms of a delivery drone, supplying food to a college campus. 
+# Drone-Delivery-Simulation
+This application creates a drone delivery simulation that analyzes different packing algorithms for optimal delivery performance. The application provides a gui to change the following simulation settings:
 
-The application currently allows the user to modify the settings of the simulation, import and export settings to and from disk, and run the simulation. The results shows the average and worst times for the FIFO and knapsack algorithms, and displays a graph of the two packing algorithms. 
+- food items: name and weight
+- meal items: name food items, order frequency 
+- delivery map: campus map, delivery destinations
+- drones: number of drones, carrying capcaity, speed of drone, etc...
 
-The result data can be exported as an xml document to disk, which can then be imported to Excel for analysis. 
+Settings update in real time and are verified by the application before running. Configurations can be imported and exported to disk for later analysis, as can the results. The results shows the average and worst times for the FIFO and knapsack algorithms, and displays a graph of the two packing algorithms. 
 
 # Install
 - first create a javafx project in your IDE of choice
